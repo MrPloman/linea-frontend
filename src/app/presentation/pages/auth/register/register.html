@@ -1,0 +1,55 @@
+<div class="auth">
+  <section class="auth__card" aria-labelledby="register-title">
+    <h1 class="auth__title" id="register-title">Crear cuenta</h1>
+    <p class="auth__subtitle">Guarda tus favoritos, sigue tus pedidos y compra más rápido.</p>
+
+    <!-- TODO(pol): manejar (ngSubmit) con validación + registro -->
+    <form class="auth__form" [formGroup]="form">
+      <app-input
+        id="register-name"
+        label="Nombre"
+        autocomplete="given-name"
+        [control]="form.controls.firstName"
+      />
+      <app-input
+        id="register-email"
+        label="Correo electrónico"
+        type="email"
+        autocomplete="email"
+        [control]="form.controls.email"
+      />
+      <app-input
+        id="register-password"
+        label="Contraseña"
+        type="password"
+        autocomplete="new-password"
+        hint="Mínimo 8 caracteres"
+        [control]="form.controls.password"
+      />
+      <app-input
+        id="register-confirm"
+        label="Repite la contraseña"
+        type="password"
+        autocomplete="new-password"
+        [control]="form.controls.confirmPassword"
+      />
+
+      <!-- TODO(pol): exigir aceptación real antes de registrar -->
+      <label class="auth__terms">
+        <input class="auth__terms-checkbox" type="checkbox" name="terms" />
+        <span>
+          He leído y acepto las
+          <a class="auth__terms-link" href="#">condiciones de compra</a> y la
+          <a class="auth__terms-link" href="#">política de privacidad</a>.
+        </span>
+      </label>
+
+      <app-button variant="primary" type="submit" [fullWidth]="true">Crear cuenta</app-button>
+    </form>
+
+    <p class="auth__switch">
+      ¿Ya tienes cuenta?
+      <a class="auth__switch-link" routerLink="/auth/login">Iniciar sesión</a>
+    </p>
+  </section>
+</div>

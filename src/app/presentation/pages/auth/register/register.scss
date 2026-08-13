@@ -1,0 +1,75 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.auth {
+  @include m.container;
+  display: grid;
+  place-items: center;
+  padding-block: t.$space-2xl t.$space-3xl;
+
+  &__card {
+    width: 100%;
+    max-width: 26rem;
+    padding: t.$space-xl;
+    background-color: t.$color-surface;
+    border: 1px solid t.$color-border;
+
+    @include m.respond(sm) {
+      padding: t.$space-2xl;
+    }
+  }
+
+  &__title {
+    font-size: t.$text-2xl;
+    font-weight: t.$weight-light;
+    margin-bottom: t.$space-xs;
+  }
+
+  &__subtitle {
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+    margin-bottom: t.$space-xl;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-md;
+  }
+
+  &__terms {
+    display: flex;
+    align-items: flex-start;
+    gap: t.$space-xs;
+    font-size: t.$text-sm;
+    color: t.$color-ink-soft;
+    cursor: pointer;
+  }
+
+  &__terms-checkbox {
+    margin-top: 0.2rem;
+    width: 1rem;
+    height: 1rem;
+    accent-color: t.$color-ink;
+  }
+
+  &__terms-link {
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+
+  &__switch {
+    margin-top: t.$space-xl;
+    padding-top: t.$space-lg;
+    @include m.hairline(top);
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+    text-align: center;
+  }
+
+  &__switch-link {
+    color: t.$color-ink;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+}

@@ -1,0 +1,66 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.auth {
+  @include m.container;
+  display: grid;
+  place-items: center;
+  padding-block: t.$space-2xl t.$space-3xl;
+
+  &__card {
+    width: 100%;
+    max-width: 26rem;
+    padding: t.$space-xl;
+    background-color: t.$color-surface;
+    border: 1px solid t.$color-border;
+
+    @include m.respond(sm) {
+      padding: t.$space-2xl;
+    }
+  }
+
+  &__title {
+    font-size: t.$text-2xl;
+    font-weight: t.$weight-light;
+    margin-bottom: t.$space-xs;
+  }
+
+  &__subtitle {
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+    margin-bottom: t.$space-xl;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-md;
+  }
+
+  &__forgot {
+    align-self: flex-end;
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+
+    &:hover {
+      color: t.$color-ink;
+    }
+  }
+
+  &__switch {
+    margin-top: t.$space-xl;
+    padding-top: t.$space-lg;
+    @include m.hairline(top);
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+    text-align: center;
+  }
+
+  &__switch-link {
+    color: t.$color-ink;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+}

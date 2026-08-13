@@ -1,0 +1,18 @@
+<div class="field">
+  <label class="field__label" [for]="id()">{{ label() }}</label>
+  <input
+    class="field__input"
+    [id]="id()"
+    [type]="type()"
+    [formControl]="control()"
+    [placeholder]="placeholder()"
+    [attr.autocomplete]="autocomplete()"
+  />
+  @if (hint()) {
+    <p class="field__hint">{{ hint() }}</p>
+  }
+  <!-- TODO(pol): activar cuando haya validación real -->
+  @if (showError) {
+    <p class="field__error" role="alert">{{ errorText() }}</p>
+  }
+</div>

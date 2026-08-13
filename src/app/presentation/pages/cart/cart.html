@@ -1,0 +1,79 @@
+<div class="cart">
+  <h1 class="cart__title">
+    Bolsa <span class="cart__count">({{ summary.articleCount }} artículos)</span>
+  </h1>
+
+  <!-- TODO(pol): estado vacío ("Tu bolsa está vacía") cuando no haya items -->
+  <div class="cart__layout">
+    <ul class="cart__list" aria-label="Artículos en la bolsa">
+      @for (item of items; track item.id) {
+        <li class="cart-item">
+          <a class="cart-item__media" [routerLink]="['/producto', item.productId]" tabindex="-1" aria-hidden="true">
+            <img
+              class="cart-item__image"
+              [src]="item.image"
+              [alt]="item.imageAlt"
+              width="160"
+              height="213"
+              loading="lazy"
+            />
+          </a>
+
+          <div class="cart-item__body">
+            <h2 class="cart-item__name">
+              <a [routerLink]="['/producto', item.productId]">{{ item.name }}</a>
+            </h2>
+            <p class="cart-item__meta">{{ item.color }} · Talla {{ item.size }}</p>
+            <p class="cart-item__unit-price">{{ item.unitPrice }}</p>
+
+            <div class="cart-item__controls">
+              <!-- TODO(pol): cambiar cantidad de verdad -->
+              <div class="cart-item__quantity" role="group" [attr.aria-label]="'Cantidad de ' + item.name">
+                <button class="cart-item__quantity-button" type="button" aria-label="Restar una unidad">−</button>
+                <span class="cart-item__quantity-value">{{ item.quantity }}</span>
+                <button class="cart-item__quantity-button" type="button" aria-label="Sumar una unidad">+</button>
+              </div>
+
+              <!-- TODO(pol): eliminar el artículo de la bolsa -->
+              <button class="cart-item__remove" type="button">Eliminar</button>
+            </div>
+          </div>
+
+          <p class="cart-item__total">{{ item.lineTotal }}</p>
+        </li>
+      }
+    </ul>
+
+    <!-- ============ Resumen ============ -->
+    <aside class="cart-summary" aria-label="Resumen del pedido">
+      <h2 class="cart-summary__title">Resumen</h2>
+
+      <dl class="cart-summary__rows">
+        <div class="cart-summary__row">
+          <dt>Subtotal</dt>
+          <dd>{{ summary.subtotal }}</dd>
+        </div>
+        <div class="cart-summary__row">
+          <dt>Envío</dt>
+          <dd>{{ summary.shipping }}</dd>
+        </div>
+        <div class="cart-summary__row cart-summary__row--total">
+          <dt>Total <span class="cart-summary__tax-note">(IVA incluido)</span></dt>
+          <dd>{{ summary.total }}</dd>
+        </div>
+      </dl>
+
+      <!-- TODO(pol): aplicar código promocional -->
+      <form class="cart-summary__promo">
+        <label class="cart-summary__promo-label" for="promo-code">Código promocional</label>
+        <div class="cart-summary__promo-row">
+          <input class="cart-summary__promo-input" id="promo-code" type="text" name="promo-code" placeholder="Código" />
+          <button class="cart-summary__promo-button" type="button">Aplicar</button>
+        </div>
+      </form>
+
+      <a class="cart-summary__checkout" routerLink="/checkout">Tramitar pedido</a>
+      <a class="cart-summary__continue" routerLink="/catalogo">Seguir comprando</a>
+    </aside>
+  </div>
+</div>

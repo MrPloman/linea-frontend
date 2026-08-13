@@ -1,1 +1,120 @@
-/* You can add global styles to this file, and also import other style files */
+// ============================================
+// Estilos globales — reset ligero + base tipográfica
+// Los tokens viven en src/app/presentation/styles/tokens
+// ============================================
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  background-color: t.$color-background;
+  color: t.$color-ink;
+  font-family: t.$font-sans;
+  font-size: t.$text-md;
+  line-height: t.$leading-normal;
+  letter-spacing: t.$tracking-normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: t.$weight-medium;
+  line-height: t.$leading-tight;
+  overflow-wrap: break-word;
+}
+
+ul[class],
+ol[class] {
+  list-style: none;
+  padding: 0;
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+
+:focus-visible {
+  @include m.focus-ring;
+}
+
+::selection {
+  background-color: t.$color-ink;
+  color: t.$color-surface;
+}
+
+// Enlace para saltar al contenido (a11y, primer elemento enfocable)
+.skip-link {
+  @include m.visually-hidden;
+
+  &:focus-visible {
+    position: fixed;
+    inset: auto;
+    top: t.$space-md;
+    left: t.$space-md;
+    z-index: 999;
+    width: auto;
+    height: auto;
+    margin: 0;
+    clip: auto;
+    padding: t.$space-sm t.$space-lg;
+    background-color: t.$color-ink;
+    color: t.$color-surface;
+    @include m.label-caps(t.$text-xs);
+  }
+}
+
+// Respeto a usuarios con movimiento reducido
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

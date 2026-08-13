@@ -1,0 +1,77 @@
+<div class="pdp">
+  <app-breadcrumbs class="pdp__breadcrumbs" [items]="breadcrumbItems" />
+
+  <div class="pdp__layout">
+    <!-- ============ Galería ============ -->
+    <app-product-gallery
+      class="pdp__gallery"
+      [images]="galleryImages"
+      [altBase]="product.imageAlt"
+    />
+
+    <!-- ============ Panel de compra ============ -->
+    <section class="pdp__info" aria-label="Información de compra">
+      <p class="pdp__kicker">Novedad</p>
+      <h1 class="pdp__name">{{ product.name }}</h1>
+      <p class="pdp__price">{{ product.price }}</p>
+
+      <app-color-selector class="pdp__selector" [colors]="colorOptions" />
+
+      <div class="pdp__sizes">
+        <app-size-selector [unavailable]="unavailableSizes" />
+        <!-- TODO(pol): página/modal de guía de tallas -->
+        <a class="pdp__size-guide" href="#">Guía de tallas</a>
+      </div>
+
+      <!-- TODO(pol): añadir al carrito de verdad (talla+color seleccionados) -->
+      <app-button class="pdp__add" variant="primary" [fullWidth]="true">
+        Añadir a la bolsa
+      </app-button>
+
+      <!-- TODO: live stock widget -->
+      <div class="pdp__stock-widget" aria-hidden="true"></div>
+
+      <ul class="pdp__perks">
+        <li class="pdp__perk">Envío gratuito a partir de 50 €</li>
+        <li class="pdp__perk">Devoluciones gratuitas en 30 días</li>
+      </ul>
+
+      <div class="pdp__details">
+        <details class="pdp__accordion" open>
+          <summary class="pdp__accordion-summary">Descripción</summary>
+          <p class="pdp__accordion-body">
+            Blazer de corte estructurado confeccionada en mezcla de lana. Hombros
+            marcados, cierre de un botón y forro interior de viscosa. Un básico
+            atemporal para elevar cualquier look.
+          </p>
+        </details>
+        <details class="pdp__accordion">
+          <summary class="pdp__accordion-summary">Composición y cuidados</summary>
+          <p class="pdp__accordion-body">
+            Exterior: 70&nbsp;% lana, 30&nbsp;% poliéster reciclado. Forro: 100&nbsp;%
+            viscosa. Limpieza en seco. No usar secadora.
+          </p>
+        </details>
+        <details class="pdp__accordion">
+          <summary class="pdp__accordion-summary">Envíos y devoluciones</summary>
+          <p class="pdp__accordion-body">
+            Entrega estándar en 2–4 días laborables. Dispones de 30 días para
+            devoluciones gratuitas desde la recepción del pedido.
+          </p>
+        </details>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ Relacionados ============ -->
+  <section class="pdp__related" aria-labelledby="related-title">
+    <h2 class="pdp__related-title" id="related-title">También te puede gustar</h2>
+    <ul class="pdp__related-grid">
+      @for (relatedProduct of related; track relatedProduct.id) {
+        <li>
+          <app-product-card [product]="relatedProduct" />
+        </li>
+      }
+    </ul>
+  </section>
+</div>

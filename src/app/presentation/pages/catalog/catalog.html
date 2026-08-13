@@ -1,0 +1,134 @@
+<div class="catalog">
+  <app-breadcrumbs class="catalog__breadcrumbs" [items]="breadcrumbItems" />
+
+  <header class="catalog__head">
+    <h1 class="catalog__title">Mujer</h1>
+    <p class="catalog__count">{{ products.length }} artículos</p>
+
+    <div class="catalog__toolbar">
+      <button class="catalog__filters-toggle" type="button" (click)="openMobileFilters()">
+        Filtrar
+      </button>
+      <!-- TODO(pol): ordenación real del listado -->
+      <label class="catalog__sort">
+        <span class="catalog__sort-label">Ordenar por</span>
+        <select class="catalog__sort-select" name="sort">
+          <option value="relevance">Relevancia</option>
+          <option value="price-asc">Precio: de menor a mayor</option>
+          <option value="price-desc">Precio: de mayor a menor</option>
+          <option value="newest">Novedades</option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <div class="catalog__layout">
+    <!-- ============ Sidebar de filtros (off-canvas en móvil) ============ -->
+    <aside
+      class="catalog__sidebar"
+      [class.catalog__sidebar--open]="isMobileFiltersOpen()"
+      aria-label="Filtros de producto"
+    >
+      <div class="catalog__sidebar-head">
+        <h2 class="catalog__sidebar-title">Filtros</h2>
+        <button
+          class="catalog__sidebar-close"
+          type="button"
+          aria-label="Cerrar filtros"
+          (click)="closeMobileFilters()"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- TODO(pol): aplicar filtros reales sobre el listado -->
+      <form class="filters">
+        <details class="filters__group" open>
+          <summary class="filters__summary">Categoría</summary>
+          <ul class="filters__options">
+            @for (category of filterCategories; track category) {
+              <li class="filters__option">
+                <label class="filters__checkbox">
+                  <input type="checkbox" name="category" [value]="category" />
+                  <span>{{ category }}</span>
+                </label>
+              </li>
+            }
+          </ul>
+        </details>
+
+        <details class="filters__group" open>
+          <summary class="filters__summary">Talla</summary>
+          <div class="filters__chips">
+            @for (size of filterSizes; track size) {
+              <label class="filters__chip">
+                <input type="checkbox" name="size" [value]="size" />
+                <span class="filters__chip-label">{{ size }}</span>
+              </label>
+            }
+          </div>
+        </details>
+
+        <details class="filters__group" open>
+          <summary class="filters__summary">Color</summary>
+          <div class="filters__swatches">
+            @for (color of filterColors; track color.name) {
+              <label class="filters__swatch" [attr.title]="color.name">
+                <input type="checkbox" name="color" [value]="color.name" />
+                <span
+                  class="filters__swatch-dot"
+                  [style.background-color]="color.value"
+                ></span>
+                <span class="filters__swatch-name">{{ color.name }}</span>
+              </label>
+            }
+          </div>
+        </details>
+
+        <details class="filters__group" open>
+          <summary class="filters__summary">Precio</summary>
+          <div class="filters__price">
+            <label class="filters__price-field">
+              <span>Mín.</span>
+              <input type="number" name="price-min" min="0" placeholder="0 €" />
+            </label>
+            <span class="filters__price-sep" aria-hidden="true">—</span>
+            <label class="filters__price-field">
+              <span>Máx.</span>
+              <input type="number" name="price-max" min="0" placeholder="200 €" />
+            </label>
+          </div>
+        </details>
+
+        <button class="filters__apply" type="button" (click)="closeMobileFilters()">
+          Ver artículos
+        </button>
+      </form>
+    </aside>
+
+    @if (isMobileFiltersOpen()) {
+      <div class="catalog__overlay" aria-hidden="true" (click)="closeMobileFilters()"></div>
+    }
+
+    <!-- ============ Grid de productos ============ -->
+    <section class="catalog__results" aria-label="Listado de productos">
+      <ul class="catalog__grid">
+        @for (product of products; track product.id) {
+          <li>
+            <app-product-card [product]="product" />
+          </li>
+        }
+      </ul>
+
+      <!-- TODO(pol): paginación real (hoy es decorativa) -->
+      <nav class="pagination" aria-label="Paginación del listado">
+        <span class="pagination__page pagination__page--current" aria-current="page">1</span>
+        <a class="pagination__page" routerLink="/catalogo">2</a>
+        <a class="pagination__page" routerLink="/catalogo">3</a>
+        <span class="pagination__ellipsis" aria-hidden="true">…</span>
+        <a class="pagination__page" routerLink="/catalogo">8</a>
+        <a class="pagination__next" routerLink="/catalogo">Siguiente</a>
+      </nav>
+    </section>
+  </div>
+</div>

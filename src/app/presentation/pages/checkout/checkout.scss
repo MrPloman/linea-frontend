@@ -1,0 +1,243 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.checkout {
+  @include m.container;
+  padding-block: t.$space-xl t.$space-3xl;
+
+  &__title {
+    font-size: t.$text-3xl;
+    font-weight: t.$weight-light;
+    margin-bottom: t.$space-lg;
+  }
+
+  // ---- Indicador de pasos ----------------------------------
+  &__steps {
+    display: flex;
+    gap: t.$space-lg;
+    margin-bottom: t.$space-2xl;
+    @include m.hairline(bottom);
+    padding-bottom: t.$space-md;
+  }
+
+  &__step {
+    display: flex;
+    align-items: center;
+    gap: t.$space-xs;
+    color: t.$color-text-muted;
+    font-size: t.$text-sm;
+
+    &--active {
+      color: t.$color-ink;
+    }
+
+    &--done {
+      color: t.$color-success;
+    }
+  }
+
+  &__step-number {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    font-size: t.$text-xs;
+
+    .checkout__step--active & {
+      background-color: t.$color-ink;
+      border-color: t.$color-ink;
+      color: t.$color-surface;
+    }
+  }
+
+  &__step-label {
+    @media (max-width: 39.99rem) {
+      // En móvil solo se muestra la etiqueta del paso activo
+      display: none;
+
+      .checkout__step--active & {
+        display: inline;
+      }
+    }
+  }
+
+  // ---- Layout ----------------------------------------------
+  &__layout {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-xl;
+
+    @include m.respond(lg) {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
+      gap: t.$space-3xl;
+      align-items: start;
+    }
+  }
+
+  &__panel-title {
+    font-size: t.$text-xl;
+    font-weight: t.$weight-regular;
+    margin-bottom: t.$space-lg;
+  }
+
+  // ---- Formularios -----------------------------------------
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-md;
+    margin-bottom: t.$space-xl;
+  }
+
+  &__form-row {
+    display: grid;
+    gap: t.$space-md;
+
+    @include m.respond(sm) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  // ---- Opciones tipo radio (envío / pago) ------------------
+  &__options {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-sm;
+    margin-bottom: t.$space-xl;
+  }
+
+  &__options-legend {
+    @include m.label-caps(t.$text-xs);
+    color: t.$color-ink-soft;
+    margin-bottom: t.$space-sm;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: t.$space-md;
+    padding: t.$space-md;
+    background-color: t.$color-surface;
+    border: 1px solid t.$color-border-strong;
+    border-radius: t.$radius-sm;
+    cursor: pointer;
+    transition: border-color t.$transition-fast;
+
+    &:hover {
+      border-color: t.$color-ink;
+    }
+
+    // Realza la opción marcada
+    &:has(input:checked) {
+      border-color: t.$color-ink;
+      box-shadow: 0 0 0 1px t.$color-ink;
+    }
+
+    input {
+      accent-color: t.$color-ink;
+    }
+  }
+
+  &__option-body {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-3xs;
+  }
+
+  &__option-name {
+    font-size: t.$text-sm;
+    font-weight: t.$weight-medium;
+  }
+
+  &__option-detail {
+    font-size: t.$text-xs;
+    color: t.$color-text-muted;
+  }
+
+  &__option-price {
+    margin-left: auto;
+    font-size: t.$text-sm;
+  }
+
+  // ---- Acciones --------------------------------------------
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: t.$space-md;
+  }
+
+  &__back {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+    cursor: pointer;
+
+    &:hover {
+      color: t.$color-ink;
+    }
+  }
+}
+
+// ============ Resumen lateral ============
+.checkout-summary {
+  padding: t.$space-lg;
+  background-color: t.$color-surface;
+  border: 1px solid t.$color-border;
+
+  @include m.respond(lg) {
+    position: sticky;
+    top: 6rem;
+  }
+
+  &__title {
+    @include m.label-caps(t.$text-sm);
+  }
+
+  &__count {
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+    margin-bottom: t.$space-lg;
+  }
+
+  &__rows {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-sm;
+    margin-bottom: t.$space-lg;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    font-size: t.$text-sm;
+
+    dd {
+      margin: 0;
+    }
+
+    &--total {
+      padding-top: t.$space-sm;
+      @include m.hairline(top);
+      font-size: t.$text-md;
+      font-weight: t.$weight-semibold;
+    }
+  }
+
+  &__edit {
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+
+    &:hover {
+      color: t.$color-ink;
+    }
+  }
+}

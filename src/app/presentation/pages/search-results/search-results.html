@@ -1,0 +1,50 @@
+<div class="search">
+  <!-- ============ Buscador ============ -->
+  <section class="search__hero">
+    <!-- TODO(pol): búsqueda real (submit → query param → resultados) -->
+    <form class="search__form" role="search" aria-label="Buscar productos">
+      <label class="search__label" for="search-input">¿Qué estás buscando?</label>
+      <div class="search__bar">
+        <svg class="search__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <line x1="16.5" y1="16.5" x2="21" y2="21" />
+        </svg>
+        <input
+          class="search__input"
+          id="search-input"
+          type="search"
+          name="q"
+          placeholder="Busca prendas, tejidos, colores…"
+          autocomplete="off"
+        />
+        <button class="search__submit" type="button">Buscar</button>
+      </div>
+    </form>
+
+    <div class="search__popular">
+      <span class="search__popular-label">Populares:</span>
+      <ul class="search__popular-list">
+        @for (term of popularSearches; track term) {
+          <li>
+            <a class="search__popular-chip" routerLink="/buscar">{{ term }}</a>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ Resultados ============ -->
+  <section class="search__results" aria-labelledby="search-results-title">
+    <h1 class="search__results-title" id="search-results-title">
+      {{ results.length }} resultados para <em>«{{ query }}»</em>
+    </h1>
+
+    <ul class="search__grid">
+      @for (product of results; track product.id) {
+        <li>
+          <app-product-card [product]="product" />
+        </li>
+      }
+    </ul>
+  </section>
+</div>

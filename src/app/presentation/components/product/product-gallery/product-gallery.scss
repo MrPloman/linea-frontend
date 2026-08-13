@@ -1,0 +1,60 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+:host {
+  display: block;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: t.$space-sm;
+
+  @include m.respond(md) {
+    flex-direction: row;
+  }
+
+  &__thumbs {
+    display: flex;
+    gap: t.$space-xs;
+    overflow-x: auto;
+
+    @include m.respond(md) {
+      flex-direction: column;
+      overflow-x: visible;
+    }
+  }
+
+  &__thumb {
+    display: block;
+    width: 4rem;
+    padding: 0;
+    border: 1px solid transparent;
+    background: none;
+    transition: border-color t.$transition-fast;
+
+    img {
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+    }
+
+    &:hover {
+      border-color: t.$color-border-strong;
+    }
+
+    &--active {
+      border-color: t.$color-ink;
+    }
+  }
+
+  &__main {
+    flex: 1;
+    background-color: t.$color-surface-alt;
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+}

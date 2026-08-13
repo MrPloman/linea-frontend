@@ -1,0 +1,20 @@
+<fieldset class="color-selector">
+  <legend class="color-selector__legend">
+    Color <span class="color-selector__value">— {{ selectedName() }}</span>
+  </legend>
+
+  <div class="color-selector__options" role="group">
+    @for (color of colors(); track color.name; let i = $index) {
+      <button
+        class="color-selector__option"
+        type="button"
+        [class.color-selector__option--selected]="selectedIndex() === i"
+        [attr.aria-pressed]="selectedIndex() === i"
+        [attr.aria-label]="'Color ' + color.name"
+        (click)="select(i)"
+      >
+        <span class="color-selector__swatch" [style.background-color]="color.value"></span>
+      </button>
+    }
+  </div>
+</fieldset>

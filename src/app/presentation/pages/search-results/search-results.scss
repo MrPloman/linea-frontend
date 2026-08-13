@@ -1,0 +1,120 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.search {
+  @include m.container;
+  padding-block: t.$space-2xl t.$space-3xl;
+
+  // ---- Buscador --------------------------------------------
+  &__hero {
+    max-width: 44rem;
+    margin-inline: auto;
+    margin-bottom: t.$space-3xl;
+  }
+
+  &__label {
+    display: block;
+    font-size: t.$text-2xl;
+    font-weight: t.$weight-light;
+    margin-bottom: t.$space-lg;
+    text-align: center;
+  }
+
+  &__bar {
+    display: flex;
+    align-items: center;
+    gap: t.$space-sm;
+    padding-inline: t.$space-md;
+    background-color: t.$color-surface;
+    border: 1px solid t.$color-ink;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    color: t.$color-text-muted;
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    min-height: 3.25rem;
+    border: none;
+    background: none;
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: t.$color-text-muted;
+    }
+  }
+
+  &__submit {
+    @include m.label-caps(t.$text-xs);
+    padding: t.$space-xs t.$space-md;
+    background-color: t.$color-ink;
+    border: none;
+    color: t.$color-surface;
+  }
+
+  &__popular {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: t.$space-xs;
+    margin-top: t.$space-md;
+    justify-content: center;
+  }
+
+  &__popular-label {
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+  }
+
+  &__popular-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: t.$space-xs;
+  }
+
+  &__popular-chip {
+    display: inline-block;
+    padding: t.$space-2xs t.$space-sm;
+    border: 1px solid t.$color-border-strong;
+    border-radius: t.$radius-pill;
+    font-size: t.$text-sm;
+    transition: border-color t.$transition-fast, background-color t.$transition-fast;
+
+    &:hover {
+      border-color: t.$color-ink;
+      background-color: t.$color-surface;
+    }
+  }
+
+  // ---- Resultados ------------------------------------------
+  &__results-title {
+    font-size: t.$text-lg;
+    font-weight: t.$weight-regular;
+    margin-bottom: t.$space-xl;
+
+    em {
+      font-style: normal;
+      color: t.$color-accent-ink;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: t.$space-xl t.$space-md;
+
+    @include m.respond(md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include m.respond(xl) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}

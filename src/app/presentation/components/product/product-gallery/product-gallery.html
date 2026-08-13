@@ -1,0 +1,28 @@
+<div class="gallery">
+  <ul class="gallery__thumbs" aria-label="Miniaturas del producto">
+    @for (image of images(); track image; let i = $index) {
+      <li>
+        <button
+          class="gallery__thumb"
+          type="button"
+          [class.gallery__thumb--active]="activeIndex() === i"
+          [attr.aria-label]="'Ver imagen ' + (i + 1) + ' de ' + images().length"
+          [attr.aria-current]="activeIndex() === i ? 'true' : null"
+          (click)="select(i)"
+        >
+          <img [src]="image" [alt]="''" width="120" height="160" loading="lazy" />
+        </button>
+      </li>
+    }
+  </ul>
+
+  <figure class="gallery__main">
+    <img
+      class="gallery__image"
+      [src]="images()[activeIndex()]"
+      [alt]="altBase() + ', imagen ' + (activeIndex() + 1) + ' de ' + images().length"
+      width="600"
+      height="800"
+    />
+  </figure>
+</div>

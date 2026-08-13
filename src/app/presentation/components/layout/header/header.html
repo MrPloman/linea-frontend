@@ -1,0 +1,62 @@
+<header class="header">
+  <div class="header__inner">
+    <button
+      class="header__burger"
+      type="button"
+      aria-controls="main-nav"
+      [attr.aria-expanded]="isMenuOpen()"
+      [attr.aria-label]="isMenuOpen() ? 'Cerrar menú' : 'Abrir menú'"
+      (click)="toggleMenu()"
+    >
+      <span class="header__burger-line" aria-hidden="true"></span>
+      <span class="header__burger-line" aria-hidden="true"></span>
+      <span class="header__burger-line" aria-hidden="true"></span>
+    </button>
+
+    <a class="header__logo" routerLink="/" aria-label="LINEA, ir a la página de inicio">LINEA</a>
+
+    <nav
+      id="main-nav"
+      class="header__nav"
+      [class.header__nav--open]="isMenuOpen()"
+      aria-label="Navegación principal"
+    >
+      <p class="header__nav-title" aria-hidden="true">Menú</p>
+      <!-- TODO(pol): categorías reales con sus propias rutas/filtros -->
+      <ul class="header__nav-list">
+        <li><a class="header__nav-link" routerLink="/catalogo" routerLinkActive="header__nav-link--active" (click)="closeMenu()">Mujer</a></li>
+        <li><a class="header__nav-link" routerLink="/catalogo" (click)="closeMenu()">Hombre</a></li>
+        <li><a class="header__nav-link" routerLink="/catalogo" (click)="closeMenu()">Accesorios</a></li>
+        <li><a class="header__nav-link" routerLink="/catalogo" (click)="closeMenu()">Novedades</a></li>
+        <li><a class="header__nav-link header__nav-link--sale" routerLink="/catalogo" (click)="closeMenu()">Rebajas</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <a class="header__action" routerLink="/buscar" aria-label="Buscar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <line x1="16.5" y1="16.5" x2="21" y2="21" />
+        </svg>
+      </a>
+      <a class="header__action header__action--account" routerLink="/auth/login" aria-label="Mi cuenta">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="12" cy="8" r="3.5" />
+          <path d="M4.5 20c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6" />
+        </svg>
+      </a>
+      <a class="header__action header__cart" routerLink="/carrito" [attr.aria-label]="'Bolsa de compra, ' + cartCount + ' artículos'">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M5.5 8h13l-1 13h-11l-1-13z" />
+          <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+        </svg>
+        <span class="header__cart-count" aria-hidden="true">{{ cartCount }}</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Dentro del header para compartir stacking context con el drawer -->
+  @if (isMenuOpen()) {
+    <div class="header-overlay" aria-hidden="true" (click)="closeMenu()"></div>
+  }
+</header>

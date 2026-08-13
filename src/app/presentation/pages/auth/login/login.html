@@ -1,0 +1,34 @@
+<div class="auth">
+  <section class="auth__card" aria-labelledby="login-title">
+    <h1 class="auth__title" id="login-title">Iniciar sesión</h1>
+    <p class="auth__subtitle">Accede a tu cuenta para ver tus pedidos y favoritos.</p>
+
+    <!-- TODO(pol): manejar (ngSubmit) con validación + autenticación -->
+    <form class="auth__form" [formGroup]="form">
+      <app-input
+        id="login-email"
+        label="Correo electrónico"
+        type="email"
+        autocomplete="email"
+        [control]="form.controls.email"
+      />
+      <app-input
+        id="login-password"
+        label="Contraseña"
+        type="password"
+        autocomplete="current-password"
+        [control]="form.controls.password"
+      />
+
+      <!-- TODO(pol): flujo de recuperación de contraseña -->
+      <a class="auth__forgot" href="#">¿Has olvidado tu contraseña?</a>
+
+      <app-button variant="primary" type="submit" [fullWidth]="true">Iniciar sesión</app-button>
+    </form>
+
+    <p class="auth__switch">
+      ¿Aún no tienes cuenta?
+      <a class="auth__switch-link" routerLink="/auth/registro">Crear cuenta</a>
+    </p>
+  </section>
+</div>

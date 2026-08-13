@@ -1,0 +1,24 @@
+<fieldset class="size-selector">
+  <legend class="size-selector__legend">
+    Talla
+    @if (selected(); as size) {
+      <span class="size-selector__value">— {{ size }}</span>
+    }
+  </legend>
+
+  <div class="size-selector__options" role="group">
+    @for (size of sizes(); track size) {
+      <button
+        class="size-selector__option"
+        type="button"
+        [class.size-selector__option--selected]="selected() === size"
+        [disabled]="isUnavailable(size)"
+        [attr.aria-pressed]="selected() === size"
+        [attr.aria-label]="isUnavailable(size) ? 'Talla ' + size + ', agotada' : 'Talla ' + size"
+        (click)="select(size)"
+      >
+        {{ size }}
+      </button>
+    }
+  </div>
+</fieldset>

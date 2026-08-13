@@ -1,0 +1,157 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.pdp {
+  @include m.container;
+  padding-block: t.$space-lg t.$space-3xl;
+
+  &__breadcrumbs {
+    display: block;
+    margin-bottom: t.$space-lg;
+  }
+
+  &__layout {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-xl;
+
+    @include m.respond(lg) {
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: t.$space-3xl;
+      align-items: start;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-lg;
+
+    @include m.respond(lg) {
+      position: sticky;
+      top: 6rem;
+      max-width: 26rem;
+    }
+  }
+
+  &__kicker {
+    @include m.label-caps(t.$text-xs);
+    color: t.$color-accent-ink;
+  }
+
+  &__name {
+    font-size: t.$text-2xl;
+    font-weight: t.$weight-light;
+    margin-top: -#{t.$space-sm};
+  }
+
+  &__price {
+    font-size: t.$text-lg;
+    margin-top: -#{t.$space-sm};
+  }
+
+  &__sizes {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-xs;
+  }
+
+  &__size-guide {
+    align-self: flex-start;
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+
+    &:hover {
+      color: t.$color-ink;
+    }
+  }
+
+  // Hueco reservado para el widget de stock en vivo (sin contenido aún).
+  // Mantiene el alto que ocupará para que el layout no salte al implementarlo.
+  &__stock-widget {
+    min-height: 3.5rem;
+    border: 1px dashed t.$color-border-strong;
+    border-radius: t.$radius-sm;
+    background-color: t.$color-surface-alt;
+  }
+
+  &__perks {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-2xs;
+  }
+
+  &__perk {
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+
+    &::before {
+      content: '— ';
+    }
+  }
+
+  // ---- Acordeones de detalle -------------------------------
+  &__details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__accordion {
+    @include m.hairline(top);
+
+    &:last-child {
+      @include m.hairline(bottom);
+    }
+  }
+
+  &__accordion-summary {
+    @include m.label-caps(t.$text-xs);
+    padding-block: t.$space-md;
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::after {
+      content: '+';
+      float: right;
+      color: t.$color-text-muted;
+    }
+
+    details[open] > &::after {
+      content: '−';
+    }
+  }
+
+  &__accordion-body {
+    padding-bottom: t.$space-md;
+    font-size: t.$text-sm;
+    color: t.$color-ink-soft;
+  }
+
+  // ---- Relacionados ----------------------------------------
+  &__related {
+    margin-top: t.$space-3xl;
+  }
+
+  &__related-title {
+    font-size: t.$text-2xl;
+    font-weight: t.$weight-light;
+    margin-bottom: t.$space-xl;
+  }
+
+  &__related-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: t.$space-xl t.$space-md;
+
+    @include m.respond(lg) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}

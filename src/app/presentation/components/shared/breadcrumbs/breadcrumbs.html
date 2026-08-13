@@ -1,0 +1,13 @@
+<nav class="breadcrumbs" aria-label="Migas de pan">
+  <ol class="breadcrumbs__list">
+    @for (item of items(); track item.label) {
+      <li class="breadcrumbs__item">
+        @if (item.link) {
+          <a class="breadcrumbs__link" [routerLink]="item.link">{{ item.label }}</a>
+        } @else {
+          <span class="breadcrumbs__current" aria-current="page">{{ item.label }}</span>
+        }
+      </li>
+    }
+  </ol>
+</nav>

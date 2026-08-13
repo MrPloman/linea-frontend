@@ -1,0 +1,70 @@
+<footer class="footer">
+  <div class="footer__inner">
+    <section class="footer__newsletter" aria-label="Newsletter">
+      <h2 class="footer__newsletter-title">Suscríbete a la newsletter</h2>
+      <p class="footer__newsletter-text">
+        Novedades, ideas de estilo y acceso anticipado a rebajas.
+      </p>
+      <!-- TODO(pol): suscripción real (validación + envío) -->
+      <form class="footer__newsletter-form">
+        <label class="footer__newsletter-label" for="newsletter-email">Correo electrónico</label>
+        <input
+          class="footer__newsletter-input"
+          id="newsletter-email"
+          type="email"
+          name="newsletter-email"
+          placeholder="tu@correo.com"
+          autocomplete="email"
+        />
+        <button class="footer__newsletter-button" type="button">Suscribirme</button>
+      </form>
+    </section>
+
+    <!-- TODO(pol): crear las páginas estáticas (ayuda, empresa, legal) y enrutar -->
+    <nav class="footer__nav" aria-label="Enlaces del pie de página">
+      <div class="footer__column">
+        <h3 class="footer__column-title">Comprar</h3>
+        <ul class="footer__list">
+          <li><a class="footer__link" routerLink="/catalogo">Mujer</a></li>
+          <li><a class="footer__link" routerLink="/catalogo">Hombre</a></li>
+          <li><a class="footer__link" routerLink="/catalogo">Accesorios</a></li>
+          <li><a class="footer__link" routerLink="/catalogo">Rebajas</a></li>
+        </ul>
+      </div>
+      <div class="footer__column">
+        <h3 class="footer__column-title">Ayuda</h3>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="#">Envíos y entregas</a></li>
+          <li><a class="footer__link" href="#">Devoluciones</a></li>
+          <li><a class="footer__link" href="#">Guía de tallas</a></li>
+          <li><a class="footer__link" href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer__column">
+        <h3 class="footer__column-title">Empresa</h3>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="#">Sobre LINEA</a></li>
+          <li><a class="footer__link" href="#">Sostenibilidad</a></li>
+          <li><a class="footer__link" href="#">Trabaja con nosotros</a></li>
+        </ul>
+      </div>
+      <div class="footer__column">
+        <h3 class="footer__column-title">Legal</h3>
+        <ul class="footer__list">
+          <li><a class="footer__link" href="#">Condiciones de compra</a></li>
+          <li><a class="footer__link" href="#">Privacidad</a></li>
+          <li><a class="footer__link" href="#">Cookies</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="footer__bottom">
+      <p class="footer__copyright">© {{ year }} LINEA. Todos los derechos reservados.</p>
+      <ul class="footer__social" aria-label="Redes sociales">
+        <li><a class="footer__link" href="#" aria-label="Instagram">Instagram</a></li>
+        <li><a class="footer__link" href="#" aria-label="Pinterest">Pinterest</a></li>
+        <li><a class="footer__link" href="#" aria-label="TikTok">TikTok</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

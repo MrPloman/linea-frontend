@@ -1,0 +1,174 @@
+<div class="checkout">
+  <header class="checkout__head">
+    <h1 class="checkout__title">Tramitar pedido</h1>
+
+    <!-- Indicador de pasos -->
+    <ol class="checkout__steps" aria-label="Pasos del pedido">
+      @for (step of steps; track step.number) {
+        <li
+          class="checkout__step"
+          [class.checkout__step--active]="currentStep() === step.number"
+          [class.checkout__step--done]="currentStep() > step.number"
+          [attr.aria-current]="currentStep() === step.number ? 'step' : null"
+        >
+          <span class="checkout__step-number" aria-hidden="true">{{ step.number }}</span>
+          <span class="checkout__step-label">{{ step.label }}</span>
+        </li>
+      }
+    </ol>
+  </header>
+
+  <div class="checkout__layout">
+    <div class="checkout__main">
+      @switch (currentStep()) {
+        <!-- ============ Paso 1: Dirección ============ -->
+        @case (1) {
+          <section class="checkout__panel" aria-labelledby="step-address-title">
+            <h2 class="checkout__panel-title" id="step-address-title">Dirección de entrega</h2>
+
+            <!-- TODO(pol): validación y persistencia de la dirección -->
+            <form class="checkout__form" [formGroup]="addressForm">
+              <div class="checkout__form-row">
+                <app-input id="address-first-name" label="Nombre" autocomplete="given-name" [control]="addressForm.controls.firstName" />
+                <app-input id="address-last-name" label="Apellidos" autocomplete="family-name" [control]="addressForm.controls.lastName" />
+              </div>
+              <app-input id="address-street" label="Dirección" placeholder="Calle, número, piso" autocomplete="street-address" [control]="addressForm.controls.street" />
+              <div class="checkout__form-row">
+                <app-input id="address-zip" label="Código postal" autocomplete="postal-code" [control]="addressForm.controls.zip" />
+                <app-input id="address-city" label="Ciudad" autocomplete="address-level2" [control]="addressForm.controls.city" />
+              </div>
+              <app-input
+                id="address-phone"
+                label="Teléfono"
+                type="tel"
+                autocomplete="tel"
+                hint="Solo para avisos de la entrega"
+                [control]="addressForm.controls.phone"
+              />
+            </form>
+
+            <div class="checkout__actions">
+              <a class="checkout__back" routerLink="/carrito">Volver a la bolsa</a>
+              <app-button variant="primary" (click)="next()">Continuar con el envío</app-button>
+            </div>
+          </section>
+        }
+
+        <!-- ============ Paso 2: Envío ============ -->
+        @case (2) {
+          <section class="checkout__panel" aria-labelledby="step-shipping-title">
+            <h2 class="checkout__panel-title" id="step-shipping-title">Método de envío</h2>
+
+            <!-- TODO(pol): tarifas y plazos reales según dirección -->
+            <fieldset class="checkout__options">
+              <legend class="checkout__options-legend">Elige una opción</legend>
+
+              <label class="checkout__option">
+                <input type="radio" name="shipping" value="standard" checked />
+                <span class="checkout__option-body">
+                  <span class="checkout__option-name">Envío estándar</span>
+                  <span class="checkout__option-detail">2–4 días laborables</span>
+                </span>
+                <span class="checkout__option-price">Gratuito</span>
+              </label>
+
+              <label class="checkout__option">
+                <input type="radio" name="shipping" value="express" />
+                <span class="checkout__option-body">
+                  <span class="checkout__option-name">Envío exprés</span>
+                  <span class="checkout__option-detail">24–48 horas</span>
+                </span>
+                <span class="checkout__option-price">4,95 €</span>
+              </label>
+
+              <label class="checkout__option">
+                <input type="radio" name="shipping" value="pickup" />
+                <span class="checkout__option-body">
+                  <span class="checkout__option-name">Recogida en tienda</span>
+                  <span class="checkout__option-detail">Disponible en 1–3 días</span>
+                </span>
+                <span class="checkout__option-price">Gratuito</span>
+              </label>
+            </fieldset>
+
+            <div class="checkout__actions">
+              <button class="checkout__back" type="button" (click)="previous()">Volver</button>
+              <app-button variant="primary" (click)="next()">Continuar con el pago</app-button>
+            </div>
+          </section>
+        }
+
+        <!-- ============ Paso 3: Pago ============ -->
+        @case (3) {
+          <section class="checkout__panel" aria-labelledby="step-payment-title">
+            <h2 class="checkout__panel-title" id="step-payment-title">Pago</h2>
+
+            <!-- TODO(pol): integración real con pasarela de pago -->
+            <fieldset class="checkout__options">
+              <legend class="checkout__options-legend">Método de pago</legend>
+
+              <label class="checkout__option">
+                <input type="radio" name="payment" value="card" checked />
+                <span class="checkout__option-body">
+                  <span class="checkout__option-name">Tarjeta de crédito o débito</span>
+                </span>
+              </label>
+
+              <label class="checkout__option">
+                <input type="radio" name="payment" value="bizum" />
+                <span class="checkout__option-body">
+                  <span class="checkout__option-name">Bizum</span>
+                </span>
+              </label>
+
+              <label class="checkout__option">
+                <input type="radio" name="payment" value="paypal" />
+                <span class="checkout__option-body">
+                  <span class="checkout__option-name">PayPal</span>
+                </span>
+              </label>
+            </fieldset>
+
+            <form class="checkout__form" [formGroup]="paymentForm">
+              <app-input id="payment-holder" label="Titular de la tarjeta" autocomplete="cc-name" [control]="paymentForm.controls.cardHolder" />
+              <app-input id="payment-number" label="Número de tarjeta" placeholder="1234 5678 9012 3456" autocomplete="cc-number" [control]="paymentForm.controls.cardNumber" />
+              <div class="checkout__form-row">
+                <app-input id="payment-expiry" label="Caducidad" placeholder="MM/AA" autocomplete="cc-exp" [control]="paymentForm.controls.cardExpiry" />
+                <app-input id="payment-cvc" label="CVC" placeholder="123" autocomplete="cc-csc" [control]="paymentForm.controls.cardCvc" />
+              </div>
+            </form>
+
+            <div class="checkout__actions">
+              <button class="checkout__back" type="button" (click)="previous()">Volver</button>
+              <!-- TODO(pol): confirmar y enviar el pedido real -->
+              <app-button variant="primary">Realizar pedido</app-button>
+            </div>
+          </section>
+        }
+      }
+    </div>
+
+    <!-- ============ Resumen lateral ============ -->
+    <aside class="checkout-summary" aria-label="Resumen del pedido">
+      <h2 class="checkout-summary__title">Tu pedido</h2>
+      <p class="checkout-summary__count">{{ summary.articleCount }} artículos</p>
+
+      <dl class="checkout-summary__rows">
+        <div class="checkout-summary__row">
+          <dt>Subtotal</dt>
+          <dd>{{ summary.subtotal }}</dd>
+        </div>
+        <div class="checkout-summary__row">
+          <dt>Envío</dt>
+          <dd>{{ summary.shipping }}</dd>
+        </div>
+        <div class="checkout-summary__row checkout-summary__row--total">
+          <dt>Total</dt>
+          <dd>{{ summary.total }}</dd>
+        </div>
+      </dl>
+
+      <a class="checkout-summary__edit" routerLink="/carrito">Editar la bolsa</a>
+    </aside>
+  </div>
+</div>

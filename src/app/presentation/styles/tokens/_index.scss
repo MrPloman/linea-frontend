@@ -1,0 +1,5 @@
+// Punto de entrada de los design tokens.
+// Uso en componentes:  @use 'tokens' as t;
+@forward 'colors';
+@forward 'spacing';
+@forward 'typography';

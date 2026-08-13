@@ -1,0 +1,50 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+:host {
+  display: block;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-2xs;
+
+  &__label {
+    @include m.label-caps(t.$text-xs);
+    color: t.$color-ink-soft;
+  }
+
+  &__input {
+    min-height: 3rem;
+    padding: t.$space-sm t.$space-md;
+    background-color: t.$color-surface;
+    border: 1px solid t.$color-border-strong;
+    border-radius: t.$radius-sm;
+    transition: border-color t.$transition-fast;
+
+    &::placeholder {
+      color: t.$color-text-muted;
+    }
+
+    &:hover {
+      border-color: t.$color-ink-soft;
+    }
+
+    &:focus-visible {
+      outline: none;
+      border-color: t.$color-ink;
+      box-shadow: 0 0 0 1px t.$color-ink;
+    }
+  }
+
+  &__hint {
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+  }
+
+  &__error {
+    font-size: t.$text-sm;
+    color: t.$color-danger;
+  }
+}

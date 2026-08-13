@@ -1,0 +1,22 @@
+// ============================================
+// Mixins — Breakpoints (mobile-first, min-width)
+// Uso:  @include m.respond(md) { ... }
+// ============================================
+@use 'sass:map';
+
+$breakpoints: (
+  sm: 40rem,  //  640px
+  md: 48rem,  //  768px
+  lg: 64rem,  // 1024px
+  xl: 80rem,  // 1280px
+);
+
+@mixin respond($name) {
+  $width: map.get($breakpoints, $name);
+  @if not $width {
+    @error 'Breakpoint desconocido: #{$name}. Usa: #{map.keys($breakpoints)}';
+  }
+  @media (min-width: $width) {
+    @content;
+  }
+}

@@ -1,0 +1,23 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.badge {
+  @include m.label-caps(t.$text-xs);
+  display: inline-block;
+  padding: t.$space-3xs t.$space-xs;
+  background-color: t.$color-surface;
+  color: t.$color-ink;
+  border: 1px solid t.$color-border;
+
+  &--nuevo {
+    background-color: t.$color-ink;
+    color: t.$color-surface;
+    border-color: t.$color-ink;
+  }
+
+  &--rebajas {
+    background-color: t.$color-sale;
+    color: t.$color-surface;
+    border-color: t.$color-sale;
+  }
+}

@@ -1,0 +1,207 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: t.$z-header;
+  background-color: t.$color-background;
+  @include m.hairline(bottom);
+
+  &__inner {
+    @include m.container;
+    display: flex;
+    align-items: center;
+    gap: t.$space-lg;
+    min-height: 4rem;
+
+    @include m.respond(lg) {
+      min-height: 4.5rem;
+    }
+  }
+
+  // ---- Logo -------------------------------------------------
+  &__logo {
+    font-size: t.$text-xl;
+    font-weight: t.$weight-semibold;
+    letter-spacing: t.$tracking-wider;
+    margin-inline: auto;
+
+    @include m.respond(lg) {
+      margin-inline: 0 t.$space-2xl;
+    }
+  }
+
+  // ---- Burger (solo móvil) ---------------------------------
+  &__burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: t.$space-xs;
+    background: none;
+    border: none;
+
+    @include m.respond(lg) {
+      display: none;
+    }
+  }
+
+  &__burger-line {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background-color: t.$color-ink;
+  }
+
+  // ---- Navegación ------------------------------------------
+  // Móvil: drawer off-canvas. Escritorio: fila inline.
+  &__nav {
+    position: fixed;
+    inset: 0 30% 0 0;
+    z-index: t.$z-drawer;
+    display: flex;
+    flex-direction: column;
+    padding: t.$space-lg;
+    background-color: t.$color-background;
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform t.$transition-base, visibility t.$transition-base;
+
+    &--open {
+      transform: translateX(0);
+      visibility: visible;
+      box-shadow: t.$shadow-raised;
+    }
+
+    @include m.respond(lg) {
+      position: static;
+      inset: auto;
+      z-index: auto;
+      flex-direction: row;
+      align-items: center;
+      padding: 0;
+      background: none;
+      transform: none;
+      visibility: visible;
+      transition: none;
+      box-shadow: none;
+    }
+  }
+
+  &__nav-title {
+    @include m.label-caps(t.$text-xs);
+    color: t.$color-text-muted;
+    margin-bottom: t.$space-lg;
+
+    @include m.respond(lg) {
+      display: none;
+    }
+  }
+
+  &__nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-lg;
+
+    @include m.respond(lg) {
+      flex-direction: row;
+      gap: t.$space-xl;
+    }
+  }
+
+  &__nav-link {
+    @include m.label-caps(t.$text-md);
+
+    @include m.respond(lg) {
+      @include m.label-caps(t.$text-sm);
+      position: relative;
+      padding-block: t.$space-2xs;
+
+      // Subrayado animado al pasar el ratón
+      &::after {
+        content: '';
+        position: absolute;
+        inset-inline: 0;
+        bottom: 0;
+        height: 1px;
+        background-color: t.$color-ink;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform t.$transition-base;
+      }
+
+      &:hover::after,
+      &--active::after {
+        transform: scaleX(1);
+      }
+    }
+
+    &--sale {
+      color: t.$color-sale;
+    }
+  }
+
+  // ---- Acciones (buscar, cuenta, bolsa) --------------------
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: t.$space-xs;
+    margin-left: auto;
+  }
+
+  &__action {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: t.$color-ink;
+    transition: color t.$transition-fast;
+
+    &:hover {
+      color: t.$color-accent-ink;
+    }
+
+    &--account {
+      display: none;
+
+      @include m.respond(sm) {
+        display: grid;
+      }
+    }
+  }
+
+  &__cart {
+    position: relative;
+  }
+
+  &__cart-count {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.1rem;
+    display: grid;
+    place-items: center;
+    min-width: 1rem;
+    height: 1rem;
+    padding-inline: 0.2rem;
+    background-color: t.$color-ink;
+    color: t.$color-surface;
+    border-radius: t.$radius-pill;
+    font-size: 0.625rem;
+    font-weight: t.$weight-medium;
+  }
+}
+
+// Capa oscura tras el drawer móvil
+.header-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: t.$z-overlay;
+  background-color: t.$color-overlay;
+
+  @include m.respond(lg) {
+    display: none;
+  }
+}

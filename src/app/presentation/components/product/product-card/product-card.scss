@@ -1,0 +1,117 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+:host {
+  display: block;
+}
+
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-sm;
+
+  &__media {
+    position: relative;
+    overflow: hidden;
+    background-color: t.$color-surface-alt;
+  }
+
+  &__media-link {
+    display: block;
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    transition: transform 400ms ease;
+
+    .product-card:hover & {
+      transform: scale(1.03);
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    top: t.$space-sm;
+    left: t.$space-sm;
+  }
+
+  &__wishlist {
+    position: absolute;
+    top: t.$space-sm;
+    right: t.$space-sm;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    background-color: t.$color-surface;
+    border: none;
+    border-radius: 50%;
+    color: t.$color-ink;
+    opacity: 0;
+    transition: opacity t.$transition-fast, color t.$transition-fast;
+
+    .product-card:hover &,
+    &:focus-visible {
+      opacity: 1;
+    }
+
+    &:hover {
+      color: t.$color-sale;
+    }
+
+    // En táctil no hay hover: visible siempre
+    @media (hover: none) {
+      opacity: 1;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-2xs;
+  }
+
+  &__name {
+    font-size: t.$text-sm;
+    font-weight: t.$weight-regular;
+    line-height: t.$leading-snug;
+  }
+
+  &__name-link {
+    // Amplía el área clicable del título a toda la zona de info
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.3em;
+    }
+  }
+
+  &__price {
+    display: flex;
+    gap: t.$space-xs;
+    font-size: t.$text-sm;
+  }
+
+  &__price-original {
+    color: t.$color-text-muted;
+  }
+
+  &__price-current--sale {
+    color: t.$color-sale;
+  }
+
+  &__colors {
+    display: flex;
+    gap: t.$space-2xs;
+    margin-top: t.$space-3xs;
+  }
+
+  &__color {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    border: 1px solid rgba(28, 27, 25, 0.2);
+  }
+}

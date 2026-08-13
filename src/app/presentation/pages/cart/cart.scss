@@ -1,0 +1,251 @@
+@use 'sass:color';
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+.cart {
+  @include m.container;
+  padding-block: t.$space-xl t.$space-3xl;
+
+  &__title {
+    font-size: t.$text-3xl;
+    font-weight: t.$weight-light;
+    margin-bottom: t.$space-xl;
+  }
+
+  &__count {
+    font-size: t.$text-md;
+    color: t.$color-text-muted;
+  }
+
+  &__layout {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-xl;
+
+    @include m.respond(lg) {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
+      gap: t.$space-3xl;
+      align-items: start;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+// ============ Línea de artículo ============
+.cart-item {
+  display: grid;
+  grid-template-columns: 6rem 1fr auto;
+  gap: t.$space-md;
+  padding-block: t.$space-lg;
+  @include m.hairline(bottom);
+
+  &:first-child {
+    @include m.hairline(top);
+  }
+
+  @include m.respond(md) {
+    grid-template-columns: 8rem 1fr auto;
+    gap: t.$space-lg;
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    background-color: t.$color-surface-alt;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-2xs;
+  }
+
+  &__name {
+    font-size: t.$text-md;
+    font-weight: t.$weight-regular;
+
+    a:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.3em;
+    }
+  }
+
+  &__meta {
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+  }
+
+  &__unit-price {
+    font-size: t.$text-sm;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: t.$space-lg;
+    margin-top: auto;
+    padding-top: t.$space-sm;
+  }
+
+  &__quantity {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid t.$color-border-strong;
+  }
+
+  &__quantity-button {
+    width: 2.25rem;
+    height: 2.25rem;
+    background: none;
+    border: none;
+    font-size: t.$text-md;
+    transition: background-color t.$transition-fast;
+
+    &:hover {
+      background-color: t.$color-surface-alt;
+    }
+  }
+
+  &__quantity-value {
+    min-width: 2rem;
+    text-align: center;
+    font-size: t.$text-sm;
+  }
+
+  &__remove {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+
+    &:hover {
+      color: t.$color-danger;
+    }
+  }
+
+  &__total {
+    font-size: t.$text-md;
+    font-weight: t.$weight-medium;
+    text-align: right;
+  }
+}
+
+// ============ Resumen ============
+.cart-summary {
+  padding: t.$space-lg;
+  background-color: t.$color-surface;
+  border: 1px solid t.$color-border;
+
+  @include m.respond(lg) {
+    position: sticky;
+    top: 6rem;
+  }
+
+  &__title {
+    @include m.label-caps(t.$text-sm);
+    margin-bottom: t.$space-lg;
+  }
+
+  &__rows {
+    display: flex;
+    flex-direction: column;
+    gap: t.$space-sm;
+    margin-bottom: t.$space-lg;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    font-size: t.$text-sm;
+
+    dd {
+      margin: 0;
+    }
+
+    &--total {
+      padding-top: t.$space-sm;
+      @include m.hairline(top);
+      font-size: t.$text-md;
+      font-weight: t.$weight-semibold;
+    }
+  }
+
+  &__tax-note {
+    font-size: t.$text-xs;
+    font-weight: t.$weight-regular;
+    color: t.$color-text-muted;
+  }
+
+  &__promo {
+    margin-bottom: t.$space-lg;
+  }
+
+  &__promo-label {
+    @include m.label-caps(t.$text-xs);
+    display: block;
+    color: t.$color-ink-soft;
+    margin-bottom: t.$space-xs;
+  }
+
+  &__promo-row {
+    display: flex;
+  }
+
+  &__promo-input {
+    flex: 1;
+    min-width: 0;
+    min-height: 2.75rem;
+    padding-inline: t.$space-sm;
+    border: 1px solid t.$color-border-strong;
+    border-right: none;
+  }
+
+  &__promo-button {
+    @include m.label-caps(t.$text-xs);
+    padding-inline: t.$space-md;
+    background: none;
+    border: 1px solid t.$color-ink;
+
+    &:hover {
+      background-color: t.$color-ink;
+      color: t.$color-surface;
+    }
+  }
+
+  &__checkout {
+    @include m.label-caps(t.$text-sm);
+    display: grid;
+    place-items: center;
+    min-height: 3rem;
+    background-color: t.$color-ink;
+    color: t.$color-surface;
+    transition: background-color t.$transition-fast;
+
+    &:hover {
+      background-color: color.adjust(t.$color-ink, $lightness: 14%);
+    }
+  }
+
+  &__continue {
+    display: block;
+    margin-top: t.$space-md;
+    text-align: center;
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+
+    &:hover {
+      color: t.$color-ink;
+    }
+  }
+}

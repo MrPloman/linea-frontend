@@ -1,0 +1,78 @@
+<!-- ============ Hero ============ -->
+<section class="hero">
+  <img
+    class="hero__image"
+    src="/images/hero.svg"
+    alt="Modelo con la nueva colección de otoño de LINEA"
+    width="1800"
+    height="1000"
+    fetchpriority="high"
+  />
+  <div class="hero__content">
+    <p class="hero__kicker">Nueva colección</p>
+    <h1 class="hero__title">Otoño 2026</h1>
+    <p class="hero__subtitle">Prendas esenciales en tejidos naturales, pensadas para durar.</p>
+    <a class="hero__cta" routerLink="/catalogo">Descubrir la colección</a>
+  </div>
+</section>
+
+<!-- ============ Categorías destacadas ============ -->
+<section class="categories" aria-labelledby="categories-title">
+  <div class="categories__inner">
+    <h2 class="categories__title" id="categories-title">Comprar por categoría</h2>
+    <ul class="categories__grid">
+      @for (category of categories; track category.id) {
+        <li>
+          <a class="categories__card" routerLink="/catalogo">
+            <img
+              class="categories__image"
+              [src]="category.image"
+              [alt]="'Categoría ' + category.name"
+              width="800"
+              height="1000"
+              loading="lazy"
+            />
+            <span class="categories__label">{{ category.name }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<!-- ============ Productos destacados (carrusel scroll-snap) ============ -->
+<section class="featured" aria-labelledby="featured-title">
+  <div class="featured__inner">
+    <div class="featured__head">
+      <h2 class="featured__title" id="featured-title">Destacados</h2>
+      <a class="featured__link" routerLink="/catalogo">Ver todo</a>
+    </div>
+    <!-- Carrusel sin JS: scroll horizontal con snap -->
+    <ul class="featured__carousel" tabindex="0" aria-label="Carrusel de productos destacados">
+      @for (product of featured; track product.id) {
+        <li class="featured__slide">
+          <app-product-card [product]="product" />
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<!-- ============ Banner editorial ============ -->
+<section class="editorial">
+  <img
+    class="editorial__image"
+    src="/images/editorial.svg"
+    alt="Editorial: tejidos sostenibles de la temporada"
+    width="1600"
+    height="700"
+    loading="lazy"
+  />
+  <div class="editorial__content">
+    <h2 class="editorial__title">Hecho para durar</h2>
+    <p class="editorial__text">
+      Algodón orgánico, lana certificada y lino europeo. Conoce el origen de cada prenda.
+    </p>
+    <a class="editorial__cta" routerLink="/catalogo">Explorar tejidos</a>
+  </div>
+</section>

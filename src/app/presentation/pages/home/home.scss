@@ -1,0 +1,213 @@
+@use 'sass:color';
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+// CTA claro sobre imagen oscura / fondo claro
+%cta-light {
+  @include m.label-caps(t.$text-sm);
+  display: inline-block;
+  padding: t.$space-sm t.$space-xl;
+  background-color: t.$color-surface;
+  color: t.$color-ink;
+  transition: background-color t.$transition-fast;
+
+  &:hover {
+    background-color: color.adjust(t.$color-surface, $lightness: -10%);
+  }
+}
+
+// ============ Hero ============
+.hero {
+  position: relative;
+  display: grid;
+
+  &__image {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: min(80dvh, 40rem);
+    object-fit: cover;
+  }
+
+  &__content {
+    grid-area: 1 / 1;
+    align-self: end;
+    padding: t.$space-xl t.$container-padding t.$space-2xl;
+    max-width: t.$container-max;
+    justify-self: stretch;
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  &__kicker {
+    @include m.label-caps(t.$text-xs);
+    color: t.$color-ink-soft;
+    margin-bottom: t.$space-xs;
+  }
+
+  &__title {
+    font-size: t.$text-display;
+    font-weight: t.$weight-light;
+    letter-spacing: t.$tracking-wide;
+    text-transform: uppercase;
+    margin-bottom: t.$space-sm;
+  }
+
+  &__subtitle {
+    max-width: 28rem;
+    margin-bottom: t.$space-lg;
+    color: t.$color-ink-soft;
+  }
+
+  &__cta {
+    @extend %cta-light;
+    background-color: t.$color-ink;
+    color: t.$color-surface;
+
+    &:hover {
+      background-color: color.adjust(t.$color-ink, $lightness: 14%);
+    }
+  }
+}
+
+// ============ Categorías ============
+.categories {
+  padding-block: t.$space-3xl;
+
+  &__inner {
+    @include m.container;
+  }
+
+  &__title {
+    font-size: t.$text-2xl;
+    font-weight: t.$weight-light;
+    margin-bottom: t.$space-xl;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: t.$space-md;
+
+    @include m.respond(lg) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform 400ms ease;
+
+    .categories__card:hover & {
+      transform: scale(1.03);
+    }
+  }
+
+  &__label {
+    @include m.label-caps(t.$text-sm);
+    position: absolute;
+    bottom: t.$space-md;
+    left: t.$space-md;
+    padding: t.$space-2xs t.$space-sm;
+    background-color: t.$color-surface;
+  }
+}
+
+// ============ Destacados (carrusel) ============
+.featured {
+  padding-block: t.$space-xl t.$space-3xl;
+
+  &__inner {
+    @include m.container;
+  }
+
+  &__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: t.$space-xl;
+  }
+
+  &__title {
+    font-size: t.$text-2xl;
+    font-weight: t.$weight-light;
+  }
+
+  &__link {
+    @include m.label-caps(t.$text-xs);
+    text-decoration: underline;
+    text-underline-offset: 0.35em;
+
+    &:hover {
+      color: t.$color-accent-ink;
+    }
+  }
+
+  &__carousel {
+    display: flex;
+    gap: t.$space-md;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: t.$space-sm;
+    scrollbar-width: thin;
+    scrollbar-color: t.$color-border-strong transparent;
+  }
+
+  &__slide {
+    flex: 0 0 70%;
+    scroll-snap-align: start;
+
+    @include m.respond(sm) {
+      flex-basis: 42%;
+    }
+
+    @include m.respond(lg) {
+      flex-basis: calc(25% - #{t.$space-md});
+    }
+  }
+}
+
+// ============ Editorial ============
+.editorial {
+  position: relative;
+  display: grid;
+
+  &__image {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: min(60dvh, 28rem);
+    object-fit: cover;
+  }
+
+  &__content {
+    grid-area: 1 / 1;
+    place-self: center;
+    text-align: center;
+    padding: t.$space-lg;
+    max-width: 34rem;
+  }
+
+  &__title {
+    font-size: t.$text-3xl;
+    font-weight: t.$weight-light;
+    letter-spacing: t.$tracking-wide;
+    text-transform: uppercase;
+    margin-bottom: t.$space-sm;
+  }
+
+  &__text {
+    margin-bottom: t.$space-lg;
+    color: t.$color-ink-soft;
+  }
+
+  &__cta {
+    @extend %cta-light;
+  }
+}

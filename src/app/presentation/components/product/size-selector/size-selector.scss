@@ -1,0 +1,57 @@
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+:host {
+  display: block;
+}
+
+.size-selector {
+  display: flex;
+  flex-direction: column;
+  gap: t.$space-sm;
+
+  &__legend {
+    @include m.label-caps(t.$text-xs);
+    color: t.$color-ink-soft;
+    margin-bottom: t.$space-sm;
+  }
+
+  &__value {
+    color: t.$color-text-muted;
+    text-transform: none;
+    letter-spacing: t.$tracking-normal;
+  }
+
+  &__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: t.$space-xs;
+  }
+
+  &__option {
+    min-width: 3rem;
+    min-height: 3rem;
+    padding: t.$space-xs t.$space-sm;
+    background-color: t.$color-surface;
+    border: 1px solid t.$color-border-strong;
+    border-radius: t.$radius-sm;
+    font-size: t.$text-sm;
+    transition: border-color t.$transition-fast, background-color t.$transition-fast;
+
+    &:hover:not(:disabled) {
+      border-color: t.$color-ink;
+    }
+
+    &--selected {
+      background-color: t.$color-ink;
+      border-color: t.$color-ink;
+      color: t.$color-surface;
+    }
+
+    &:disabled {
+      color: t.$color-border-strong;
+      text-decoration: line-through;
+      cursor: not-allowed;
+    }
+  }
+}

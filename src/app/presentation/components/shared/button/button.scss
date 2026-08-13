@@ -1,0 +1,71 @@
+@use 'sass:color';
+@use 'tokens' as t;
+@use 'mixins' as m;
+
+:host {
+  display: inline-block;
+
+  &:has(.button--full) {
+    display: block;
+  }
+}
+
+.button {
+  @include m.label-caps(t.$text-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: t.$space-xs;
+  min-height: 3rem;
+  padding: t.$space-sm t.$space-xl;
+  border: 1px solid transparent;
+  border-radius: t.$radius-sm;
+  transition:
+    background-color t.$transition-fast,
+    border-color t.$transition-fast,
+    color t.$transition-fast;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  // Variantes
+  &--primary {
+    background-color: t.$color-ink;
+    color: t.$color-surface;
+
+    &:hover:not(:disabled) {
+      background-color: color.adjust(t.$color-ink, $lightness: 14%);
+    }
+  }
+
+  &--secondary {
+    background-color: transparent;
+    border-color: t.$color-ink;
+    color: t.$color-ink;
+
+    &:hover:not(:disabled) {
+      background-color: t.$color-ink;
+      color: t.$color-surface;
+    }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: t.$color-ink;
+    text-decoration: underline;
+    text-underline-offset: 0.35em;
+    padding-inline: t.$space-sm;
+
+    &:hover:not(:disabled) {
+      color: color.adjust(t.$color-accent-ink, $lightness: -8%);
+    }
+  }
+
+  // Modificador de anchura completa
+  &--full {
+    display: flex;
+    width: 100%;
+  }
+}

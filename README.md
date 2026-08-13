@@ -1,59 +1,77 @@
-# Linea
+# LINEA — Scaffold visual de e-commerce (Angular 21)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.
+Andamiaje **puramente visual** de un e-commerce de moda. No hay lógica de negocio:
+ni HTTP, ni stores, ni servicios, ni validación. Cada punto donde falta lógica
+real está marcado con un comentario `TODO(pol)` en el sitio exacto del código.
 
-## Development server
+## Stack
 
-To start a local development server, run:
+- Angular 21 (standalone components, sin `NgModule`)
+- **Zoneless** (`provideZonelessChangeDetection`, sin `zone.js`)
+- **SSR + hydration** con event replay (`ng new --ssr`)
+- Signals **solo para estado visual** (menú móvil, filtros off-canvas, paso del
+  checkout, imagen activa de la galería…) — nunca para estado de negocio
+- `inject()` en lugar de constructor injection
+- SCSS con BEM + design tokens centralizados; `color.adjust()` (nada deprecado)
+- Routing con lazy loading por ruta (`loadComponent`)
+- Cero librerías de UI de terceros
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Arrancar
 
 ```bash
-ng generate --help
+npm start        # dev server con SSR en http://localhost:4200
+npm run build    # build de producción (navegador + servidor)
 ```
 
-## Building
+## Estructura
 
-To build the project run:
+```
+src/app/
+├─ core/
+│   ├─ domain/          ← VACÍO (aquí irán los modelos de negocio)
+│   └─ application/     ← VACÍO (aquí irán los casos de uso)
+├─ infrastructure/       ← VACÍO (aquí irán repositorios/HTTP)
+├─ presentation/
+│   ├─ pages/            home · catalog · product-detail · cart · checkout
+│   │                    search-results · auth/login · auth/register
+│   ├─ components/
+│   │   ├─ layout/       header (nav responsive) · footer
+│   │   ├─ product/      product-card · product-gallery · size-selector · color-selector
+│   │   └─ shared/       button · badge · input · spinner · breadcrumbs
+│   ├─ mocks/            datos estáticos hardcodeados (view models temporales)
+│   └─ styles/
+│       ├─ tokens/       color · spacing · typography
+│       └─ mixins/       breakpoints (mobile-first) · helpers (container, a11y…)
+```
+
+Los tokens y mixins se importan por `includePaths` (ver `angular.json`):
+
+```scss
+@use 'tokens' as t;
+@use 'mixins' as m;
+```
+
+Los imports TypeScript usan el alias `@presentation/*` (ver `tsconfig.json`).
+
+## Qué falta por implementar (a propósito)
+
+Busca los puntos pendientes con:
 
 ```bash
-ng build
+grep -rn "TODO(pol)" src
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Resumen: catálogo/filtros/ordenación/paginación reales, carga del producto por
+`:id`, carrito con cálculo de totales, validación de formularios, checkout con
+envío real, autenticación, favoritos, newsletter, guards de ruta, y el widget de
+stock en vivo del PDP (su hueco está en `product-detail.html`, marcado con
+`<!-- TODO: live stock widget -->`).
 
-## Running unit tests
+Notas de arquitectura ya decididas en el scaffold:
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Los "view models" de `presentation/mocks/` son temporales: el modelo real vive
+  en `core/domain` cuando exista.
+- Las rutas del servidor (`app.routes.server.ts`) usan `RenderMode.Server`;
+  valorar prerender cuando haya datos reales.
+- Los precios están formateados a mano en los mocks; al implementar lógica,
+  formatear con `CurrencyPipe`/`Intl`.

@@ -1,0 +1,41 @@
+@use 'tokens' as t;
+
+.breadcrumbs {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: t.$space-xs;
+    list-style: none;
+    padding: 0;
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: t.$space-xs;
+    font-size: t.$text-sm;
+    color: t.$color-text-muted;
+
+    // Separador entre migas
+    & + &::before {
+      content: '/';
+      color: t.$color-border-strong;
+    }
+  }
+
+  &__link {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.3em;
+    transition: text-decoration-color t.$transition-fast;
+
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+
+  &__current {
+    color: t.$color-ink;
+  }
+}

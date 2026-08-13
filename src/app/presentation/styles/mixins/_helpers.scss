@@ -1,0 +1,54 @@
+// ============================================
+// Mixins — Helpers de layout, tipografía y a11y
+// Uso:  @use 'mixins' as m;
+// ============================================
+@use '../tokens' as t;
+
+// Contenedor centrado con padding lateral
+@mixin container {
+  width: 100%;
+  max-width: t.$container-max;
+  margin-inline: auto;
+  padding-inline: t.$container-padding;
+}
+
+// Etiqueta en mayúsculas con tracking (nav, botones, kickers)
+@mixin label-caps($size: t.$text-sm) {
+  font-family: t.$font-sans;
+  font-size: $size;
+  font-weight: t.$weight-medium;
+  letter-spacing: t.$tracking-wide;
+  text-transform: uppercase;
+}
+
+// Anillo de foco visible (a11y) — aplicar en :focus-visible
+@mixin focus-ring {
+  outline: 2px solid t.$color-ink;
+  outline-offset: 2px;
+}
+
+// Ocultar visualmente manteniendo accesibilidad para lectores de pantalla
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Línea fina de separación
+@mixin hairline($side: bottom) {
+  border-#{$side}: 1px solid t.$color-border;
+}
+
+// Recorte de texto en N líneas
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  overflow: hidden;
+}
