@@ -1,5 +1,5 @@
 // money.ts
-import { Currency, SUPPORTED_CURRENCIES } from './currency';
+import { Currency, SUPPORTED_CURRENCIES } from '../types/currency';
 
 export class Money {
   private constructor(
