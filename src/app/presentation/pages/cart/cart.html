@@ -1,18 +1,23 @@
 <div class="cart">
   <h1 class="cart__title">
-    Bolsa <span class="cart__count">({{ summary.articleCount }} artículos)</span>
+    Bolsa <span class="cart__count">({{ getTotalItems() }} artículos)</span>
   </h1>
 
   <!-- TODO(pol): estado vacío ("Tu bolsa está vacía") cuando no haya items -->
   <div class="cart__layout">
     <ul class="cart__list" aria-label="Artículos en la bolsa">
-      @for (item of items; track item.id) {
+      @for (item of items; track item.skuValue) {
         <li class="cart-item">
-          <a class="cart-item__media" [routerLink]="['/producto', item.productId]" tabindex="-1" aria-hidden="true">
+          <a
+            class="cart-item__media"
+            [routerLink]="['/producto', item.skuValue]"
+            tabindex="-1"
+            aria-hidden="true"
+          >
             <img
               class="cart-item__image"
-              [src]="item.image"
-              [alt]="item.imageAlt"
+              [src]="item.image.url"
+              [alt]="item.image.altText"
               width="160"
               height="213"
               loading="lazy"
@@ -21,25 +26,45 @@
 
           <div class="cart-item__body">
             <h2 class="cart-item__name">
-              <a [routerLink]="['/producto', item.productId]">{{ item.name }}</a>
+              <a [routerLink]="['/producto', item.skuValue]">{{ item.productNameValue }}</a>
             </h2>
-            <p class="cart-item__meta">{{ item.color }} · Talla {{ item.size }}</p>
-            <p class="cart-item__unit-price">{{ item.unitPrice }}</p>
+            <p class="cart-item__meta">Talla {{ item.sizeValue }}</p>
+            <p class="cart-item__unit-price">{{ item.priceAtAddTimeValue.toDisplayString() }}</p>
 
             <div class="cart-item__controls">
               <!-- TODO(pol): cambiar cantidad de verdad -->
-              <div class="cart-item__quantity" role="group" [attr.aria-label]="'Cantidad de ' + item.name">
-                <button class="cart-item__quantity-button" type="button" aria-label="Restar una unidad">−</button>
-                <span class="cart-item__quantity-value">{{ item.quantity }}</span>
-                <button class="cart-item__quantity-button" type="button" aria-label="Sumar una unidad">+</button>
+              <div
+                class="cart-item__quantity"
+                role="group"
+                [attr.aria-label]="'Cantidad de ' + item.productNameValue"
+              >
+                <button
+                  class="cart-item__quantity-button"
+                  type="button"
+                  aria-label="Restar una unidad"
+                  (click)="updateItemQuantity(item, item.quantityOfUnits - 1)"
+                >
+                  −
+                </button>
+                <span class="cart-item__quantity-value">{{ item.quantityOfUnits }}</span>
+                <button
+                  class="cart-item__quantity-button"
+                  type="button"
+                  aria-label="Sumar una unidad"
+                  (click)="updateItemQuantity(item, item.quantityOfUnits + 1)"
+                >
+                  +
+                </button>
               </div>
 
               <!-- TODO(pol): eliminar el artículo de la bolsa -->
-              <button class="cart-item__remove" type="button">Eliminar</button>
+              <button class="cart-item__remove" type="button" (click)="removeItem(item)">
+                Eliminar
+              </button>
             </div>
           </div>
 
-          <p class="cart-item__total">{{ item.lineTotal }}</p>
+          <p class="cart-item__total">Total: {{ item.lineTotal.toDisplayString() }}</p>
         </li>
       }
     </ul>
@@ -51,7 +76,7 @@
       <dl class="cart-summary__rows">
         <div class="cart-summary__row">
           <dt>Subtotal</dt>
-          <dd>{{ summary.subtotal }}</dd>
+          <dd>{{ getTotalPrice().toDisplayString() }}</dd>
         </div>
         <div class="cart-summary__row">
           <dt>Envío</dt>
@@ -59,7 +84,7 @@
         </div>
         <div class="cart-summary__row cart-summary__row--total">
           <dt>Total <span class="cart-summary__tax-note">(IVA incluido)</span></dt>
-          <dd>{{ summary.total }}</dd>
+          <dd>{{ getTotalPrice().toDisplayString() }}</dd>
         </div>
       </dl>
 
@@ -67,7 +92,13 @@
       <form class="cart-summary__promo">
         <label class="cart-summary__promo-label" for="promo-code">Código promocional</label>
         <div class="cart-summary__promo-row">
-          <input class="cart-summary__promo-input" id="promo-code" type="text" name="promo-code" placeholder="Código" />
+          <input
+            class="cart-summary__promo-input"
+            id="promo-code"
+            type="text"
+            name="promo-code"
+            placeholder="Código"
+          />
           <button class="cart-summary__promo-button" type="button">Aplicar</button>
         </div>
       </form>

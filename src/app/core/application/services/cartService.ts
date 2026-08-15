@@ -2,11 +2,13 @@ import { Injectable, computed, signal } from '@angular/core';
 import { CartItem } from '../../domain/models/cartItem';
 import { Money } from '../../domain/models/money';
 import { ProductSku } from '../../domain/models/productSku';
-import { StockQuantity } from '../../domain/models/stockQuantity';
+import { Quantity } from '../../domain/models/quantity';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
   private readonly _cart = signal<CartItem[]>([]);
+  public readonly cart = this._cart.asReadonly();
+
   public readonly itemCount = computed<number>(() =>
     this._cart().reduce(
       (prevVal: number, cartItem: CartItem) => prevVal + cartItem.quantityOfUnits,
@@ -15,7 +17,6 @@ export class CartService {
   );
   public readonly isEmpty = computed<boolean>(() => this._cart().length === 0);
 
-  public readonly cart = this._cart.asReadonly();
   public readonly total = computed(() =>
     this.cart().reduce((acc, item) => acc.add(item.lineTotal), Money.createMoney(0, 'EUR')),
   );
@@ -28,7 +29,7 @@ export class CartService {
     this._cart.set(this.cart().filter((itemInside: CartItem) => !itemInside.isSameCartItem(item)));
   }
 
-  public updateItemQuantity(sku: ProductSku, newQuantity: StockQuantity): void {
+  public updateItemQuantity(sku: ProductSku, newQuantity: Quantity): void {
     this._cart.set(
       this.cart().map((cartItem: CartItem) => {
         if (cartItem.checkSku(sku)) {

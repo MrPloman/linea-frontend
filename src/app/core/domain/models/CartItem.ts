@@ -1,7 +1,8 @@
+import { Image } from '../types/image';
 import { Money } from './money';
 import { ProductSku } from './productSku';
+import { Quantity } from './quantity';
 import { Size } from './size';
-import { StockQuantity } from './stockQuantity';
 
 export class CartItem {
   private constructor(
@@ -9,7 +10,8 @@ export class CartItem {
     private readonly productName: string,
     private readonly size: Size,
     private readonly priceAtAddTime: Money,
-    private readonly quantity: StockQuantity,
+    private readonly quantity: Quantity,
+    private readonly img: Image,
   ) {}
 
   public static createCartItem(
@@ -17,7 +19,8 @@ export class CartItem {
     productName: string,
     size: Size,
     priceAtAddTime: Money,
-    quantity: StockQuantity,
+    quantity: Quantity,
+    img: Image,
   ): CartItem {
     if (!productName || productName.trim().length === 0) {
       throw new Error('ProductName is required');
@@ -26,10 +29,10 @@ export class CartItem {
       throw new Error('Quantity must be greater than 0');
     }
 
-    return new CartItem(sku, productName, size, priceAtAddTime, quantity);
+    return new CartItem(sku, productName, size, priceAtAddTime, quantity, img);
   }
 
-  public updateQuantity(newQuantity: StockQuantity): CartItem {
+  public updateQuantity(newQuantity: Quantity): CartItem {
     if (!newQuantity || newQuantity.displayValue <= 0)
       throw new Error('Quantity is required and is supposed to be 0 or positive number');
     return CartItem.createCartItem(
@@ -38,6 +41,7 @@ export class CartItem {
       this.size,
       this.priceAtAddTime,
       newQuantity,
+      this.img,
     );
   }
   public get lineTotal() {
@@ -51,5 +55,20 @@ export class CartItem {
   }
   public get quantityOfUnits() {
     return this.quantity.displayValue;
+  }
+  public get skuValue(): string {
+    return this.sku.displayValue;
+  }
+  public get priceAtAddTimeValue(): Money {
+    return this.priceAtAddTime;
+  }
+  public get productNameValue(): string {
+    return this.productName;
+  }
+  public get sizeValue(): string {
+    return this.size.displayValue;
+  }
+  public get image(): Image {
+    return this.img;
   }
 }

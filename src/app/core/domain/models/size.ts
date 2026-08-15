@@ -55,4 +55,7 @@ export class Size {
   public isEqual(other: Size): boolean {
     return this.system === other.system && this.value === other.value;
   }
+  public get displayValue(): string {
+    return `${this.value}`;
+  }
 }
