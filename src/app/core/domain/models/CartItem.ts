@@ -40,4 +40,16 @@ export class CartItem {
       newQuantity,
     );
   }
+  public get lineTotal() {
+    return this.priceAtAddTime.multiply(this.quantity.displayValue);
+  }
+  public checkSku(sku: ProductSku): boolean {
+    return this.sku.isEqual(sku);
+  }
+  public isSameCartItem(outterItem: CartItem) {
+    return this.checkSku(outterItem.sku);
+  }
+  public get quantityOfUnits() {
+    return this.quantity.displayValue;
+  }
 }
