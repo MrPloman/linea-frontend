@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../../core/application/services/cartService';
@@ -24,7 +25,7 @@ interface CartItemVM {
 /** Bolsa de compra — todo visual, sin persistencia ni cálculos reales. */
 @Component({
   selector: 'app-cart',
-  imports: [RouterLink],
+  imports: [RouterLink, NgOptimizedImage],
   templateUrl: './cart.html',
   styleUrl: './cart.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,43 +33,6 @@ interface CartItemVM {
 export class Cart {
   private cartService = inject(CartService);
   protected items: CartItem[] = [];
-  //   {
-  //     id: 'line-1',
-  //     productId: 'camisa-lino-oversize',
-  //     name: 'Camisa de lino oversize',
-  //     color: 'Arena',
-  //     size: 'M',
-  //     quantity: 1,
-  //     unitPrice: '49,95 €',
-  //     lineTotal: '49,95 €',
-  //     image: '/images/products/p1.svg',
-  //     imageAlt: 'Camisa de lino oversize en color arena',
-  //   },
-  //   {
-  //     id: 'line-2',
-  //     productId: 'vestido-midi-satinado',
-  //     name: 'Vestido midi satinado',
-  //     color: 'Piedra',
-  //     size: 'S',
-  //     quantity: 1,
-  //     unitPrice: '79,95 €',
-  //     lineTotal: '79,95 €',
-  //     image: '/images/products/p2.svg',
-  //     imageAlt: 'Vestido midi satinado en color piedra',
-  //   },
-  //   {
-  //     id: 'line-3',
-  //     productId: 'sandalias-tiras',
-  //     name: 'Sandalias de tiras con tacón',
-  //     color: 'Beige',
-  //     size: '38',
-  //     quantity: 2,
-  //     unitPrice: '69,95 €',
-  //     lineTotal: '139,90 €',
-  //     image: '/images/products/p10.svg',
-  //     imageAlt: 'Sandalias de tiras con tacón en beige',
-  //   },
-  // ];
 
   // TODO(pol): cálculo real de totales (subtotal, envío, impuestos)
   protected readonly summary = {
@@ -83,7 +47,7 @@ export class Cart {
         ProductSku.createProductSku('camisa-lino-oversize'),
         'Camisa de lino oversize',
         Size.createSize('letter', 'M'),
-        Money.createMoney(1, 'EUR'),
+        Money.createMoney(1100, 'EUR'),
         Quantity.createQuantity(1),
         {
           url: '/images/products/p1.svg',
@@ -112,9 +76,19 @@ export class Cart {
   }
 
   public getTotalItems(): number {
-    return this.items.reduce((total, item) => total + item.quantityOfUnits, 0);
+    return this.cartService.getTotalItems();
+  }
+  public getSubTotalPrice(): Money {
+    return this.cartService.subTotal();
   }
   public getTotalPrice(): Money {
     return this.cartService.total();
+  }
+  public getShippingCost(): Money {
+    return this.cartService.shippingCost();
+  }
+
+  public getVat(): Money {
+    return this.cartService.vat();
   }
 }

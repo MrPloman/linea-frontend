@@ -23,6 +23,15 @@ export class Money {
     return Money.createMoney(this.amountInCents + otherMoney.amountInCents, this.currency);
   }
 
+  public substract(otherMoney: Money) {
+    if (this.currency !== otherMoney.currency) {
+      throw new Error(
+        `Cannot add Money with different currencies: ${this.currency} vs ${otherMoney.currency}`,
+      );
+    }
+    return Money.createMoney(this.amountInCents - otherMoney.amountInCents, this.currency);
+  }
+
   public multiply(factor: number): Money {
     return Money.createMoney(Math.round(this.amountInCents * factor), this.currency);
   }
@@ -51,6 +60,12 @@ export class Money {
     return this.amountInCents > 0;
   }
 
+  public percentatgeCharge(percentatge: number) {
+    const vatAmount = Math.round((this.amountInCents * percentatge) / 100);
+    console.log(vatAmount);
+    return Money.createMoney(vatAmount, this.currency);
+  }
+
   public isGreaterOrEqualTo(other: Money): boolean {
     if (this.currency !== other.currency) {
       throw new Error(
@@ -58,5 +73,8 @@ export class Money {
       );
     }
     return this.amountInCents >= other.amountInCents;
+  }
+  public get currencyValue() {
+    return this.currency;
   }
 }

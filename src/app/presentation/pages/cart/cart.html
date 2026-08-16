@@ -1,3 +1,8 @@
+@let subtotal = getSubTotalPrice();
+@let shipping = getShippingCost();
+@let vat = getVat();
+@let total = getTotalPrice();
+
 <div class="cart">
   <h1 class="cart__title">
     Bolsa <span class="cart__count">({{ getTotalItems() }} artículos)</span>
@@ -16,11 +21,11 @@
           >
             <img
               class="cart-item__image"
-              [src]="item.image.url"
+              [ngSrc]="item.image.url"
               [alt]="item.image.altText"
               width="160"
               height="213"
-              loading="lazy"
+              priority
             />
           </a>
 
@@ -76,15 +81,28 @@
       <dl class="cart-summary__rows">
         <div class="cart-summary__row">
           <dt>Subtotal</dt>
-          <dd>{{ getTotalPrice().toDisplayString() }}</dd>
+          <dd>
+            {{ `${subtotal.toDisplayString()} ${subtotal.currencyValue}` }}
+          </dd>
         </div>
         <div class="cart-summary__row">
           <dt>Envío</dt>
-          <dd>{{ summary.shipping }}</dd>
+          <dd>
+            {{
+              shipping.toDisplayString() === '0.00'
+                ? 'GRATIS'
+                : `${shipping.toDisplayString()} ${shipping.currencyValue}`
+            }}
+          </dd>
+        </div>
+        <div class="cart-summary__row">
+          <dt>IVA</dt>
+          <dd></dd>
+          <dd>{{ `${vat.toDisplayString()} ${vat.currencyValue}` }}</dd>
         </div>
         <div class="cart-summary__row cart-summary__row--total">
           <dt>Total <span class="cart-summary__tax-note">(IVA incluido)</span></dt>
-          <dd>{{ getTotalPrice().toDisplayString() }}</dd>
+          <dd>{{ `${total.toDisplayString()} ${total.currencyValue}` }}</dd>
         </div>
       </dl>
 
