@@ -43,7 +43,7 @@ export class Product {
     const variantToUpdate = updatedVariants[variantIndex];
     updatedVariants[variantIndex] = {
       ...variantToUpdate,
-      stock: variantToUpdate.stock.subtract(quantity),
+      stock: variantToUpdate.stock.substract(quantity),
     };
 
     return new Product(this.id, this.name, updatedVariants);

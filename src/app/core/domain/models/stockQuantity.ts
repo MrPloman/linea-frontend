@@ -12,10 +12,10 @@ export class StockQuantity {
     return StockQuantity.createStockQuantity(this.quantity + otherQuantity.quantity);
   }
 
-  public subtract(otherQuantity: StockQuantity): StockQuantity {
+  public substract(otherQuantity: StockQuantity): StockQuantity {
     if (this.quantity < otherQuantity.quantity) {
       throw new Error(
-        `Cannot subtract ${otherQuantity.quantity} from ${this.quantity}. Result would be negative`,
+        `Cannot substract ${otherQuantity.quantity} from ${this.quantity}. Result would be negative`,
       );
     }
     return StockQuantity.createStockQuantity(this.quantity - otherQuantity.quantity);
@@ -25,7 +25,7 @@ export class StockQuantity {
   }
 
   public oneLess(): StockQuantity {
-    return this.subtract(StockQuantity.createStockQuantity(1));
+    return this.substract(StockQuantity.createStockQuantity(1));
   }
   public isLowStock(threshold: number): boolean {
     if (typeof threshold !== 'number' || !Number.isInteger(threshold) || threshold < 0) {

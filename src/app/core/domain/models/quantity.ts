@@ -24,10 +24,10 @@ export class Quantity {
     return Quantity.createQuantity(this.value + other.value);
   }
 
-  public subtract(other: Quantity): Quantity {
+  public substract(other: Quantity): Quantity {
     if (this.value - other.value <= 0) {
       throw new Error(
-        `Cannot subtract ${other.value} from ${this.value}. Result must remain greater than 0.`,
+        `Cannot substract ${other.value} from ${this.value}. Result must remain greater than 0.`,
       );
     }
     return Quantity.createQuantity(this.value - other.value);

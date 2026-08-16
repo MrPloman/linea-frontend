@@ -35,17 +35,17 @@ export class Money {
   public multiply(factor: number): Money {
     return Money.createMoney(Math.round(this.amountInCents * factor), this.currency);
   }
-
-  public applyDiscount(discountPercentage: number): Money {
-    if (discountPercentage < 0 || discountPercentage > 100) {
-      throw new Error('Discount percentage must be between 0 and 100');
-    }
-    const discountedAmount = Math.round(this.amountInCents * (1 - discountPercentage / 100));
-    return Money.createMoney(discountedAmount, this.currency);
+  public divide(factor: number): Money {
+    if (factor <= 0) throw new Error('Factor divider must be greater than 0');
+    return Money.createMoney(Math.round(this.amountInCents / factor), this.currency);
   }
 
   public toDisplayString(): string {
     return (this.amountInCents / 100).toFixed(2);
+  }
+
+  public toDisplayStringAndCurrency(): string {
+    return `${this.toDisplayString()} ${this.currencyValue}`;
   }
 
   public isEqual(otherMoney: Money): boolean {
@@ -60,9 +60,8 @@ export class Money {
     return this.amountInCents > 0;
   }
 
-  public percentatgeCharge(percentatge: number) {
-    const vatAmount = Math.round((this.amountInCents * percentatge) / 100);
-    console.log(vatAmount);
+  public percentageValue(percentage: number) {
+    const vatAmount = Math.round((this.amountInCents * percentage) / 100);
     return Money.createMoney(vatAmount, this.currency);
   }
 

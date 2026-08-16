@@ -47,11 +47,11 @@ export class CartItem {
   public get lineTotal() {
     return this.priceAtAddTime.multiply(this.quantity.displayValue);
   }
-  public checkSku(sku: ProductSku): boolean {
-    return this.sku.isEqual(sku);
+  public checkSku(outterItem: CartItem): boolean {
+    return this.sku.isEqual(outterItem.sku);
   }
   public isSameCartItem(outterItem: CartItem) {
-    return this.checkSku(outterItem.sku);
+    return this.checkSku(outterItem);
   }
   public get quantityOfUnits() {
     return this.quantity.displayValue;

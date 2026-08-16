@@ -1,128 +1,129 @@
-@let subtotal = getSubTotalPrice();
-@let shipping = getShippingCost();
-@let vat = getVat();
-@let total = getTotalPrice();
-
 <div class="cart">
   <h1 class="cart__title">
-    Bolsa <span class="cart__count">({{ getTotalItems() }} artículos)</span>
+    Bolsa <span class="cart__count">({{ cartService.itemCount() }} artículos)</span>
   </h1>
+  @if (cartService.cart().length === 0) {
+    <div class="cart__empty">
+      <p>Tu bolsa está vacía</p>
+      <a class="cart__continue" routerLink="/catalogo">Seguir comprando</a>
+    </div>
+  } @else {
+    <div class="cart__layout">
+      <ul class="cart__list" aria-label="Artículos en la bolsa">
+        @for (item of cartService.cart(); track item.skuValue) {
+          <li class="cart-item">
+            <a
+              class="cart-item__media"
+              [routerLink]="['/producto', item.skuValue]"
+              tabindex="-1"
+              aria-hidden="true"
+            >
+              <img
+                class="cart-item__image"
+                [ngSrc]="item.image.url"
+                [alt]="item.image.altText"
+                width="160"
+                height="213"
+                priority
+              />
+            </a>
 
-  <!-- TODO(pol): estado vacío ("Tu bolsa está vacía") cuando no haya items -->
-  <div class="cart__layout">
-    <ul class="cart__list" aria-label="Artículos en la bolsa">
-      @for (item of items; track item.skuValue) {
-        <li class="cart-item">
-          <a
-            class="cart-item__media"
-            [routerLink]="['/producto', item.skuValue]"
-            tabindex="-1"
-            aria-hidden="true"
-          >
-            <img
-              class="cart-item__image"
-              [ngSrc]="item.image.url"
-              [alt]="item.image.altText"
-              width="160"
-              height="213"
-              priority
-            />
-          </a>
+            <div class="cart-item__body">
+              <h2 class="cart-item__name">
+                <a [routerLink]="['/producto', item.skuValue]">{{ item.productNameValue }}</a>
+              </h2>
+              <p class="cart-item__meta">Talla {{ item.sizeValue }}</p>
+              <p class="cart-item__unit-price">{{ item.priceAtAddTimeValue.toDisplayString() }}</p>
 
-          <div class="cart-item__body">
-            <h2 class="cart-item__name">
-              <a [routerLink]="['/producto', item.skuValue]">{{ item.productNameValue }}</a>
-            </h2>
-            <p class="cart-item__meta">Talla {{ item.sizeValue }}</p>
-            <p class="cart-item__unit-price">{{ item.priceAtAddTimeValue.toDisplayString() }}</p>
-
-            <div class="cart-item__controls">
-              <!-- TODO(pol): cambiar cantidad de verdad -->
-              <div
-                class="cart-item__quantity"
-                role="group"
-                [attr.aria-label]="'Cantidad de ' + item.productNameValue"
-              >
-                <button
-                  class="cart-item__quantity-button"
-                  type="button"
-                  aria-label="Restar una unidad"
-                  (click)="updateItemQuantity(item, item.quantityOfUnits - 1)"
+              <div class="cart-item__controls">
+                <div
+                  class="cart-item__quantity"
+                  role="group"
+                  [attr.aria-label]="'Cantidad de ' + item.productNameValue"
                 >
-                  −
-                </button>
-                <span class="cart-item__quantity-value">{{ item.quantityOfUnits }}</span>
-                <button
-                  class="cart-item__quantity-button"
-                  type="button"
-                  aria-label="Sumar una unidad"
-                  (click)="updateItemQuantity(item, item.quantityOfUnits + 1)"
-                >
-                  +
+                  <button
+                    class="cart-item__quantity-button"
+                    type="button"
+                    aria-label="Restar una unidad"
+                    (click)="updateItemQuantity(item, item.quantityOfUnits - 1)"
+                  >
+                    −
+                  </button>
+                  <span class="cart-item__quantity-value">{{ item.quantityOfUnits }}</span>
+                  <button
+                    class="cart-item__quantity-button"
+                    type="button"
+                    aria-label="Sumar una unidad"
+                    (click)="updateItemQuantity(item, item.quantityOfUnits + 1)"
+                  >
+                    +
+                  </button>
+                </div>
+
+                <button class="cart-item__remove" type="button" (click)="removeItem(item)">
+                  Eliminar
                 </button>
               </div>
-
-              <!-- TODO(pol): eliminar el artículo de la bolsa -->
-              <button class="cart-item__remove" type="button" (click)="removeItem(item)">
-                Eliminar
-              </button>
             </div>
+
+            <p class="cart-item__total">Total: {{ item.lineTotal.toDisplayString() }}</p>
+          </li>
+        }
+      </ul>
+
+      <!-- ============ Resumen ============ -->
+      <aside class="cart-summary" aria-label="Resumen del pedido">
+        <h2 class="cart-summary__title">Resumen</h2>
+
+        <dl class="cart-summary__rows">
+          <div class="cart-summary__row">
+            <dt>Subtotal</dt>
+            <dd>
+              {{ `${cartService.subTotal().toDisplayStringAndCurrency()}` }}
+            </dd>
           </div>
+          <div class="cart-summary__row">
+            <dt>Envío</dt>
+            <dd>
+              {{
+                cartService.shippingCost().toDisplayString() === '0.00'
+                  ? 'GRATIS'
+                  : `${cartService.shippingCost().toDisplayStringAndCurrency()}`
+              }}
+            </dd>
+          </div>
+          <div class="cart-summary__row">
+            <dt>IVA</dt>
+            <dd>
+              {{ `${cartService.vat().toDisplayStringAndCurrency()}` }}
+            </dd>
+          </div>
+          <div class="cart-summary__row cart-summary__row--total">
+            <dt>Total <span class="cart-summary__tax-note">(IVA incluido)</span></dt>
+            <dd>
+              {{ `${cartService.total().toDisplayStringAndCurrency()}` }}
+            </dd>
+          </div>
+        </dl>
 
-          <p class="cart-item__total">Total: {{ item.lineTotal.toDisplayString() }}</p>
-        </li>
-      }
-    </ul>
+        <!-- TODO(pol): PENDIENTE A HACER aplicar código promocional -->
+        <form class="cart-summary__promo">
+          <label class="cart-summary__promo-label" for="promo-code">Código promocional</label>
+          <div class="cart-summary__promo-row">
+            <input
+              class="cart-summary__promo-input"
+              id="promo-code"
+              type="text"
+              name="promo-code"
+              placeholder="Código"
+            />
+            <button class="cart-summary__promo-button" type="button">Aplicar</button>
+          </div>
+        </form>
 
-    <!-- ============ Resumen ============ -->
-    <aside class="cart-summary" aria-label="Resumen del pedido">
-      <h2 class="cart-summary__title">Resumen</h2>
-
-      <dl class="cart-summary__rows">
-        <div class="cart-summary__row">
-          <dt>Subtotal</dt>
-          <dd>
-            {{ `${subtotal.toDisplayString()} ${subtotal.currencyValue}` }}
-          </dd>
-        </div>
-        <div class="cart-summary__row">
-          <dt>Envío</dt>
-          <dd>
-            {{
-              shipping.toDisplayString() === '0.00'
-                ? 'GRATIS'
-                : `${shipping.toDisplayString()} ${shipping.currencyValue}`
-            }}
-          </dd>
-        </div>
-        <div class="cart-summary__row">
-          <dt>IVA</dt>
-          <dd></dd>
-          <dd>{{ `${vat.toDisplayString()} ${vat.currencyValue}` }}</dd>
-        </div>
-        <div class="cart-summary__row cart-summary__row--total">
-          <dt>Total <span class="cart-summary__tax-note">(IVA incluido)</span></dt>
-          <dd>{{ `${total.toDisplayString()} ${total.currencyValue}` }}</dd>
-        </div>
-      </dl>
-
-      <!-- TODO(pol): aplicar código promocional -->
-      <form class="cart-summary__promo">
-        <label class="cart-summary__promo-label" for="promo-code">Código promocional</label>
-        <div class="cart-summary__promo-row">
-          <input
-            class="cart-summary__promo-input"
-            id="promo-code"
-            type="text"
-            name="promo-code"
-            placeholder="Código"
-          />
-          <button class="cart-summary__promo-button" type="button">Aplicar</button>
-        </div>
-      </form>
-
-      <a class="cart-summary__checkout" routerLink="/checkout">Tramitar pedido</a>
-      <a class="cart-summary__continue" routerLink="/catalogo">Seguir comprando</a>
-    </aside>
-  </div>
+        <a class="cart-summary__checkout" routerLink="/checkout">Tramitar pedido</a>
+        <a class="cart-summary__continue" routerLink="/catalogo">Seguir comprando</a>
+      </aside>
+    </div>
+  }
 </div>

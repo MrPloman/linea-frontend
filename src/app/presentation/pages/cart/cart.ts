@@ -31,16 +31,8 @@ interface CartItemVM {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Cart {
-  private cartService = inject(CartService);
-  protected items: CartItem[] = [];
+  protected cartService = inject(CartService);
 
-  // TODO(pol): cálculo real de totales (subtotal, envío, impuestos)
-  protected readonly summary = {
-    articleCount: 4,
-    subtotal: '269,80 €',
-    shipping: 'Gratuito',
-    total: '269,80 €',
-  };
   ngOnInit() {
     this.cartService.addItem(
       CartItem.createCartItem(
@@ -55,12 +47,23 @@ export class Cart {
         },
       ),
     );
-    this.items = this.cartService.cart();
+    this.cartService.addItem(
+      CartItem.createCartItem(
+        ProductSku.createProductSku('camisa-lino-normal'),
+        'Camisa de lino normal',
+        Size.createSize('letter', 'L'),
+        Money.createMoney(2300, 'EUR'),
+        Quantity.createQuantity(10),
+        {
+          url: '/images/products/p1.svg',
+          altText: 'Camisa de lino normal en color arena',
+        },
+      ),
+    );
   }
 
   public removeItem(item: CartItem): void {
     this.cartService.removeItem(item);
-    this.items = this.cartService.cart();
   }
 
   public updateItemQuantity(item: CartItem, newQuantity: number): void {
@@ -68,27 +71,6 @@ export class Cart {
       this.removeItem(item);
       return;
     }
-    this.cartService.updateItemQuantity(
-      ProductSku.createProductSku(item.skuValue),
-      Quantity.createQuantity(newQuantity),
-    );
-    this.items = this.cartService.cart();
-  }
-
-  public getTotalItems(): number {
-    return this.cartService.getTotalItems();
-  }
-  public getSubTotalPrice(): Money {
-    return this.cartService.subTotal();
-  }
-  public getTotalPrice(): Money {
-    return this.cartService.total();
-  }
-  public getShippingCost(): Money {
-    return this.cartService.shippingCost();
-  }
-
-  public getVat(): Money {
-    return this.cartService.vat();
+    this.cartService.updateItemQuantity(item, Quantity.createQuantity(newQuantity));
   }
 }
