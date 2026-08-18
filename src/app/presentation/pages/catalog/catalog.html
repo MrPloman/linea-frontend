@@ -3,7 +3,7 @@
 
   <header class="catalog__head">
     <h1 class="catalog__title">Mujer</h1>
-    <p class="catalog__count">{{ products.length }} artículos</p>
+    <p class="catalog__count">{{ products().length }} artículos</p>
 
     <div class="catalog__toolbar">
       <button class="catalog__filters-toggle" type="button" (click)="openMobileFilters()">
@@ -75,10 +75,7 @@
             @for (color of filterColors; track color.name) {
               <label class="filters__swatch" [attr.title]="color.name">
                 <input type="checkbox" name="color" [value]="color.name" />
-                <span
-                  class="filters__swatch-dot"
-                  [style.background-color]="color.value"
-                ></span>
+                <span class="filters__swatch-dot" [style.background-color]="color.value"></span>
                 <span class="filters__swatch-name">{{ color.name }}</span>
               </label>
             }
@@ -113,9 +110,9 @@
     <!-- ============ Grid de productos ============ -->
     <section class="catalog__results" aria-label="Listado de productos">
       <ul class="catalog__grid">
-        @for (product of products; track product.id) {
+        @for (product of products(); track product.displayId) {
           <li>
-            <app-product-card [product]="product" />
+            <app-product-card [product]="product" [id]="product.displayId" />
           </li>
         }
       </ul>

@@ -2,60 +2,52 @@
   <div class="product-card__media">
     <a
       class="product-card__media-link"
-      [routerLink]="['/producto', product().id]"
-      [attr.aria-label]="'Ver ' + product().name"
+      [routerLink]="['/producto', product().displayId]"
+      [attr.aria-label]="'Ver ' + product().displayName"
     >
       <img
         class="product-card__image"
-        [src]="product().image"
-        [alt]="product().imageAlt"
+        [src]="product().imageUrl"
+        [alt]="product().displayName"
         width="600"
         height="800"
         loading="lazy"
       />
     </a>
 
-    @if (product().badge === 'nuevo') {
-      <app-badge class="product-card__badge" variant="nuevo">Nuevo</app-badge>
-    } @else if (product().badge === 'rebajas') {
-      <app-badge class="product-card__badge" variant="rebajas">Rebajas</app-badge>
-    }
-
     <!-- TODO(pol): acción real de favoritos/wishlist -->
     <button
       class="product-card__wishlist"
       type="button"
-      [attr.aria-label]="'Guardar ' + product().name + ' en favoritos'"
+      [attr.aria-label]="'Guardar ' + product().displayName"
     >
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-        <path d="M12 20.5S3.5 15.5 3.5 9.5a4.5 4.5 0 0 1 8.5-2 4.5 4.5 0 0 1 8.5 2c0 6-8.5 11-8.5 11z" />
+      <svg
+        viewBox="0 0 24 24"
+        width="18"
+        height="18"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        aria-hidden="true"
+      >
+        <path
+          d="M12 20.5S3.5 15.5 3.5 9.5a4.5 4.5 0 0 1 8.5-2 4.5 4.5 0 0 1 8.5 2c0 6-8.5 11-8.5 11z"
+        />
       </svg>
     </button>
   </div>
 
   <div class="product-card__info">
     <h3 class="product-card__name">
-      <a class="product-card__name-link" [routerLink]="['/producto', product().id]">
-        {{ product().name }}
+      <a class="product-card__name-link" [routerLink]="['/producto', product().displayId]">
+        {{ product().displayName }}
       </a>
     </h3>
 
     <p class="product-card__price">
-      @if (product().originalPrice) {
-        <s class="product-card__price-original">{{ product().originalPrice }}</s>
+      @if (cheapestVariant(); as variant) {
+        <span class="product-card__price-current">Desde {{ variant.price.toDisplayString() }}</span>
       }
-      <span
-        class="product-card__price-current"
-        [class.product-card__price-current--sale]="product().originalPrice"
-      >
-        {{ product().price }}
-      </span>
     </p>
-
-    <ul class="product-card__colors" [attr.aria-label]="'Colores disponibles: ' + product().colors.length">
-      @for (color of product().colors; track color) {
-        <li class="product-card__color" [style.background-color]="color"></li>
-      }
-    </ul>
   </div>
 </article>

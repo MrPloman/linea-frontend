@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  resource,
+  signal,
+} from '@angular/core';
 
 import {
   ColorOptionVM,
@@ -15,6 +23,8 @@ import { Button } from '@presentation/components/shared/button/button';
 import { MOCK_GALLERY_IMAGES, MOCK_PRODUCTS } from '@presentation/mocks/products.mock';
 import { FindProductByIdUseCase } from '../../../core/application/useCases/products/findProductById';
 import { Product } from '../../../core/domain/models/product';
+import { ProductSku } from '../../../core/domain/models/productSku';
+import { ProductVariant } from '../../../core/domain/types/productVariant';
 
 /** Ficha de producto (PDP). */
 @Component({
@@ -25,12 +35,22 @@ import { Product } from '../../../core/domain/models/product';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductDetail {
-  // TODO(pol): cargar el producto real a partir del parámetro :id de la ruta
-  // (inject(ActivatedRoute) + caso de uso en core/application).
   id = input.required<string>();
-  private findProductByIdUseCase = inject(FindProductByIdUseCase);
-  protected product = signal<Product | null>(null);
+  public product = signal<Product | null>(null);
+  protected selectedSku = signal<ProductSku | null>(null);
 
+  private findProductByIdUseCase = inject(FindProductByIdUseCase);
+  protected productResource = resource({
+    params: () => this.id(),
+    loader: ({ params }) => this.findProductByIdUseCase.execute(params),
+  });
+  protected selectedVariant = computed<ProductVariant | undefined>(() => {
+    const product = this.productResource.value();
+    const sku = this.selectedSku();
+    if (!product || !sku) return undefined;
+    return product.getVariantBySku(sku);
+  });
+  protected unavailableVariants = computed(() => this.selectedVariant()?.stock.isZero());
   protected readonly galleryImages = MOCK_GALLERY_IMAGES;
   protected readonly related = MOCK_PRODUCTS.slice(4, 8);
 
@@ -46,6 +66,4 @@ export class ProductDetail {
   ];
 
   protected readonly unavailableSizes = ['XS'];
-
-  constructor() {}
 }

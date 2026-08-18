@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { Breadcrumbs, BreadcrumbItemVM } from '@presentation/components/shared/breadcrumbs/breadcrumbs';
 import { ProductCard } from '@presentation/components/product/product-card/product-card';
+import {
+  BreadcrumbItemVM,
+  Breadcrumbs,
+} from '@presentation/components/shared/breadcrumbs/breadcrumbs';
 import { MOCK_PRODUCTS } from '@presentation/mocks/products.mock';
 
 /**
@@ -21,7 +24,7 @@ import { MOCK_PRODUCTS } from '@presentation/mocks/products.mock';
 })
 export class Catalog {
   // TODO(pol): productos, filtros y paginación reales desde core/application
-  protected readonly products = MOCK_PRODUCTS;
+  protected readonly products = signal(MOCK_PRODUCTS);
 
   protected readonly breadcrumbItems: BreadcrumbItemVM[] = [
     { label: 'Inicio', link: '/' },
@@ -29,7 +32,14 @@ export class Catalog {
   ];
 
   // Opciones de filtro (solo visual)
-  protected readonly filterCategories = ['Vestidos', 'Camisas', 'Pantalones', 'Punto', 'Abrigos', 'Accesorios'];
+  protected readonly filterCategories = [
+    'Vestidos',
+    'Camisas',
+    'Pantalones',
+    'Punto',
+    'Abrigos',
+    'Accesorios',
+  ];
   protected readonly filterSizes = ['XS', 'S', 'M', 'L', 'XL'];
   protected readonly filterColors = [
     { name: 'Crudo', value: '#e4ddd0' },
@@ -48,5 +58,8 @@ export class Catalog {
 
   protected closeMobileFilters(): void {
     this.isMobileFiltersOpen.set(false);
+  }
+  constructor() {
+    console.log(this.products());
   }
 }

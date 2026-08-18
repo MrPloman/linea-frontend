@@ -48,4 +48,24 @@ export class Product {
 
     return new Product(this.id, this.name, updatedVariants);
   }
+  public getVariantBySku(sku: ProductSku) {
+    if (!sku) throw new Error();
+    return this.variants.find((variant: ProductVariant) => sku.isEqual(variant.sku));
+  }
+  public get displayName() {
+    return this.name;
+  }
+  public get displayId() {
+    return this.id;
+  }
+
+  public get imageUrl(): string {
+    return this.variants[0].images[0].src;
+  }
+
+  public getCheapestVariant(): ProductVariant {
+    return this.variants.reduce((cheapest, current) =>
+      current.price.isGreaterOrEqualTo(cheapest.price) ? cheapest : current,
+    );
+  }
 }

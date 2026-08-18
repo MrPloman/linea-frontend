@@ -33,6 +33,9 @@ export class StockQuantity {
     }
     return this.quantity <= threshold;
   }
+  public isZero() {
+    this.quantity === 0;
+  }
 
   public isEqual(other: StockQuantity): boolean {
     return this.quantity === other.quantity;

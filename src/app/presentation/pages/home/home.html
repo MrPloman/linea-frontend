@@ -49,9 +49,9 @@
     </div>
     <!-- Carrusel sin JS: scroll horizontal con snap -->
     <ul class="featured__carousel" tabindex="0" aria-label="Carrusel de productos destacados">
-      @for (product of featured; track product.id) {
+      @for (product of featured; track product.displayId) {
         <li class="featured__slide">
-          <app-product-card [product]="product" />
+          <app-product-card [id]="product.displayId" />
         </li>
       }
     </ul>

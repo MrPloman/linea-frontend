@@ -8,4 +8,5 @@ export type ProductVariant = {
   size: Size;
   price: Money;
   stock: StockQuantity;
+  images: { src: string; alt: string }[];
 };
