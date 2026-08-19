@@ -46,9 +46,33 @@ export const MOCK_PRODUCTS: Product[] = [
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
     ),
     ProductVariant.createProductVariant(
-      ProductSku.createProductSku('camisa-lino-oversize-beige-s'),
+      ProductSku.createProductSku('camisa-lino-oversize-azul-xs'),
+      Size.createSize('letter', 'XS'),
+      Color.createColor('blue'),
+      Money.createMoney(10000, 'EUR'),
+      StockQuantity.createStockQuantity(12),
+      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('camisa-lino-oversize-rojo-xs'),
+      Size.createSize('letter', 'XS'),
+      Color.createColor('red'),
+      Money.createMoney(10000, 'EUR'),
+      StockQuantity.createStockQuantity(12),
+      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('camisa-lino-oversize-azul-xs'),
+      Size.createSize('letter', 'XS'),
+      Color.createColor('blue'),
+      Money.createMoney(10000, 'EUR'),
+      StockQuantity.createStockQuantity(12),
+      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('camisa-lino-oversize-verde-s'),
       Size.createSize('letter', 'S'),
-      Color.createColor('beige'),
+      Color.createColor('green'),
       Money.createMoney(10000, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -81,7 +105,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camisa-lino-oversize-azul-xs'),
       Size.createSize('letter', 'XS'),
-      Color.createColor('azul'),
+      Color.createColor('blue'),
       Money.createMoney(10000, 'EUR'),
       StockQuantity.createStockQuantity(8),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -89,7 +113,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camisa-lino-oversize-azul-s'),
       Size.createSize('letter', 'S'),
-      Color.createColor('azul'),
+      Color.createColor('blue'),
       Money.createMoney(10000, 'EUR'),
       StockQuantity.createStockQuantity(15),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -97,7 +121,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camisa-lino-oversize-azul-m'),
       Size.createSize('letter', 'M'),
-      Color.createColor('azul'),
+      Color.createColor('blue'),
       Money.createMoney(10000, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -105,7 +129,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camisa-lino-oversize-azul-l'),
       Size.createSize('letter', 'L'),
-      Color.createColor('azul'),
+      Color.createColor('blue'),
       Money.createMoney(10000, 'EUR'),
       StockQuantity.createStockQuantity(4),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -113,7 +137,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camisa-lino-oversize-azul-xl'),
       Size.createSize('letter', 'XL'),
-      Color.createColor('azul'),
+      Color.createColor('blue'),
       Money.createMoney(10000, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -124,7 +148,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('vestido-midi-satinado-36'),
       Size.createSize('numeric-eu', 36),
-      Color.createColor('piedra'),
+      Color.createColor('stone'),
       Money.createMoney(100000, 'EUR'),
       StockQuantity.createStockQuantity(5),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -132,7 +156,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('vestido-midi-satinado-38'),
       Size.createSize('numeric-eu', 38),
-      Color.createColor('piedra'),
+      Color.createColor('stone'),
       Money.createMoney(100000, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -140,7 +164,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('vestido-midi-satinado-40'),
       Size.createSize('numeric-eu', 40),
-      Color.createColor('piedra'),
+      Color.createColor('stone'),
       Money.createMoney(100000, 'EUR'),
       StockQuantity.createStockQuantity(9),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -148,7 +172,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('vestido-midi-satinado-42'),
       Size.createSize('numeric-eu', 42),
-      Color.createColor('piedra'),
+      Color.createColor('stone'),
       Money.createMoney(100000, 'EUR'),
       StockQuantity.createStockQuantity(3),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -156,18 +180,17 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('vestido-midi-satinado-44'),
       Size.createSize('numeric-eu', 44),
-      Color.createColor('piedra'),
+      Color.createColor('stone'),
       Money.createMoney(100000, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
     ),
   ]),
-
   Product.createProduct('6a84be08ba01efc6f6000002', 'Pantalón wide-leg', [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('pantalon-wide-leg-36'),
       Size.createSize('numeric-eu', 36),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(14),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -175,7 +198,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('pantalon-wide-leg-38'),
       Size.createSize('numeric-eu', 38),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(7),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -183,7 +206,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('pantalon-wide-leg-40'),
       Size.createSize('numeric-eu', 40),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -191,7 +214,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('pantalon-wide-leg-42'),
       Size.createSize('numeric-eu', 42),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(11),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -199,7 +222,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('pantalon-wide-leg-44'),
       Size.createSize('numeric-eu', 44),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -210,7 +233,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('jersey-cashmere-xs'),
       Size.createSize('letter', 'XS'),
-      Color.createColor('gris'),
+      Color.createColor('grey'),
       Money.createMoney(14900, 'EUR'),
       StockQuantity.createStockQuantity(4),
       [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
@@ -218,7 +241,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('jersey-cashmere-s'),
       Size.createSize('letter', 'S'),
-      Color.createColor('gris'),
+      Color.createColor('grey'),
       Money.createMoney(14900, 'EUR'),
       StockQuantity.createStockQuantity(18),
       [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
@@ -226,7 +249,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('jersey-cashmere-m'),
       Size.createSize('letter', 'M'),
-      Color.createColor('gris'),
+      Color.createColor('grey'),
       Money.createMoney(14900, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
@@ -234,7 +257,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('jersey-cashmere-l'),
       Size.createSize('letter', 'L'),
-      Color.createColor('gris'),
+      Color.createColor('grey'),
       Money.createMoney(14900, 'EUR'),
       StockQuantity.createStockQuantity(9),
       [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
@@ -242,7 +265,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('jersey-cashmere-xl'),
       Size.createSize('letter', 'XL'),
-      Color.createColor('gris'),
+      Color.createColor('grey'),
       Money.createMoney(14900, 'EUR'),
       StockQuantity.createStockQuantity(2),
       [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
@@ -253,7 +276,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('falda-plisada-36'),
       Size.createSize('numeric-eu', 36),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(4595, 'EUR'),
       StockQuantity.createStockQuantity(6),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -261,7 +284,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('falda-plisada-36'),
       Size.createSize('numeric-eu', 36),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(4595, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -269,7 +292,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('falda-plisada-38'),
       Size.createSize('numeric-eu', 38),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(4595, 'EUR'),
       StockQuantity.createStockQuantity(15),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -277,7 +300,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('falda-plisada-40'),
       Size.createSize('numeric-eu', 40),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(4595, 'EUR'),
       StockQuantity.createStockQuantity(3),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -285,7 +308,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('falda-plisada-42'),
       Size.createSize('numeric-eu', 42),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(4595, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -340,7 +363,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camiseta-organica-blanco-xs'),
       Size.createSize('letter', 'XS'),
-      Color.createColor('blanco'),
+      Color.createColor('white'),
       Money.createMoney(1995, 'EUR'),
       StockQuantity.createStockQuantity(30),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -348,7 +371,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camiseta-organica-blanco-s'),
       Size.createSize('letter', 'S'),
-      Color.createColor('blanco'),
+      Color.createColor('white'),
       Money.createMoney(1995, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -356,7 +379,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camiseta-organica-blanco-m'),
       Size.createSize('letter', 'M'),
-      Color.createColor('blanco'),
+      Color.createColor('white'),
       Money.createMoney(1995, 'EUR'),
       StockQuantity.createStockQuantity(25),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -364,7 +387,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camiseta-organica-blanco-l'),
       Size.createSize('letter', 'L'),
-      Color.createColor('blanco'),
+      Color.createColor('white'),
       Money.createMoney(1995, 'EUR'),
       StockQuantity.createStockQuantity(10),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -372,7 +395,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camiseta-organica-blanco-xl'),
       Size.createSize('letter', 'XL'),
-      Color.createColor('blanco'),
+      Color.createColor('white'),
       Money.createMoney(1995, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
@@ -381,7 +404,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camiseta-organica-negro-xs'),
       Size.createSize('letter', 'XS'),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(1995, 'EUR'),
       StockQuantity.createStockQuantity(9),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -389,7 +412,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camiseta-organica-negro-s'),
       Size.createSize('letter', 'S'),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(1995, 'EUR'),
       StockQuantity.createStockQuantity(22),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -397,7 +420,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camiseta-organica-negro-m'),
       Size.createSize('letter', 'M'),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(1995, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -405,7 +428,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camiseta-organica-negro-l'),
       Size.createSize('letter', 'L'),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(1995, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -413,7 +436,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camiseta-organica-negro-xl'),
       Size.createSize('letter', 'XL'),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(1995, 'EUR'),
       StockQuantity.createStockQuantity(5),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -424,7 +447,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('bolso-tote-piel'),
       Size.createSize('unique', 'Única'),
-      Color.createColor('marron'),
+      Color.createColor('brown'),
       Money.createMoney(19900, 'EUR'),
       StockQuantity.createStockQuantity(7),
       [
@@ -438,7 +461,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('sandalias-tiras-36'),
       Size.createSize('shoe', 36),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(5),
       [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
@@ -446,7 +469,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('sandalias-tiras-37'),
       Size.createSize('shoe', 37),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
@@ -454,7 +477,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('sandalias-tiras-38'),
       Size.createSize('shoe', 38),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(9),
       [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
@@ -462,7 +485,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('sandalias-tiras-39'),
       Size.createSize('shoe', 39),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(3),
       [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
@@ -470,7 +493,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('sandalias-tiras-40'),
       Size.createSize('shoe', 40),
-      Color.createColor('negro'),
+      Color.createColor('black'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
@@ -481,7 +504,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('chaqueta-vaquera-xs'),
       Size.createSize('letter', 'XS'),
-      Color.createColor('azul'),
+      Color.createColor('blue'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(11),
       [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
@@ -489,7 +512,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('chaqueta-vaquera-s'),
       Size.createSize('letter', 'S'),
-      Color.createColor('azul'),
+      Color.createColor('blue'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
@@ -497,7 +520,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('chaqueta-vaquera-m'),
       Size.createSize('letter', 'M'),
-      Color.createColor('azul'),
+      Color.createColor('blue'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(16),
       [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
@@ -505,7 +528,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('chaqueta-vaquera-l'),
       Size.createSize('letter', 'L'),
-      Color.createColor('azul'),
+      Color.createColor('blue'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(4),
       [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
@@ -513,7 +536,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('chaqueta-vaquera-xl'),
       Size.createSize('letter', 'XL'),
-      Color.createColor('azul'),
+      Color.createColor('blue'),
       Money.createMoney(6995, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
@@ -524,7 +547,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('top-crochet-xs'),
       Size.createSize('letter', 'XS'),
-      Color.createColor('blanco'),
+      Color.createColor('white'),
       Money.createMoney(3995, 'EUR'),
       StockQuantity.createStockQuantity(2),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -532,7 +555,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('top-crochet-s'),
       Size.createSize('letter', 'S'),
-      Color.createColor('blanco'),
+      Color.createColor('white'),
       Money.createMoney(3995, 'EUR'),
       StockQuantity.createStockQuantity(13),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -540,7 +563,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('top-crochet-m'),
       Size.createSize('letter', 'M'),
-      Color.createColor('blanco'),
+      Color.createColor('white'),
       Money.createMoney(3995, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -548,7 +571,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('top-crochet-l'),
       Size.createSize('letter', 'L'),
-      Color.createColor('blanco'),
+      Color.createColor('white'),
       Money.createMoney(3995, 'EUR'),
       StockQuantity.createStockQuantity(6),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
@@ -556,7 +579,7 @@ export const MOCK_PRODUCTS: Product[] = [
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('top-crochet-xl'),
       Size.createSize('letter', 'XL'),
-      Color.createColor('blanco'),
+      Color.createColor('white'),
       Money.createMoney(3995, 'EUR'),
       StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],

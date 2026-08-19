@@ -1,52 +1,47 @@
 @use 'tokens' as t;
 @use 'mixins' as m;
-
 :host {
   display: block;
 }
-
 .color-selector {
   display: flex;
   flex-direction: column;
-
   &__legend {
     @include m.label-caps(t.$text-xs);
     color: t.$color-ink-soft;
     margin-bottom: t.$space-sm;
   }
-
   &__value {
     color: t.$color-text-muted;
     text-transform: none;
     letter-spacing: t.$tracking-normal;
   }
-
   &__options {
     display: flex;
     flex-wrap: wrap;
     gap: t.$space-xs;
   }
-
   &__option {
     display: grid;
     place-items: center;
-
-    width: 3rem;
-    height: 3.5rem;
+    width: 2.25rem;
+    height: 2.25rem;
     padding: 0;
-
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    transition: border-color t.$transition-fast;
     &:hover {
       border-color: t.$color-border-strong;
     }
-
     &--selected {
       border-color: t.$color-ink;
     }
   }
-
   &__swatch {
     width: 1.5rem;
     height: 1.5rem;
-    margin-top: -5px;
+    border-radius: 50%;
+    border: 1px solid rgba(28, 27, 25, 0.2);
   }
 }

@@ -35,6 +35,9 @@ export class ProductVariant {
   public get sizeValue(): Size {
     return this.size;
   }
+  public get colorValue(): Color {
+    return this.color;
+  }
 
   public get priceValue(): Money {
     return this.price;

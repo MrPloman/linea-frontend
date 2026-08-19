@@ -59,7 +59,5 @@ export class Catalog {
   protected closeMobileFilters(): void {
     this.isMobileFiltersOpen.set(false);
   }
-  constructor() {
-    console.log(this.products());
-  }
+  constructor() {}
 }

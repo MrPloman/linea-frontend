@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   inject,
   input,
   resource,
@@ -52,6 +51,16 @@ export class ProductDetail {
   public getAllVariants = computed(() => this.productResource.value()?.getArrayOfVariants());
   protected unavailableVariants = computed(() => this.selectedVariant()?.stockValue.isZero());
   protected readonly galleryImages = MOCK_GALLERY_IMAGES;
+  protected colors = computed<string[] | undefined>(() =>
+    Array.from(
+      new Set(
+        this.productResource
+          .value()
+          ?.getArrayOfVariants()
+          .map((variant) => variant.colorValue.displayValue),
+      ),
+    ),
+  );
   protected sizes = computed<string[] | undefined>(() => {
     let arr = this.productResource
       .value()
@@ -75,7 +84,5 @@ export class ProductDetail {
 
   protected readonly unavailableSizes = ['XS'];
 
-  constructor() {
-    effect(() => console.log(this.productResource.value()));
-  }
+  constructor() {}
 }

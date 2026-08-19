@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model, signal } from '@angular/core';
 
 /**
  * Selector de talla. La talla marcada es estado puramente visual.
@@ -11,7 +11,7 @@ import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SizeSelector {
-  readonly sizes = input.required<string[]>();
+  readonly sizes = model<string[]>([]);
   /** Tallas agotadas (solo visual) — TODO(pol): vendrá del stock real */
   readonly unavailable = input<string[]>([]);
 
@@ -24,4 +24,5 @@ export class SizeSelector {
   protected isUnavailable(size: string): boolean {
     return this.unavailable().includes(size);
   }
+  constructor() {}
 }

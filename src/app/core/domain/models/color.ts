@@ -1,15 +1,15 @@
 // color.ts
 export const AVAILABLE_COLORS = [
-  'negro',
-  'blanco',
+  'black',
+  'white',
   'beige',
-  'azul',
-  'rojo',
-  'verde',
-  'gris',
-  'marron',
-  'rosa',
-  'piedra',
+  'blue',
+  'red',
+  'green',
+  'grey',
+  'brown',
+  'pink',
+  'stone',
 ] as const;
 
 export type ColorValue = (typeof AVAILABLE_COLORS)[number];
