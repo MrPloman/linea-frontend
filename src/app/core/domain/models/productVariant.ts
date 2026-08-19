@@ -1,4 +1,5 @@
 import { Image } from '../types/image';
+import { Color } from './color';
 import { Money } from './money';
 import { ProductSku } from './productSku';
 import { Size } from './size';
@@ -7,6 +8,7 @@ export class ProductVariant {
   private constructor(
     private readonly sku: ProductSku,
     private readonly size: Size,
+    private readonly color: Color,
     private readonly price: Money,
     private readonly stock: StockQuantity,
     private readonly images: Image[],
@@ -15,6 +17,7 @@ export class ProductVariant {
   public static createProductVariant(
     sku: ProductSku,
     size: Size,
+    color: Color,
     price: Money,
     stock: StockQuantity,
     images: Image[],
@@ -22,7 +25,7 @@ export class ProductVariant {
     if (!images || images.length === 0) {
       throw new Error('ProductVariant must have at least one image');
     }
-    return new ProductVariant(sku, size, price, stock, images);
+    return new ProductVariant(sku, size, color, price, stock, images);
   }
 
   public get skuValue(): ProductSku {
@@ -53,6 +56,7 @@ export class ProductVariant {
     return ProductVariant.createProductVariant(
       this.sku,
       this.size,
+      this.color,
       this.price,
       newStock,
       this.images,

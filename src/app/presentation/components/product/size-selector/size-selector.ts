@@ -11,7 +11,7 @@ import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SizeSelector {
-  readonly sizes = input<string[]>(['XS', 'S', 'M', 'L', 'XL']);
+  readonly sizes = input.required<string[]>();
   /** Tallas agotadas (solo visual) — TODO(pol): vendrá del stock real */
   readonly unavailable = input<string[]>([]);
 

@@ -52,6 +52,14 @@ export class ProductDetail {
   public getAllVariants = computed(() => this.productResource.value()?.getArrayOfVariants());
   protected unavailableVariants = computed(() => this.selectedVariant()?.stockValue.isZero());
   protected readonly galleryImages = MOCK_GALLERY_IMAGES;
+  protected sizes = computed<string[] | undefined>(() => {
+    let arr = this.productResource
+      .value()
+      ?.getArrayOfVariants()
+      .map((variant) => variant.sizeValue.displayValue);
+
+    return Array.from(new Set(arr));
+  });
   protected readonly related = MOCK_PRODUCTS.slice(4, 8);
 
   protected readonly breadcrumbItems: BreadcrumbItemVM[] = [

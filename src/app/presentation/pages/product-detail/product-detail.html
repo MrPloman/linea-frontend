@@ -19,7 +19,7 @@
       <section class="pdp__info" aria-label="Información de compra">
         <p class="pdp__kicker">Novedad</p>
         <h1 class="pdp__name">{{ product.displayName }}</h1>
-        <p class="pdp__price">{{ selectedVariant()?.price }}</p>
+        <p class="pdp__price">{{ selectedVariant()?.priceValue }}</p>
 
         <app-variants-selector
           class="pdp__selector"
@@ -27,8 +27,7 @@
         />
 
         <div class="pdp__sizes">
-          <app-size-selector [unavailable]="unavailableSizes" />
-          <!-- TODO(pol): página/modal de guía de tallas -->
+          <app-size-selector [unavailable]="unavailableSizes" [sizes]="sizes() ?? []" />
           <a class="pdp__size-guide" href="#">Guía de tallas</a>
         </div>
 
