@@ -1,5 +1,5 @@
-import { ProductVariant } from '../types/productVariant';
 import { ProductSku } from './productSku';
+import { ProductVariant } from './productVariant';
 import { StockQuantity } from './stockQuantity';
 
 export class Product {
@@ -22,35 +22,32 @@ export class Product {
       throw new Error('productVariant is required');
     }
 
-    const productVariantsName = new Set<string>();
+    const productVariantsName = new Set<ProductSku>();
     productVariants.forEach((variant: ProductVariant) => {
-      if (productVariantsName.has(variant.sku.displayValue)) {
-        throw new Error(`Variant SKU already in use: ${variant.sku.displayValue}`);
+      if (productVariantsName.has(variant.skuValue)) {
+        throw new Error(`Variant SKU already in use: ${variant.skuValue}`);
       }
-      productVariantsName.add(variant.sku.displayValue);
+      productVariantsName.add(variant.skuValue);
     });
     return new Product(productId, productName, productVariants);
   }
 
   public decrementVariantStock(sku: ProductSku, quantity: StockQuantity): Product {
-    const variantIndex = this.variants.findIndex((variant) => variant.sku.isEqual(sku));
+    const variantIndex = this.variants.findIndex((variant) => variant.skuValue.isEqual(sku));
 
     if (variantIndex === -1) {
       throw new Error(`Variant with SKU ${sku.displayValue} not found`);
     }
 
-    const updatedVariants = [...this.variants];
-    const variantToUpdate = updatedVariants[variantIndex];
-    updatedVariants[variantIndex] = {
-      ...variantToUpdate,
-      stock: variantToUpdate.stock.substract(quantity),
-    };
+    const updatedVariants: ProductVariant[] = [...this.variants];
+    const variantToUpdate: ProductVariant = updatedVariants[variantIndex];
+    variantToUpdate.withStock(variantToUpdate.stockValue.substract(quantity));
 
     return new Product(this.id, this.name, updatedVariants);
   }
   public getVariantBySku(sku: ProductSku) {
     if (!sku) throw new Error();
-    return this.variants.find((variant: ProductVariant) => sku.isEqual(variant.sku));
+    return this.variants.find((variant: ProductVariant) => sku.isEqual(variant.skuValue));
   }
   public get displayName() {
     return this.name;
@@ -60,12 +57,12 @@ export class Product {
   }
 
   public get variantImageUrl(): string {
-    return this.variants[0].images[0].src;
+    return this.variants[0].imagesValue[0].url;
   }
 
   public getCheapestVariant(): ProductVariant {
     return this.variants.reduce((cheapest, current) =>
-      current.price.isGreaterOrEqualTo(cheapest.price) ? cheapest : current,
+      current.priceValue.isGreaterOrEqualTo(cheapest.priceValue) ? cheapest : current,
     );
   }
   public getArrayOfVariants(): ProductVariant[] {

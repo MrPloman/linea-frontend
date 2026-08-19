@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
-import { ProductVariant } from '../../../../core/domain/types/productVariant';
+import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
+import { ProductVariant } from '../../../../core/domain/models/productVariant';
 
 export interface ColorOptionVM {
   name: string;
@@ -13,15 +13,15 @@ export interface ColorOptionVM {
 @Component({
   selector: 'app-variants-selector',
   templateUrl: './variants-selector.html',
-  styleUrl: './color-selector.scss',
+  styleUrl: './variants-selector.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VariantsSelector {
   readonly variants = input.required<ProductVariant[]>();
 
-  protected readonly selectedVariantIndex = signal(0);
+  public readonly selectedVariantIndex = model<number>(0);
   protected readonly selectedVariantName = computed(
-    () => this.variants()[this.selectedVariantIndex()]?.sku ?? '',
+    () => this.variants()[this.selectedVariantIndex()]?.skuValue ?? '',
   );
 
   protected select(index: number): void {

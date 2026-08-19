@@ -30,13 +30,10 @@
   &__option {
     display: grid;
     place-items: center;
-    width: 2.25rem;
-    height: 2.25rem;
+
+    width: 3rem;
+    height: 3.5rem;
     padding: 0;
-    background: none;
-    border: 1px solid transparent;
-    border-radius: 50%;
-    transition: border-color t.$transition-fast;
 
     &:hover {
       border-color: t.$color-border-strong;
@@ -50,7 +47,6 @@
   &__swatch {
     width: 1.5rem;
     height: 1.5rem;
-    border-radius: 50%;
-    border: 1px solid rgba(28, 27, 25, 0.2);
+    margin-top: -5px;
   }
 }

@@ -10,6 +10,7 @@
 import { Money } from '../../core/domain/models/money';
 import { Product } from '../../core/domain/models/product';
 import { ProductSku } from '../../core/domain/models/productSku';
+import { ProductVariant } from '../../core/domain/models/productVariant';
 import { Size } from '../../core/domain/models/size';
 import { StockQuantity } from '../../core/domain/models/stockQuantity';
 
@@ -34,297 +35,426 @@ export interface CategoryMockVM {
 
 export const MOCK_PRODUCTS: Product[] = [
   Product.createProduct('6a84be08ba01efc6f6000000', 'Camisa de lino oversize', [
-    {
-      sku: ProductSku.createProductSku('Camisa de lino oversize'),
-      size: Size.createSize('letter', 'M'),
-      price: Money.createMoney(10000, 'EUR'),
-      stock: StockQuantity.createStockQuantity(100),
-      images: [
-        {
-          src: '/images/products/gallery-1.svg',
-          alt: 'gallery1',
-        },
-        {
-          src: '/images/products/gallery-2.svg',
-          alt: 'gallery2',
-        },
-        {
-          src: '/images/products/gallery-3.svg',
-          alt: 'gallery3',
-        },
-        {
-          src: '/images/products/gallery-4.svg',
-          alt: 'gallery4',
-        },
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('camisa-lino-oversize-xs'),
+      Size.createSize('letter', 'XS'),
+      Money.createMoney(10000, 'EUR'),
+      StockQuantity.createStockQuantity(12),
+      [
+        { url: '/images/products/gallery-1.svg', altText: 'gallery1' },
+        { url: '/images/products/gallery-2.svg', altText: 'gallery2' },
       ],
-    },
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('camisa-lino-oversize-s'),
+      Size.createSize('letter', 'S'),
+      Money.createMoney(10000, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [
+        { url: '/images/products/gallery-1.svg', altText: 'gallery1' },
+        { url: '/images/products/gallery-2.svg', altText: 'gallery2' },
+      ],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('camisa-lino-oversize-m'),
+      Size.createSize('letter', 'M'),
+      Money.createMoney(10000, 'EUR'),
+      StockQuantity.createStockQuantity(20),
+      [
+        { url: '/images/products/gallery-1.svg', altText: 'gallery1' },
+        { url: '/images/products/gallery-2.svg', altText: 'gallery2' },
+      ],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('camisa-lino-oversize-l'),
+      Size.createSize('letter', 'L'),
+      Money.createMoney(10000, 'EUR'),
+      StockQuantity.createStockQuantity(6),
+      [
+        { url: '/images/products/gallery-1.svg', altText: 'gallery1' },
+        { url: '/images/products/gallery-2.svg', altText: 'gallery2' },
+      ],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('camisa-lino-oversize-xl'),
+      Size.createSize('letter', 'XL'),
+      Money.createMoney(10000, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [
+        { url: '/images/products/gallery-1.svg', altText: 'gallery1' },
+        { url: '/images/products/gallery-2.svg', altText: 'gallery2' },
+      ],
+    ),
   ]),
+
   Product.createProduct('6a84be08ba01efc6f6000001', 'Vestido midi satinado en color piedra', [
-    {
-      sku: ProductSku.createProductSku('Vestido midi satinado en color piedra'),
-      size: Size.createSize('numeric-eu', 40),
-      price: Money.createMoney(100000, 'EUR'),
-      stock: StockQuantity.createStockQuantity(100),
-      images: [
-        {
-          src: '/images/products/gallery-1.svg',
-          alt: 'gallery1',
-        },
-        {
-          src: '/images/products/gallery-2.svg',
-          alt: 'gallery2',
-        },
-        {
-          src: '/images/products/gallery-3.svg',
-          alt: 'gallery3',
-        },
-        {
-          src: '/images/products/gallery-4.svg',
-          alt: 'gallery4',
-        },
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('vestido-midi-satinado-36'),
+      Size.createSize('numeric-eu', 36),
+      Money.createMoney(100000, 'EUR'),
+      StockQuantity.createStockQuantity(5),
+      [
+        { url: '/images/products/gallery-1.svg', altText: 'gallery1' },
+        { url: '/images/products/gallery-3.svg', altText: 'gallery3' },
       ],
-    },
-  ]),
-  Product.createProduct('6a84be08ba01efc6f6000002', 'Vestido midi satinado en color piedra', [
-    {
-      sku: ProductSku.createProductSku('pantalon-wide-leg'),
-      size: Size.createSize('numeric-eu', 40),
-      price: Money.createMoney(100000, 'EUR'),
-      stock: StockQuantity.createStockQuantity(100),
-      images: [
-        {
-          src: '/images/products/gallery-1.svg',
-          alt: 'gallery1',
-        },
-        {
-          src: '/images/products/gallery-2.svg',
-          alt: 'gallery2',
-        },
-        {
-          src: '/images/products/gallery-3.svg',
-          alt: 'gallery3',
-        },
-        {
-          src: '/images/products/gallery-4.svg',
-          alt: 'gallery4',
-        },
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('vestido-midi-satinado-38'),
+      Size.createSize('numeric-eu', 38),
+      Money.createMoney(100000, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [
+        { url: '/images/products/gallery-1.svg', altText: 'gallery1' },
+        { url: '/images/products/gallery-3.svg', altText: 'gallery3' },
       ],
-    },
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('vestido-midi-satinado-40'),
+      Size.createSize('numeric-eu', 40),
+      Money.createMoney(100000, 'EUR'),
+      StockQuantity.createStockQuantity(9),
+      [
+        { url: '/images/products/gallery-1.svg', altText: 'gallery1' },
+        { url: '/images/products/gallery-3.svg', altText: 'gallery3' },
+      ],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('vestido-midi-satinado-42'),
+      Size.createSize('numeric-eu', 42),
+      Money.createMoney(100000, 'EUR'),
+      StockQuantity.createStockQuantity(3),
+      [
+        { url: '/images/products/gallery-1.svg', altText: 'gallery1' },
+        { url: '/images/products/gallery-3.svg', altText: 'gallery3' },
+      ],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('vestido-midi-satinado-44'),
+      Size.createSize('numeric-eu', 44),
+      Money.createMoney(100000, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [
+        { url: '/images/products/gallery-1.svg', altText: 'gallery1' },
+        { url: '/images/products/gallery-3.svg', altText: 'gallery3' },
+      ],
+    ),
   ]),
+
+  Product.createProduct('6a84be08ba01efc6f6000002', 'Pantalón wide-leg', [
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('pantalon-wide-leg-36'),
+      Size.createSize('numeric-eu', 36),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(14),
+      [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('pantalon-wide-leg-38'),
+      Size.createSize('numeric-eu', 38),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(7),
+      [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('pantalon-wide-leg-40'),
+      Size.createSize('numeric-eu', 40),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('pantalon-wide-leg-42'),
+      Size.createSize('numeric-eu', 42),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(11),
+      [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('pantalon-wide-leg-44'),
+      Size.createSize('numeric-eu', 44),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
+    ),
+  ]),
+
   Product.createProduct('6a84be08ba01efc6f6000003', 'Jersey de cashmere con cuello redondo', [
-    {
-      sku: ProductSku.createProductSku('jersey-cashmere'),
-      size: Size.createSize('letter', 'M'),
-      price: Money.createMoney(14900, 'EUR'),
-      stock: StockQuantity.createStockQuantity(100),
-      images: [
-        {
-          src: '/images/products/gallery-1.svg',
-          alt: 'gallery1',
-        },
-        {
-          src: '/images/products/gallery-2.svg',
-          alt: 'gallery2',
-        },
-        {
-          src: '/images/products/gallery-3.svg',
-          alt: 'gallery3',
-        },
-        {
-          src: '/images/products/gallery-4.svg',
-          alt: 'gallery4',
-        },
-      ],
-    },
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('jersey-cashmere-xs'),
+      Size.createSize('letter', 'XS'),
+      Money.createMoney(14900, 'EUR'),
+      StockQuantity.createStockQuantity(4),
+      [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('jersey-cashmere-s'),
+      Size.createSize('letter', 'S'),
+      Money.createMoney(14900, 'EUR'),
+      StockQuantity.createStockQuantity(18),
+      [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('jersey-cashmere-m'),
+      Size.createSize('letter', 'M'),
+      Money.createMoney(14900, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('jersey-cashmere-l'),
+      Size.createSize('letter', 'L'),
+      Money.createMoney(14900, 'EUR'),
+      StockQuantity.createStockQuantity(9),
+      [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('jersey-cashmere-xl'),
+      Size.createSize('letter', 'XL'),
+      Money.createMoney(14900, 'EUR'),
+      StockQuantity.createStockQuantity(2),
+      [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
+    ),
   ]),
 
   Product.createProduct('6a84be08ba01efc6f6000004', 'Falda midi plisada', [
-    {
-      sku: ProductSku.createProductSku('falda-plisada'),
-      size: Size.createSize('numeric-eu', 38),
-      price: Money.createMoney(4595, 'EUR'),
-      stock: StockQuantity.createStockQuantity(100),
-      images: [
-        {
-          src: '/images/products/gallery-1.svg',
-          alt: 'gallery1',
-        },
-        {
-          src: '/images/products/gallery-2.svg',
-          alt: 'gallery2',
-        },
-        {
-          src: '/images/products/gallery-3.svg',
-          alt: 'gallery3',
-        },
-        {
-          src: '/images/products/gallery-4.svg',
-          alt: 'gallery4',
-        },
-      ],
-    },
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('falda-plisada-36'),
+      Size.createSize('numeric-eu', 36),
+      Money.createMoney(4595, 'EUR'),
+      StockQuantity.createStockQuantity(6),
+      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('falda-plisada-36'),
+      Size.createSize('numeric-eu', 36),
+      Money.createMoney(4595, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('falda-plisada-38'),
+      Size.createSize('numeric-eu', 38),
+      Money.createMoney(4595, 'EUR'),
+      StockQuantity.createStockQuantity(15),
+      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('falda-plisada-40'),
+      Size.createSize('numeric-eu', 40),
+      Money.createMoney(4595, 'EUR'),
+      StockQuantity.createStockQuantity(3),
+      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('falda-plisada-42'),
+      Size.createSize('numeric-eu', 42),
+      Money.createMoney(4595, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
+    ),
   ]),
 
   Product.createProduct('6a84be08ba01efc6f6000005', 'Trench clásico con cinturón', [
-    {
-      sku: ProductSku.createProductSku('trench-clasico'),
-      size: Size.createSize('numeric-eu', 40),
-      price: Money.createMoney(15900, 'EUR'),
-      stock: StockQuantity.createStockQuantity(100),
-      images: [
-        {
-          src: '/images/products/gallery-1.svg',
-          alt: 'gallery1',
-        },
-        {
-          src: '/images/products/gallery-2.svg',
-          alt: 'gallery2',
-        },
-        {
-          src: '/images/products/gallery-3.svg',
-          alt: 'gallery3',
-        },
-        {
-          src: '/images/products/gallery-4.svg',
-          alt: 'gallery4',
-        },
-      ],
-    },
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('trench-clasico-36'),
+      Size.createSize('numeric-eu', 36),
+      Money.createMoney(15900, 'EUR'),
+      StockQuantity.createStockQuantity(8),
+      [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('trench-clasico-38'),
+      Size.createSize('numeric-eu', 38),
+      Money.createMoney(15900, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('trench-clasico-40'),
+      Size.createSize('numeric-eu', 40),
+      Money.createMoney(15900, 'EUR'),
+      StockQuantity.createStockQuantity(12),
+      [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('trench-clasico-42'),
+      Size.createSize('numeric-eu', 42),
+      Money.createMoney(15900, 'EUR'),
+      StockQuantity.createStockQuantity(5),
+      [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('trench-clasico-44'),
+      Size.createSize('numeric-eu', 44),
+      Money.createMoney(15900, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
+    ),
   ]),
 
   Product.createProduct('6a84be08ba01efc6f6000006', 'Camiseta de algodón orgánico', [
-    {
-      sku: ProductSku.createProductSku('camiseta-organica'),
-      size: Size.createSize('letter', 'M'),
-      price: Money.createMoney(1995, 'EUR'),
-      stock: StockQuantity.createStockQuantity(100),
-      images: [
-        {
-          src: '/images/products/gallery-1.svg',
-          alt: 'gallery1',
-        },
-        {
-          src: '/images/products/gallery-2.svg',
-          alt: 'gallery2',
-        },
-        {
-          src: '/images/products/gallery-3.svg',
-          alt: 'gallery3',
-        },
-        {
-          src: '/images/products/gallery-4.svg',
-          alt: 'gallery4',
-        },
-      ],
-    },
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('camiseta-organica-xs'),
+      Size.createSize('letter', 'XS'),
+      Money.createMoney(1995, 'EUR'),
+      StockQuantity.createStockQuantity(30),
+      [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('camiseta-organica-s'),
+      Size.createSize('letter', 'S'),
+      Money.createMoney(1995, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('camiseta-organica-m'),
+      Size.createSize('letter', 'M'),
+      Money.createMoney(1995, 'EUR'),
+      StockQuantity.createStockQuantity(25),
+      [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('camiseta-organica-l'),
+      Size.createSize('letter', 'L'),
+      Money.createMoney(1995, 'EUR'),
+      StockQuantity.createStockQuantity(10),
+      [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('camiseta-organica-xl'),
+      Size.createSize('letter', 'XL'),
+      Money.createMoney(1995, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
+    ),
   ]),
 
   Product.createProduct('6a84be08ba01efc6f6000007', 'Bolso tote de piel', [
-    {
-      sku: ProductSku.createProductSku('bolso-tote-piel'),
-      size: Size.createSize('unique', 'Única'),
-      price: Money.createMoney(19900, 'EUR'),
-      stock: StockQuantity.createStockQuantity(100),
-      images: [
-        {
-          src: '/images/products/gallery-1.svg',
-          alt: 'gallery1',
-        },
-        {
-          src: '/images/products/gallery-2.svg',
-          alt: 'gallery2',
-        },
-        {
-          src: '/images/products/gallery-3.svg',
-          alt: 'gallery3',
-        },
-        {
-          src: '/images/products/gallery-4.svg',
-          alt: 'gallery4',
-        },
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('bolso-tote-piel'),
+      Size.createSize('unique', 'Única'),
+      Money.createMoney(19900, 'EUR'),
+      StockQuantity.createStockQuantity(7),
+      [
+        { url: '/images/products/gallery-1.svg', altText: 'gallery1' },
+        { url: '/images/products/gallery-4.svg', altText: 'gallery4' },
       ],
-    },
+    ),
   ]),
 
   Product.createProduct('6a84be08ba01efc6f6000008', 'Sandalias de tiras con tacón', [
-    {
-      sku: ProductSku.createProductSku('sandalias-tiras'),
-      size: Size.createSize('numeric-eu', 38),
-      price: Money.createMoney(6995, 'EUR'),
-      stock: StockQuantity.createStockQuantity(100),
-      images: [
-        {
-          src: '/images/products/gallery-1.svg',
-          alt: 'gallery1',
-        },
-        {
-          src: '/images/products/gallery-2.svg',
-          alt: 'gallery2',
-        },
-        {
-          src: '/images/products/gallery-3.svg',
-          alt: 'gallery3',
-        },
-        {
-          src: '/images/products/gallery-4.svg',
-          alt: 'gallery4',
-        },
-      ],
-    },
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('sandalias-tiras-36'),
+      Size.createSize('shoe', 36),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(5),
+      [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('sandalias-tiras-37'),
+      Size.createSize('shoe', 37),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('sandalias-tiras-38'),
+      Size.createSize('shoe', 38),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(9),
+      [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('sandalias-tiras-39'),
+      Size.createSize('shoe', 39),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(3),
+      [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('sandalias-tiras-40'),
+      Size.createSize('shoe', 40),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-3.svg', altText: 'gallery3' }],
+    ),
   ]),
 
   Product.createProduct('6a84be08ba01efc6f6000009', 'Chaqueta vaquera relaxed', [
-    {
-      sku: ProductSku.createProductSku('chaqueta-vaquera'),
-      size: Size.createSize('letter', 'M'),
-      price: Money.createMoney(6995, 'EUR'),
-      stock: StockQuantity.createStockQuantity(100),
-      images: [
-        {
-          src: '/images/products/gallery-1.svg',
-          alt: 'gallery1',
-        },
-        {
-          src: '/images/products/gallery-2.svg',
-          alt: 'gallery2',
-        },
-        {
-          src: '/images/products/gallery-3.svg',
-          alt: 'gallery3',
-        },
-        {
-          src: '/images/products/gallery-4.svg',
-          alt: 'gallery4',
-        },
-      ],
-    },
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('chaqueta-vaquera-xs'),
+      Size.createSize('letter', 'XS'),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(11),
+      [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('chaqueta-vaquera-s'),
+      Size.createSize('letter', 'S'),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('chaqueta-vaquera-m'),
+      Size.createSize('letter', 'M'),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(16),
+      [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('chaqueta-vaquera-l'),
+      Size.createSize('letter', 'L'),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(4),
+      [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('chaqueta-vaquera-xl'),
+      Size.createSize('letter', 'XL'),
+      Money.createMoney(6995, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-4.svg', altText: 'gallery4' }],
+    ),
   ]),
 
   Product.createProduct('6a84be08ba01efc6f6000010', 'Top de crochet artesanal', [
-    {
-      sku: ProductSku.createProductSku('top-crochet'),
-      size: Size.createSize('letter', 'S'),
-      price: Money.createMoney(3995, 'EUR'),
-      stock: StockQuantity.createStockQuantity(100),
-      images: [
-        {
-          src: '/images/products/gallery-1.svg',
-          alt: 'gallery1',
-        },
-        {
-          src: '/images/products/gallery-2.svg',
-          alt: 'gallery2',
-        },
-        {
-          src: '/images/products/gallery-3.svg',
-          alt: 'gallery3',
-        },
-        {
-          src: '/images/products/gallery-4.svg',
-          alt: 'gallery4',
-        },
-      ],
-    },
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('top-crochet-xs'),
+      Size.createSize('letter', 'XS'),
+      Money.createMoney(3995, 'EUR'),
+      StockQuantity.createStockQuantity(2),
+      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('top-crochet-s'),
+      Size.createSize('letter', 'S'),
+      Money.createMoney(3995, 'EUR'),
+      StockQuantity.createStockQuantity(13),
+      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('top-crochet-m'),
+      Size.createSize('letter', 'M'),
+      Money.createMoney(3995, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('top-crochet-l'),
+      Size.createSize('letter', 'L'),
+      Money.createMoney(3995, 'EUR'),
+      StockQuantity.createStockQuantity(6),
+      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
+    ),
+    ProductVariant.createProductVariant(
+      ProductSku.createProductSku('top-crochet-xl'),
+      Size.createSize('letter', 'XL'),
+      Money.createMoney(3995, 'EUR'),
+      StockQuantity.createStockQuantity(0),
+      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
+    ),
   ]),
 ];
 

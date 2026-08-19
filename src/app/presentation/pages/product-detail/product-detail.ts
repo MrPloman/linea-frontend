@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   input,
   resource,
@@ -18,9 +19,8 @@ import {
 import { Button } from '@presentation/components/shared/button/button';
 import { MOCK_GALLERY_IMAGES, MOCK_PRODUCTS } from '@presentation/mocks/products.mock';
 import { FindProductByIdUseCase } from '../../../core/application/useCases/products/findProductById';
-import { Product } from '../../../core/domain/models/product';
 import { ProductSku } from '../../../core/domain/models/productSku';
-import { ProductVariant } from '../../../core/domain/types/productVariant';
+import { ProductVariant } from '../../../core/domain/models/productVariant';
 import { VariantsSelector } from '../../components/product/color-selector/variants-selector';
 
 /** Ficha de producto (PDP). */
@@ -33,7 +33,6 @@ import { VariantsSelector } from '../../components/product/color-selector/varian
 })
 export class ProductDetail {
   id = input.required<string>();
-  public product = signal<Product | null>(null);
   protected selectedSku = signal<ProductSku | null>(null);
 
   private findProductByIdUseCase = inject(FindProductByIdUseCase);
@@ -48,10 +47,10 @@ export class ProductDetail {
     return product.getVariantBySku(sku);
   });
 
-  protected getAllVariants = computed<ProductVariant[] | undefined>(() =>
-    this.product() ? this.product()?.getArrayOfVariants() : [],
-  );
-  protected unavailableVariants = computed(() => this.selectedVariant()?.stock.isZero());
+  public selectedVariantIndex = signal(0);
+
+  public getAllVariants = computed(() => this.productResource.value()?.getArrayOfVariants());
+  protected unavailableVariants = computed(() => this.selectedVariant()?.stockValue.isZero());
   protected readonly galleryImages = MOCK_GALLERY_IMAGES;
   protected readonly related = MOCK_PRODUCTS.slice(4, 8);
 
@@ -67,4 +66,8 @@ export class ProductDetail {
   // ];
 
   protected readonly unavailableSizes = ['XS'];
+
+  constructor() {
+    effect(() => console.log(this.productResource.value()));
+  }
 }

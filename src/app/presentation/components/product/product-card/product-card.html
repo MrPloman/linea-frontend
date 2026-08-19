@@ -46,7 +46,9 @@
 
     <p class="product-card__price">
       @if (cheapestVariant(); as variant) {
-        <span class="product-card__price-current">Desde {{ variant.price.toDisplayString() }}</span>
+        <span class="product-card__price-current"
+          >Desde {{ variant.priceValue.toDisplayString() }}</span
+        >
       }
     </p>
   </div>
