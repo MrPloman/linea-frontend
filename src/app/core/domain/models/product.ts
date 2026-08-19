@@ -59,7 +59,7 @@ export class Product {
     return this.id;
   }
 
-  public get imageUrl(): string {
+  public get variantImageUrl(): string {
     return this.variants[0].images[0].src;
   }
 
@@ -67,5 +67,8 @@ export class Product {
     return this.variants.reduce((cheapest, current) =>
       current.price.isGreaterOrEqualTo(cheapest.price) ? cheapest : current,
     );
+  }
+  public getArrayOfVariants(): ProductVariant[] {
+    return this.variants;
   }
 }

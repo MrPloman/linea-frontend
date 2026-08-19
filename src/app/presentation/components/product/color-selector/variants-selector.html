@@ -1,0 +1,22 @@
+<fieldset class="color-selector">
+  <legend class="color-selector__legend">
+    Color <span class="color-selector__value">— {{ selectedVariantName() }}</span>
+  </legend>
+
+  <div class="color-selector__options" role="group">
+    @for (variant of variants(); track variant.sku; let i = $index) {
+      <button
+        class="color-selector__option"
+        type="button"
+        [class.color-selector__option--selected]="selectedVariantIndex() === i"
+        [attr.aria-pressed]="selectedVariantIndex() === i"
+        [attr.aria-label]="variant.sku"
+        (click)="select(i)"
+      >
+        <span class="color-selector__swatch">
+          <img [src]="variant.images[0].src" [alt]="variant.images[0].alt" />
+        </span>
+      </button>
+    }
+  </div>
+</fieldset>

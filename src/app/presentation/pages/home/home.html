@@ -51,7 +51,7 @@
     <ul class="featured__carousel" tabindex="0" aria-label="Carrusel de productos destacados">
       @for (product of featured; track product.displayId) {
         <li class="featured__slide">
-          <app-product-card [id]="product.displayId" />
+          <app-product-card [product]="product" [id]="product.displayId" />
         </li>
       }
     </ul>

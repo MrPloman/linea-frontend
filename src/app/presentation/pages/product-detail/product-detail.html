@@ -21,7 +21,7 @@
         <h1 class="pdp__name">{{ product.displayName }}</h1>
         <p class="pdp__price">{{ selectedVariant()?.price }}</p>
 
-        <app-color-selector class="pdp__selector" [colors]="colorOptions" />
+        <app-variants-selector class="pdp__selector" [variants]="getAllVariants() ?? []" />
 
         <div class="pdp__sizes">
           <app-size-selector [unavailable]="unavailableSizes" />
@@ -75,7 +75,7 @@
       <ul class="pdp__related-grid">
         @for (relatedProduct of related; track relatedProduct.displayId) {
           <li>
-            <app-product-card [id]="relatedProduct.displayId" />
+            <app-product-card [product]="relatedProduct" [id]="relatedProduct.displayId" />
           </li>
         }
       </ul>
