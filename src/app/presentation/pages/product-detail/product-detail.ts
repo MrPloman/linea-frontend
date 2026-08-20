@@ -4,6 +4,7 @@ import {
   computed,
   inject,
   input,
+  linkedSignal,
   resource,
   signal,
 } from '@angular/core';
@@ -19,6 +20,7 @@ import {
 import { Button } from '@presentation/components/shared/button/button';
 import { MOCK_GALLERY_IMAGES, MOCK_PRODUCTS } from '@presentation/mocks/products.mock';
 import { FindProductByIdUseCase } from '../../../core/application/useCases/products/findProductById';
+import { Color } from '../../../core/domain/models/color';
 import { ProductSku } from '../../../core/domain/models/productSku';
 import { ProductVariant } from '../../../core/domain/models/productVariant';
 
@@ -46,11 +48,8 @@ export class ProductDetail {
     return product.getVariantBySku(sku);
   });
 
-  public selectedVariantIndex = signal(0);
-
   public getAllVariants = computed(() => this.productResource.value()?.getArrayOfVariants());
-  protected unavailableVariants = computed(() => this.selectedVariant()?.stockValue.isZero());
-  protected readonly galleryImages = MOCK_GALLERY_IMAGES;
+
   protected colors = computed<string[] | undefined>(() =>
     Array.from(
       new Set(
@@ -61,14 +60,46 @@ export class ProductDetail {
       ),
     ),
   );
-  protected sizes = computed<string[] | undefined>(() => {
-    let arr = this.productResource
-      .value()
-      ?.getArrayOfVariants()
-      .map((variant) => variant.sizeValue.displayValue);
+  protected sizes = computed<string[] | undefined>(() =>
+    Array.from(
+      new Set(
+        this.productResource
+          .value()
+          ?.getArrayOfVariants()
+          .map((variant) => variant.sizeValue.displayValue),
+      ),
+    ),
+  );
 
-    return Array.from(new Set(arr));
+  protected availableSizes = computed<string[]>(() => {
+    const color = this.selectedColor();
+    if (!color) return [];
+    return Array.from(
+      new Set(
+        this.productResource
+          .value()
+          ?.getAvailableSizeByColor(color)
+          .map((s) => s.displayValue) ?? [],
+      ),
+    );
   });
+
+  protected selectedColorValue = linkedSignal<string | undefined>(
+    () => this.getAllVariants()?.[0]?.colorValue.displayValue,
+  );
+
+  protected selectedColor = computed<Color | undefined>(
+    () =>
+      this.getAllVariants()?.find((v) => v.colorValue.displayValue === this.selectedColorValue())
+        ?.colorValue,
+  );
+
+  protected selectedSizeValue = linkedSignal<string[], string | undefined>({
+    source: this.availableSizes,
+    computation: (sizes, previous) =>
+      previous?.value && sizes.includes(previous.value) ? previous.value : sizes[0],
+  });
+  // TRASH
   protected readonly related = MOCK_PRODUCTS.slice(4, 8);
 
   protected readonly breadcrumbItems: BreadcrumbItemVM[] = [
@@ -76,13 +107,6 @@ export class ProductDetail {
     { label: 'Mujer', link: '/catalogo' },
     { label: 'Blazer estructurada de lana' },
   ];
-
-  // protected readonly colorOptions: ColorOptionVM[] = [
-  //   { name: 'Beige', value: '#d0bfae' },
-  //   { name: 'Antracita', value: '#44413c' },
-  // ];
-
-  protected readonly unavailableSizes = ['XS'];
-
-  constructor() {}
+  protected readonly galleryImages = MOCK_GALLERY_IMAGES;
+  // END OF TRASH
 }

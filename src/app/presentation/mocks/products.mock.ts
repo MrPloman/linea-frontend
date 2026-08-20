@@ -42,7 +42,7 @@ export const MOCK_PRODUCTS: Product[] = [
       Size.createSize('letter', 'XS'),
       Color.createColor('beige'),
       Money.createMoney(10000, 'EUR'),
-      StockQuantity.createStockQuantity(12),
+      StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
     ),
     ProductVariant.createProductVariant(
@@ -50,7 +50,7 @@ export const MOCK_PRODUCTS: Product[] = [
       Size.createSize('letter', 'XS'),
       Color.createColor('blue'),
       Money.createMoney(10000, 'EUR'),
-      StockQuantity.createStockQuantity(12),
+      StockQuantity.createStockQuantity(1000),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
     ),
     ProductVariant.createProductVariant(
@@ -58,7 +58,7 @@ export const MOCK_PRODUCTS: Product[] = [
       Size.createSize('letter', 'XS'),
       Color.createColor('red'),
       Money.createMoney(10000, 'EUR'),
-      StockQuantity.createStockQuantity(12),
+      StockQuantity.createStockQuantity(10),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
     ),
     ProductVariant.createProductVariant(
@@ -66,7 +66,7 @@ export const MOCK_PRODUCTS: Product[] = [
       Size.createSize('letter', 'XS'),
       Color.createColor('blue'),
       Money.createMoney(10000, 'EUR'),
-      StockQuantity.createStockQuantity(12),
+      StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
     ),
     ProductVariant.createProductVariant(
@@ -74,7 +74,7 @@ export const MOCK_PRODUCTS: Product[] = [
       Size.createSize('letter', 'S'),
       Color.createColor('green'),
       Money.createMoney(10000, 'EUR'),
-      StockQuantity.createStockQuantity(0),
+      StockQuantity.createStockQuantity(10),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
     ),
     ProductVariant.createProductVariant(

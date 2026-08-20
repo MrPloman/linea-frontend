@@ -1,5 +1,7 @@
+import { Color } from './color';
 import { ProductSku } from './productSku';
 import { ProductVariant } from './productVariant';
+import { Size } from './size';
 import { StockQuantity } from './stockQuantity';
 
 export class Product {
@@ -67,5 +69,53 @@ export class Product {
   }
   public getArrayOfVariants(): ProductVariant[] {
     return this.variants;
+  }
+
+  public getVariantsBySize(size: Size) {
+    return this.variants.filter(
+      (variant: ProductVariant) =>
+        variant.sizeValue.displayValue === size.displayValue && !variant.hasNoStock(),
+    );
+  }
+  public getVariantsByColor(color: Color) {
+    return this.variants.filter(
+      (variant: ProductVariant) =>
+        variant.colorValue.displayValue === color.displayValue && !variant.hasNoStock(),
+    );
+  }
+  public getVariantByColorAndSize(color: Color, size: Size) {
+    return this.variants.filter(
+      (variant: ProductVariant) =>
+        variant.colorValue.displayValue === color.displayValue &&
+        size.displayValue === variant.sizeValue.displayValue &&
+        !variant.hasNoStock(),
+    );
+  }
+
+  public getAvailableSizeByColor(color: Color): Size[] {
+    return this.variants
+      .filter(
+        (variant: ProductVariant) =>
+          variant.colorValue.displayValue === color.displayValue && !variant.hasNoStock(),
+      )
+      .map((variant: ProductVariant) => variant.sizeValue);
+  }
+  public getAvailableColorBySize(size: Size): Color[] {
+    return this.variants
+      .filter(
+        (variant: ProductVariant) =>
+          variant.sizeValue.displayValue === size.displayValue && !variant.hasNoStock(),
+      )
+      .map((variant: ProductVariant) => variant.colorValue);
+  }
+  public getColorsFromVariants(): Color[] {
+    return this.variants
+      .filter((variant: ProductVariant) => !variant.hasNoStock())
+      .map((variant: ProductVariant) => variant.colorValue);
+  }
+  public getSizesFromVariants(): Color[] {
+    return this.variants
+      .filter((variant: ProductVariant) => !variant.hasNoStock())
+      .map((variant: ProductVariant) => variant.colorValue);
   }
 }

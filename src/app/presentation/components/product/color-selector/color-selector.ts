@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 
 export interface ColorOptionVM {
   name: string;
@@ -18,13 +18,14 @@ export interface ColorOptionVM {
 })
 export class ColorSelector {
   readonly colors = model<string[]>([]);
+  readonly availableColors = input<string[]>([]);
 
-  public readonly selectedColorIndex = model<number>(0);
-  protected readonly selectedColorName = computed(
-    () => this.colors()[this.selectedColorIndex()] ?? '',
-  );
-  protected readonly selectedIndex = signal(0);
-  protected select(index: number): void {
-    this.selectedColorIndex.set(index);
+  public selected = model<string | undefined>(undefined);
+
+  protected select(color: string): void {
+    this.selected.set(color);
+  }
+  protected isUnavailable(color: string): boolean {
+    return !this.availableColors().includes(color);
   }
 }

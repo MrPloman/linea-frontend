@@ -65,4 +65,8 @@ export class ProductVariant {
       this.images,
     );
   }
+
+  public hasNoStock() {
+    return this.stock.isZero();
+  }
 }

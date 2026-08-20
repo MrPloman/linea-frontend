@@ -21,10 +21,18 @@
         <h1 class="pdp__name">{{ product.displayName }}</h1>
         <p class="pdp__price">{{ selectedVariant()?.priceValue }}</p>
 
-        <app-color-selector class="pdp__selector" [colors]="colors() ?? []" />
+        <app-color-selector
+          [colors]="colors() ?? []"
+          [availableColors]="colors() ?? []"
+          [(selected)]="selectedColorValue"
+        />
 
         <div class="pdp__sizes">
-          <app-size-selector [unavailable]="unavailableSizes" [sizes]="sizes() ?? []" />
+          <app-size-selector
+            [sizes]="sizes() ?? []"
+            [availableSizes]="availableSizes()"
+            [(selected)]="selectedSizeValue"
+          />
           <a class="pdp__size-guide" href="#">Guía de tallas</a>
         </div>
 

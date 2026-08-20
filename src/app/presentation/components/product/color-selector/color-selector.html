@@ -1,6 +1,6 @@
 <fieldset class="color-selector">
   <legend class="color-selector__legend">
-    Color <span class="color-selector__value">— {{ selectedColorName() }}</span>
+    Color <span class="color-selector__value">— {{ selected() }}</span>
   </legend>
 
   <div class="color-selector__options" role="group">
@@ -8,10 +8,11 @@
       <button
         class="color-selector__option"
         type="button"
-        [class.color-selector__option--selected]="selectedColorIndex() === i"
-        [attr.aria-pressed]="selectedColorIndex() === i"
+        [disabled]="isUnavailable(color)"
+        [class.color-selector__option--selected]="selected() === color"
+        [attr.aria-pressed]="selected() === color"
         [attr.aria-label]="'Color ' + color"
-        (click)="select(i)"
+        (click)="select(color)"
       >
         <span class="color-selector__swatch" [style.background-color]="color"></span>
       </button>
