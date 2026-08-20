@@ -69,6 +69,11 @@
     }
   }
 
+  &__stock-message {
+    color: red;
+    font-weight: bold;
+  }
+
   // Hueco reservado para el widget de stock en vivo (sin contenido aún).
   // Mantiene el alto que ocupará para que el layout no salte al implementarlo.
   &__stock-widget {

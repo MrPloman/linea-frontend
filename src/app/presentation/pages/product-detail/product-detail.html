@@ -19,7 +19,7 @@
       <section class="pdp__info" aria-label="Información de compra">
         <p class="pdp__kicker">Novedad</p>
         <h1 class="pdp__name">{{ product.displayName }}</h1>
-        <p class="pdp__price">{{ selectedVariant()?.priceValue }}</p>
+        <p class="pdp__price">{{ selectedVariant()?.priceValue?.toDisplayStringAndCurrency() }}</p>
 
         <app-color-selector
           [colors]="colors() ?? []"
@@ -35,6 +35,9 @@
           />
           <a class="pdp__size-guide" href="#">Guía de tallas</a>
         </div>
+        @if (variantIsLowStock()) {
+          <span class="pdp__stock-message">Quedan pocas unidades para este producto.</span>
+        }
 
         <!-- TODO(pol): añadir al carrito de verdad (talla+color seleccionados) -->
         <app-button class="pdp__add" variant="primary" [fullWidth]="true">

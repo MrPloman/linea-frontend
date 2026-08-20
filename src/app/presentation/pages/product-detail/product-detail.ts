@@ -23,6 +23,7 @@ import { FindProductByIdUseCase } from '../../../core/application/useCases/produ
 import { Color } from '../../../core/domain/models/color';
 import { ProductSku } from '../../../core/domain/models/productSku';
 import { ProductVariant } from '../../../core/domain/models/productVariant';
+import { LOW_STOCK_THRESHOLD } from '../../../core/domain/policies/lowStock';
 
 /** Ficha de producto (PDP). */
 @Component({
@@ -42,33 +43,29 @@ export class ProductDetail {
     loader: ({ params }) => this.findProductByIdUseCase.execute(params),
   });
   protected selectedVariant = computed<ProductVariant | undefined>(() => {
-    const product = this.productResource.value();
-    const sku = this.selectedSku();
-    if (!product || !sku) return undefined;
-    return product.getVariantBySku(sku);
+    return this.getAllVariants()?.find(
+      (variant: ProductVariant) =>
+        variant.colorValue.displayValue === this.selectedColorValue() &&
+        variant.sizeValue.displayValue === this.selectedSizeValue(),
+    );
+  });
+  protected variantIsLowStock = computed(() => {
+    if (!this.selectedColorValue() || !this.selectedSizeValue()) return false;
+    return this.getAllVariants()?.some(
+      (variant: ProductVariant) =>
+        variant.colorValue.displayValue === this.selectedColorValue() &&
+        variant.sizeValue.displayValue === this.selectedSizeValue() &&
+        variant.hasLowStock(LOW_STOCK_THRESHOLD),
+    );
   });
 
   public getAllVariants = computed(() => this.productResource.value()?.getArrayOfVariants());
 
   protected colors = computed<string[] | undefined>(() =>
-    Array.from(
-      new Set(
-        this.productResource
-          .value()
-          ?.getArrayOfVariants()
-          .map((variant) => variant.colorValue.displayValue),
-      ),
-    ),
+    Array.from(new Set(this.getAllVariants()?.map((variant) => variant.colorValue.displayValue))),
   );
   protected sizes = computed<string[] | undefined>(() =>
-    Array.from(
-      new Set(
-        this.productResource
-          .value()
-          ?.getArrayOfVariants()
-          .map((variant) => variant.sizeValue.displayValue),
-      ),
-    ),
+    Array.from(new Set(this.getAllVariants()?.map((variant) => variant.sizeValue.displayValue))),
   );
 
   protected availableSizes = computed<string[]>(() => {

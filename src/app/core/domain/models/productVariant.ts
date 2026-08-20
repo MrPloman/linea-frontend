@@ -69,4 +69,7 @@ export class ProductVariant {
   public hasNoStock() {
     return this.stock.isZero();
   }
+  public hasLowStock(threshold: number) {
+    return this.stockValue.isLowStock(threshold);
+  }
 }
