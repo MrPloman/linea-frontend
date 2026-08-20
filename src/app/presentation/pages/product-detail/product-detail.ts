@@ -8,6 +8,7 @@ import {
   signal,
 } from '@angular/core';
 
+import { ColorSelector } from '@presentation/components/product/color-selector/color-selector';
 import { ProductCard } from '@presentation/components/product/product-card/product-card';
 import { ProductGallery } from '@presentation/components/product/product-gallery/product-gallery';
 import { SizeSelector } from '@presentation/components/product/size-selector/size-selector';
@@ -20,12 +21,11 @@ import { MOCK_GALLERY_IMAGES, MOCK_PRODUCTS } from '@presentation/mocks/products
 import { FindProductByIdUseCase } from '../../../core/application/useCases/products/findProductById';
 import { ProductSku } from '../../../core/domain/models/productSku';
 import { ProductVariant } from '../../../core/domain/models/productVariant';
-import { VariantsSelector } from '../../components/product/color-selector/variants-selector';
 
 /** Ficha de producto (PDP). */
 @Component({
   selector: 'app-product-detail',
-  imports: [Breadcrumbs, Button, ProductCard, ProductGallery, SizeSelector, VariantsSelector],
+  imports: [Breadcrumbs, Button, ProductCard, ProductGallery, SizeSelector, ColorSelector],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

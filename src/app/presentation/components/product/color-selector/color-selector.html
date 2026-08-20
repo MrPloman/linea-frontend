@@ -8,8 +8,8 @@
       <button
         class="color-selector__option"
         type="button"
-        [class.color-selector__option--selected]="selectedVariantIndex() === i"
-        [attr.aria-pressed]="selectedVariantIndex() === i"
+        [class.color-selector__option--selected]="selectedColorIndex() === i"
+        [attr.aria-pressed]="selectedColorIndex() === i"
         [attr.aria-label]="'Color ' + color"
         (click)="select(i)"
       >

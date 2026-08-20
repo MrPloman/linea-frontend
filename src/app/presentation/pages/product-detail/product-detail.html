@@ -21,7 +21,7 @@
         <h1 class="pdp__name">{{ product.displayName }}</h1>
         <p class="pdp__price">{{ selectedVariant()?.priceValue }}</p>
 
-        <app-variants-selector class="pdp__selector" [colors]="colors() ?? []" />
+        <app-color-selector class="pdp__selector" [colors]="colors() ?? []" />
 
         <div class="pdp__sizes">
           <app-size-selector [unavailable]="unavailableSizes" [sizes]="sizes() ?? []" />
