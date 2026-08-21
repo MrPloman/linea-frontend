@@ -58,4 +58,7 @@ export class Size {
   public get displayValue(): string {
     return `${this.value}`;
   }
+  public get type(): string {
+    return this.type;
+  }
 }

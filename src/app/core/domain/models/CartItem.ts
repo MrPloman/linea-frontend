@@ -85,4 +85,13 @@ export class CartItem {
   public get image(): Image {
     return this.img;
   }
+  public get exposedSku() {
+    return this.sku;
+  }
+  public get exposedColor() {
+    return this.color;
+  }
+  public get exposedSize() {
+    return this.size;
+  }
 }
