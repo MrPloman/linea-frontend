@@ -15,19 +15,6 @@ import { ProductVariant } from '../../core/domain/models/productVariant';
 import { Size } from '../../core/domain/models/size';
 import { StockQuantity } from '../../core/domain/models/stockQuantity';
 
-export interface ProductMockVM {
-  id: string;
-  name: string;
-  /** Precio ya formateado — TODO(pol): formatear con CurrencyPipe/Intl cuando haya lógica */
-  price: string;
-  /** Precio original tachado (solo productos rebajados) */
-  originalPrice?: string;
-  image: string;
-  imageAlt: string;
-  badge?: 'nuevo' | 'rebajas';
-  colors: string[];
-}
-
 export interface CategoryMockVM {
   id: string;
   name: string;
@@ -61,22 +48,7 @@ export const MOCK_PRODUCTS: Product[] = [
       StockQuantity.createStockQuantity(11),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
     ),
-    ProductVariant.createProductVariant(
-      ProductSku.createProductSku('camisa-lino-oversize-azul-xs'),
-      Size.createSize('letter', 'XS'),
-      Color.createColor('blue'),
-      Money.createMoney(10000, 'EUR'),
-      StockQuantity.createStockQuantity(1),
-      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
-    ),
-    ProductVariant.createProductVariant(
-      ProductSku.createProductSku('camisa-lino-oversize-verde-s'),
-      Size.createSize('letter', 'S'),
-      Color.createColor('green'),
-      Money.createMoney(10000, 'EUR'),
-      StockQuantity.createStockQuantity(0),
-      [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
-    ),
+
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camisa-lino-oversize-beige-m'),
       Size.createSize('letter', 'M'),
@@ -102,14 +74,7 @@ export const MOCK_PRODUCTS: Product[] = [
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
     ),
     // Color: azul
-    ProductVariant.createProductVariant(
-      ProductSku.createProductSku('camisa-lino-oversize-azul-xs'),
-      Size.createSize('letter', 'XS'),
-      Color.createColor('blue'),
-      Money.createMoney(10000, 'EUR'),
-      StockQuantity.createStockQuantity(12),
-      [{ url: '/images/products/gallery-2.svg', altText: 'gallery2' }],
-    ),
+
     ProductVariant.createProductVariant(
       ProductSku.createProductSku('camisa-lino-oversize-azul-s'),
       Size.createSize('letter', 'S'),

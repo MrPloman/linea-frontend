@@ -1,25 +1,13 @@
 import { NgOptimizedImage, TitleCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CartService } from '../../../core/application/services/cartService';
+import { CartStore } from '../../../core/application/state/cartStore';
+import { RemoveItemFromCartUseCase } from '../../../core/application/useCases/cart/removeItemFromCart';
+import { UpdateCartItemQuantityUseCase } from '../../../core/application/useCases/cart/updateCartItemQuantity';
 import { CartItem } from '../../../core/domain/models/cartItem';
 import { Quantity } from '../../../core/domain/models/quantity';
 
-/** Item de la bolsa — view model temporal. TODO(pol): modelo real en core/domain */
-interface CartItemVM {
-  id: string;
-  productId: string;
-  name: string;
-  color: string;
-  size: string;
-  quantity: number;
-  unitPrice: string;
-  lineTotal: string;
-  image: string;
-  imageAlt: string;
-}
-
-/** Bolsa de compra — todo visual, sin persistencia ni cálculos reales. */
+/** Bolsa de compra: lee del CartStore y muta a través de use cases. */
 @Component({
   selector: 'app-cart',
   imports: [RouterLink, NgOptimizedImage, TitleCasePipe],
@@ -28,19 +16,19 @@ interface CartItemVM {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Cart {
-  protected cartService = inject(CartService);
+  protected readonly cartStore = inject(CartStore);
+  private readonly removeItemFromCart = inject(RemoveItemFromCartUseCase);
+  private readonly updateCartItemQuantity = inject(UpdateCartItemQuantityUseCase);
 
-  ngOnInit() {}
-
-  public removeItem(item: CartItem): void {
-    this.cartService.removeItem(item);
+  public async removeItem(item: CartItem): Promise<void> {
+    await this.removeItemFromCart.execute(item);
   }
 
-  public updateItemQuantity(item: CartItem, newQuantity: number): void {
+  public async updateItemQuantity(item: CartItem, newQuantity: number): Promise<void> {
     if (newQuantity < 1) {
-      this.removeItem(item);
+      await this.removeItem(item);
       return;
     }
-    this.cartService.updateItemQuantity(item, Quantity.createQuantity(newQuantity));
+    await this.updateCartItemQuantity.execute(item, Quantity.createQuantity(newQuantity));
   }
 }

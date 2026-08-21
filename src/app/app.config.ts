@@ -7,7 +7,9 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
+import { CART_REPOSITORY } from './core/application/useCases/cart/cartRepositoryToken';
 import { PRODUCT_REPOSITORY } from './core/application/useCases/products/findProductById';
+import { InMemoryCartRepository } from './infrastructure/cart/memoryCart.repository';
 import { InMemoryProductRepository } from './infrastructure/products/memoryProducts.repository';
 
 export const appConfig: ApplicationConfig = {
@@ -24,5 +26,6 @@ export const appConfig: ApplicationConfig = {
     ),
     provideClientHydration(withEventReplay()),
     { provide: PRODUCT_REPOSITORY, useClass: InMemoryProductRepository },
+    { provide: CART_REPOSITORY, useClass: InMemoryCartRepository },
   ],
 };

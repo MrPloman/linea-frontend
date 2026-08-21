@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { CartService } from '../../../../core/application/services/cartService';
+import { CartStore } from '../../../../core/application/state/cartStore';
 
 /**
  * Cabecera principal con navegación responsive.
@@ -18,9 +18,7 @@ import { CartService } from '../../../../core/application/services/cartService';
 })
 export class Header {
   protected readonly isMenuOpen = signal(false);
-  protected cartService = inject(CartService);
-
-  protected readonly cartCount = 3;
+  protected readonly cartStore = inject(CartStore);
 
   protected toggleMenu(): void {
     this.isMenuOpen.update((open) => !open);

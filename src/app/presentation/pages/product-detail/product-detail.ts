@@ -18,7 +18,7 @@ import {
 } from '@presentation/components/shared/breadcrumbs/breadcrumbs';
 import { Button } from '@presentation/components/shared/button/button';
 import { MOCK_GALLERY_IMAGES, MOCK_PRODUCTS } from '@presentation/mocks/products.mock';
-import { CartService } from '../../../core/application/services/cartService';
+import { AddItemToCartUseCase } from '../../../core/application/useCases/cart/addItemToCart';
 import { FindProductByIdUseCase } from '../../../core/application/useCases/products/findProductById';
 import { CartItem } from '../../../core/domain/models/cartItem';
 import { Color } from '../../../core/domain/models/color';
@@ -35,7 +35,7 @@ import { LOW_STOCK_THRESHOLD } from '../../../core/domain/policies/lowStock';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductDetail {
-  private cartService = inject(CartService);
+  private addItemToCart = inject(AddItemToCartUseCase);
   id = input.required<string>();
 
   private findProductByIdUseCase = inject(FindProductByIdUseCase);
@@ -94,10 +94,10 @@ export class ProductDetail {
       previous?.value && sizes.includes(previous.value) ? previous.value : sizes[0],
   });
 
-  protected addToCart() {
+  protected async addToCart(): Promise<void> {
     const variant = this.selectedVariant();
     const product = this.productResource.value();
-    if (!variant || !product) return;
+    if (!variant || !product || variant.hasNoStock()) return;
     const images =
       variant && variant.imagesValue && variant.imagesValue.length > 0
         ? variant.imagesValue[0]
@@ -117,7 +117,7 @@ export class ProductDetail {
       console.log('Error creating CartItem');
       return;
     }
-    this.cartService.addItem(cartItem);
+    await this.addItemToCart.execute(cartItem);
   }
   // TRASH
   protected readonly related = MOCK_PRODUCTS.slice(4, 8);
