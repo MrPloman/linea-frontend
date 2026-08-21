@@ -57,6 +57,13 @@ export class CartItem {
   public isSameCartItem(outterItem: CartItem) {
     return this.checkSku(outterItem);
   }
+  public isSameLine(other: CartItem): boolean {
+    return (
+      this.sku.isEqual(other.sku) &&
+      this.color.isEqual(other.color) &&
+      this.size.isEqual(other.size)
+    );
+  }
   public get quantityOfUnits() {
     return this.quantity.displayValue;
   }

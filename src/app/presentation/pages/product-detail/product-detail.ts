@@ -97,11 +97,11 @@ export class ProductDetail {
   protected addToCart() {
     const variant = this.selectedVariant();
     const product = this.productResource.value();
+    if (!variant || !product) return;
     const images =
       variant && variant.imagesValue && variant.imagesValue.length > 0
         ? variant.imagesValue[0]
-        : { url: '', altText: '' };
-    if (!variant || !product) return;
+        : { url: '/images/placeholder.svg', altText: '' };
     if (variant.hasNoStock()) return;
 
     const cartItem = CartItem.createCartItem(

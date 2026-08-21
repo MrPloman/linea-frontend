@@ -31,9 +31,9 @@ export class CartService {
   });
 
   public readonly vat = computed(() => {
-    const totalWithVat = this.subTotal().add(this.shippingCost());
+    const totalWithVat = this.total();
     const totalWithoutVat = totalWithVat.divide(1.21);
-    return totalWithVat.substract(totalWithoutVat);
+    return totalWithVat.subtract(totalWithoutVat);
   });
   public readonly total = computed(() => this.subTotal().add(this.shippingCost()));
 
@@ -44,11 +44,12 @@ export class CartService {
   }
 
   public addGroupOfItems(items: CartItem[]): void {
-    this._cart.update((currentItems) => [...currentItems, ...items]);
+    if (!items || items.length === 0) return;
+    items.forEach((item) => this.addItem(item));
   }
 
   public removeItem(item: CartItem): void {
-    this._cart.set(this.cart().filter((itemInside: CartItem) => !itemInside.isSameCartItem(item)));
+    this._cart.set(this.cart().filter((itemInside: CartItem) => !itemInside.checkSku(item)));
   }
   public updateItemQuantity(cartItem: CartItem, newQuantity: Quantity): void {
     this._cart.set(

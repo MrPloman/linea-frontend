@@ -23,7 +23,7 @@ export class Money {
     return Money.createMoney(this.amountInCents + otherMoney.amountInCents, this.currency);
   }
 
-  public substract(otherMoney: Money) {
+  public subtract(otherMoney: Money) {
     if (this.currency !== otherMoney.currency) {
       throw new Error(
         `Cannot add Money with different currencies: ${this.currency} vs ${otherMoney.currency}`,
