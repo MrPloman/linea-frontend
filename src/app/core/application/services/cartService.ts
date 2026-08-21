@@ -39,7 +39,8 @@ export class CartService {
 
   // Methods
   public addItem(item: CartItem): void {
-    this._cart.update((items) => [...items, item]);
+    if (this.productIsInCart(item)) this.addOneMore(item);
+    else this._cart.update((items) => [...items, item]);
   }
 
   public addGroupOfItems(items: CartItem[]): void {
@@ -57,6 +58,17 @@ export class CartService {
         }
         return _cartItem;
       }),
+    );
+  }
+  public productIsInCart(product: CartItem): boolean {
+    return this.cart().some((cartProduct: CartItem) => cartProduct.checkSku(product));
+  }
+  public addOneMore(product: CartItem) {
+    const foundProduct = this.cart().find((productFind) => productFind.checkSku(product));
+    if (!foundProduct) return;
+    this.updateItemQuantity(
+      foundProduct,
+      Quantity.createQuantity(foundProduct.quantityOfUnits + 1),
     );
   }
   public clear() {

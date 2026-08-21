@@ -22,14 +22,14 @@
         <p class="pdp__price">{{ selectedVariant()?.priceValue?.toDisplayStringAndCurrency() }}</p>
 
         <app-color-selector
-          [colors]="colors() ?? []"
-          [availableColors]="colors() ?? []"
+          [colors]="colors()"
+          [availableColors]="colors()"
           [(selected)]="selectedColorValue"
         />
 
         <div class="pdp__sizes">
           <app-size-selector
-            [sizes]="sizes() ?? []"
+            [sizes]="sizes()"
             [availableSizes]="availableSizes()"
             [(selected)]="selectedSizeValue"
           />
@@ -40,7 +40,13 @@
         }
 
         <!-- TODO(pol): añadir al carrito de verdad (talla+color seleccionados) -->
-        <app-button class="pdp__add" variant="primary" [fullWidth]="true">
+        <app-button
+          class="pdp__add"
+          variant="primary"
+          [fullWidth]="true"
+          [disabled]="selectedVariant()?.hasNoStock() ?? true"
+          (click)="addToCart()"
+        >
           Añadir a la bolsa
         </app-button>
 

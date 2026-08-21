@@ -6,7 +6,6 @@ import {
   input,
   linkedSignal,
   resource,
-  signal,
 } from '@angular/core';
 
 import { ColorSelector } from '@presentation/components/product/color-selector/color-selector';
@@ -19,10 +18,12 @@ import {
 } from '@presentation/components/shared/breadcrumbs/breadcrumbs';
 import { Button } from '@presentation/components/shared/button/button';
 import { MOCK_GALLERY_IMAGES, MOCK_PRODUCTS } from '@presentation/mocks/products.mock';
+import { CartService } from '../../../core/application/services/cartService';
 import { FindProductByIdUseCase } from '../../../core/application/useCases/products/findProductById';
+import { CartItem } from '../../../core/domain/models/cartItem';
 import { Color } from '../../../core/domain/models/color';
-import { ProductSku } from '../../../core/domain/models/productSku';
 import { ProductVariant } from '../../../core/domain/models/productVariant';
+import { Quantity } from '../../../core/domain/models/quantity';
 import { LOW_STOCK_THRESHOLD } from '../../../core/domain/policies/lowStock';
 
 /** Ficha de producto (PDP). */
@@ -34,51 +35,47 @@ import { LOW_STOCK_THRESHOLD } from '../../../core/domain/policies/lowStock';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductDetail {
+  private cartService = inject(CartService);
   id = input.required<string>();
-  protected selectedSku = signal<ProductSku | null>(null);
 
   private findProductByIdUseCase = inject(FindProductByIdUseCase);
   protected productResource = resource({
     params: () => this.id(),
     loader: ({ params }) => this.findProductByIdUseCase.execute(params),
   });
-  protected selectedVariant = computed<ProductVariant | undefined>(() => {
-    return this.getAllVariants()?.find(
+  protected selectedVariant = computed<ProductVariant | undefined>(() =>
+    this.getAllVariants().find(
       (variant: ProductVariant) =>
         variant.colorValue.displayValue === this.selectedColorValue() &&
         variant.sizeValue.displayValue === this.selectedSizeValue(),
-    );
-  });
-  protected variantIsLowStock = computed(() => {
-    if (!this.selectedColorValue() || !this.selectedSizeValue()) return false;
-    return this.getAllVariants()?.some(
-      (variant: ProductVariant) =>
-        variant.colorValue.displayValue === this.selectedColorValue() &&
-        variant.sizeValue.displayValue === this.selectedSizeValue() &&
-        variant.hasLowStock(LOW_STOCK_THRESHOLD),
-    );
+    ),
+  );
+
+  protected variantIsLowStock = computed(
+    () => this.selectedVariant()?.hasLowStock(LOW_STOCK_THRESHOLD) ?? false,
+  );
+
+  private getAllVariants = computed(() => {
+    const product = this.productResource.value();
+    if (!product) return [];
+    return product.getArrayOfVariants();
   });
 
-  public getAllVariants = computed(() => this.productResource.value()?.getArrayOfVariants());
-
-  protected colors = computed<string[] | undefined>(() =>
-    Array.from(new Set(this.getAllVariants()?.map((variant) => variant.colorValue.displayValue))),
+  protected colors = computed<string[]>(() =>
+    Array.from(new Set(this.getAllVariants().map((v) => v.colorValue.displayValue))),
   );
-  protected sizes = computed<string[] | undefined>(() =>
-    Array.from(new Set(this.getAllVariants()?.map((variant) => variant.sizeValue.displayValue))),
-  );
+  protected sizes = computed<string[]>(() => {
+    const color = this.selectedColor();
+    const product = this.productResource.value();
+    if (!color || !product) return [];
+    return product.getSizesByColor(color).map((s) => s.displayValue);
+  });
 
   protected availableSizes = computed<string[]>(() => {
     const color = this.selectedColor();
-    if (!color) return [];
-    return Array.from(
-      new Set(
-        this.productResource
-          .value()
-          ?.getAvailableSizeByColor(color)
-          .map((s) => s.displayValue) ?? [],
-      ),
-    );
+    const product = this.productResource.value();
+    if (!color || !product) return [];
+    return product.getAvailableSizeByColor(color).map((s) => s.displayValue);
   });
 
   protected selectedColorValue = linkedSignal<string | undefined>(
@@ -87,7 +84,7 @@ export class ProductDetail {
 
   protected selectedColor = computed<Color | undefined>(
     () =>
-      this.getAllVariants()?.find((v) => v.colorValue.displayValue === this.selectedColorValue())
+      this.getAllVariants().find((v) => v.colorValue.displayValue === this.selectedColorValue())
         ?.colorValue,
   );
 
@@ -96,6 +93,32 @@ export class ProductDetail {
     computation: (sizes, previous) =>
       previous?.value && sizes.includes(previous.value) ? previous.value : sizes[0],
   });
+
+  protected addToCart() {
+    const variant = this.selectedVariant();
+    const product = this.productResource.value();
+    const images =
+      variant && variant.imagesValue && variant.imagesValue.length > 0
+        ? variant.imagesValue[0]
+        : { url: '', altText: '' };
+    if (!variant || !product) return;
+    if (variant.hasNoStock()) return;
+
+    const cartItem = CartItem.createCartItem(
+      variant.skuValue,
+      product.displayName,
+      variant.sizeValue,
+      variant.colorValue,
+      variant.priceValue,
+      Quantity.createQuantity(1),
+      images,
+    );
+    if (!cartItem || !(cartItem instanceof CartItem)) {
+      console.log('Error creating CartItem');
+      return;
+    }
+    this.cartService.addItem(cartItem);
+  }
   // TRASH
   protected readonly related = MOCK_PRODUCTS.slice(4, 8);
 

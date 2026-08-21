@@ -1,4 +1,5 @@
 import { Image } from '../types/image';
+import { Color } from './color';
 import { Money } from './money';
 import { ProductSku } from './productSku';
 import { Quantity } from './quantity';
@@ -9,6 +10,7 @@ export class CartItem {
     private readonly sku: ProductSku,
     private readonly productName: string,
     private readonly size: Size,
+    private readonly color: Color,
     private readonly priceAtAddTime: Money,
     private readonly quantity: Quantity,
     private readonly img: Image,
@@ -18,6 +20,7 @@ export class CartItem {
     sku: ProductSku,
     productName: string,
     size: Size,
+    color: Color,
     priceAtAddTime: Money,
     quantity: Quantity,
     img: Image,
@@ -29,7 +32,7 @@ export class CartItem {
       throw new Error('Quantity must be greater than 0');
     }
 
-    return new CartItem(sku, productName, size, priceAtAddTime, quantity, img);
+    return new CartItem(sku, productName, size, color, priceAtAddTime, quantity, img);
   }
 
   public updateQuantity(newQuantity: Quantity): CartItem {
@@ -39,6 +42,7 @@ export class CartItem {
       this.sku,
       this.productName,
       this.size,
+      this.color,
       this.priceAtAddTime,
       newQuantity,
       this.img,
@@ -67,6 +71,9 @@ export class CartItem {
   }
   public get sizeValue(): string {
     return this.size.displayValue;
+  }
+  public get colorValue(): string {
+    return this.color.displayValue;
   }
   public get image(): Image {
     return this.img;

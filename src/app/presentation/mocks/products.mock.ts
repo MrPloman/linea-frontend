@@ -74,7 +74,7 @@ export const MOCK_PRODUCTS: Product[] = [
       Size.createSize('letter', 'S'),
       Color.createColor('green'),
       Money.createMoney(10000, 'EUR'),
-      StockQuantity.createStockQuantity(13),
+      StockQuantity.createStockQuantity(0),
       [{ url: '/images/products/gallery-1.svg', altText: 'gallery1' }],
     ),
     ProductVariant.createProductVariant(

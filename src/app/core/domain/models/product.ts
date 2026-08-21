@@ -92,14 +92,6 @@ export class Product {
     );
   }
 
-  public getAvailableSizeByColor(color: Color): Size[] {
-    return this.variants
-      .filter(
-        (variant: ProductVariant) =>
-          variant.colorValue.displayValue === color.displayValue && !variant.hasNoStock(),
-      )
-      .map((variant: ProductVariant) => variant.sizeValue);
-  }
   public getAvailableColorBySize(size: Size): Color[] {
     return this.variants
       .filter(
@@ -117,5 +109,29 @@ export class Product {
     return this.variants
       .filter((variant: ProductVariant) => !variant.hasNoStock())
       .map((variant: ProductVariant) => variant.colorValue);
+  }
+
+  /** Tallas que existen para ese color, con y sin stock. Sin duplicados. */
+  public getSizesByColor(color: Color): Size[] {
+    return this.dedupeSizes(
+      this.variants
+        .filter((variant: ProductVariant) => variant.colorValue.isEqual(color))
+        .map((variant: ProductVariant) => variant.sizeValue),
+    );
+  }
+
+  /** Tallas comprables para ese color. Sin duplicados. */
+  public getAvailableSizeByColor(color: Color): Size[] {
+    return this.dedupeSizes(
+      this.variants
+        .filter(
+          (variant: ProductVariant) => variant.colorValue.isEqual(color) && !variant.hasNoStock(),
+        )
+        .map((variant: ProductVariant) => variant.sizeValue),
+    );
+  }
+
+  private dedupeSizes(sizes: Size[]): Size[] {
+    return sizes.filter((size, index) => sizes.findIndex((s) => s.isEqual(size)) === index);
   }
 }

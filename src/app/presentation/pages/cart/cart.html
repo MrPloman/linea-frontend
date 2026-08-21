@@ -33,6 +33,7 @@
                 <a [routerLink]="['/producto', item.skuValue]">{{ item.productNameValue }}</a>
               </h2>
               <p class="cart-item__meta">Talla {{ item.sizeValue }}</p>
+              <p class="cart-item__meta">Color {{ item.colorValue | titlecase }}</p>
               <p class="cart-item__unit-price">{{ item.priceAtAddTimeValue.toDisplayString() }}</p>
 
               <div class="cart-item__controls">
