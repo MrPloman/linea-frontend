@@ -87,7 +87,7 @@
       <a
         class="header__action header__cart"
         routerLink="/carrito"
-        [attr.aria-label]="'Bolsa de compra, ' + cartStore.itemCount() + ' artículos'"
+        [attr.aria-label]="'Bolsa de compra, ' + cartFacade.itemCount() + ' artículos'"
       >
         <svg
           viewBox="0 0 24 24"
@@ -101,7 +101,7 @@
           <path d="M5.5 8h13l-1 13h-11l-1-13z" />
           <path d="M9 8V6a3 3 0 0 1 6 0v2" />
         </svg>
-        <span class="header__cart-count" aria-hidden="true">{{ cartStore.itemCount() }}</span>
+        <span class="header__cart-count" aria-hidden="true">{{ cartFacade.itemCount() }}</span>
       </a>
     </div>
   </div>

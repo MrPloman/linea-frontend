@@ -5,9 +5,8 @@ import { getIncludedVat } from '../../../domain/policies/vatPolicy';
 
 // cart.selectors.ts
 export const selectCartState = createFeatureSelector<CartState>('cart');
-export const selectCartItems = createSelector(
-  selectCartState,
-  (state) => state.cart.getArrayOfItems,
+export const selectCartItems = createSelector(selectCartState, (state) =>
+  state.cart.getArrayOfItems(),
 );
 export const selectCartSubtotal = createSelector(selectCartState, (state) => state.cart.subTotal);
 

@@ -60,14 +60,11 @@ export class Cart {
   }
 
   public getArrayOfItems(): CartItem[] {
-    return [...this.items];
+    return this.items;
   }
 
   public get itemCount(): number {
-    return this.items.reduce(
-      (total: number, item: CartItem) => total + item.quantityOfUnits,
-      0,
-    );
+    return this.items.reduce((total: number, item: CartItem) => total + item.quantityOfUnits, 0);
   }
 
   public get isEmpty(): boolean {

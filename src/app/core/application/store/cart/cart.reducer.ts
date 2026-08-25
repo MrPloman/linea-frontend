@@ -12,7 +12,15 @@ export const cartReducer = createReducer(
   }),
   on(CartActions.removeItem, (state, { item }) => ({
     ...state,
-    items: state.cart.getArrayOfItems().filter((i) => !i.isSameCartItem(item)),
+    cart: state.cart.removeItem(item),
+  })),
+  on(CartActions.updateQuantity, (state, { item, newQuantity }) => ({
+    ...state,
+    cart: state.cart.updateItemQuantity(item, newQuantity),
+  })),
+  on(CartActions.clearCart, (state) => ({
+    ...state,
+    cart: state.cart.clear(),
   })),
   // TODO: tu turno — quantityUpdated y cartCleared, mismo patrón inmutable que ya conoces
 );

@@ -1,9 +1,7 @@
 import { NgOptimizedImage, TitleCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CartStore } from '../../../core/application/state/cartStore';
-import { RemoveItemFromCartUseCase } from '../../../core/application/useCases/cart/removeItemFromCart';
-import { UpdateCartItemQuantityUseCase } from '../../../core/application/useCases/cart/updateCartItemQuantity';
+import { CartFacade } from '../../../core/application/store/cart/cart.facade';
 import { CartItem } from '../../../core/domain/models/cartItem';
 import { Quantity } from '../../../core/domain/models/quantity';
 
@@ -16,12 +14,10 @@ import { Quantity } from '../../../core/domain/models/quantity';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Cart {
-  protected readonly cartStore = inject(CartStore);
-  private readonly removeItemFromCart = inject(RemoveItemFromCartUseCase);
-  private readonly updateCartItemQuantity = inject(UpdateCartItemQuantityUseCase);
+  protected readonly cartFacade = inject(CartFacade);
 
   public async removeItem(item: CartItem): Promise<void> {
-    await this.removeItemFromCart.execute(item);
+    await this.cartFacade.removeItem(item);
   }
 
   public async updateItemQuantity(item: CartItem, newQuantity: number): Promise<void> {
@@ -29,6 +25,6 @@ export class Cart {
       await this.removeItem(item);
       return;
     }
-    await this.updateCartItemQuantity.execute(item, Quantity.createQuantity(newQuantity));
+    await this.cartFacade.updateItemQuantity(item, Quantity.createQuantity(newQuantity));
   }
 }

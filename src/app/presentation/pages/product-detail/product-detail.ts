@@ -18,6 +18,7 @@ import {
 } from '@presentation/components/shared/breadcrumbs/breadcrumbs';
 import { Button } from '@presentation/components/shared/button/button';
 import { MOCK_GALLERY_IMAGES, MOCK_PRODUCTS } from '@presentation/mocks/products.mock';
+import { CartFacade } from '../../../core/application/store/cart/cart.facade';
 import { AddItemToCartUseCase } from '../../../core/application/useCases/cart/addItemToCart';
 import { FindProductByIdUseCase } from '../../../core/application/useCases/products/findProductById';
 import { CartItem } from '../../../core/domain/models/cartItem';
@@ -36,6 +37,7 @@ import { LOW_STOCK_THRESHOLD } from '../../../core/domain/policies/lowStock';
 })
 export class ProductDetail {
   private addItemToCart = inject(AddItemToCartUseCase);
+  private cartFacade = inject(CartFacade);
   id = input.required<string>();
 
   private findProductByIdUseCase = inject(FindProductByIdUseCase);
@@ -117,7 +119,7 @@ export class ProductDetail {
       console.log('Error creating CartItem');
       return;
     }
-    await this.addItemToCart.execute(cartItem);
+    await this.cartFacade.addItem(cartItem);
   }
   // TRASH
   protected readonly related = MOCK_PRODUCTS.slice(4, 8);
