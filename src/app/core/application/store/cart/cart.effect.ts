@@ -12,7 +12,7 @@ export class CartEffects {
     () =>
       this.actions$.pipe(
         ofType(
-          CartActions['[ADD_ITEM]'],
+          CartActions.aDD_ITEM,
           CartActions['[REMOVE_ITEM]'],
           CartActions['[UPDATE_QUANTITY]'],
           CartActions['[CLEAR_CART]'],

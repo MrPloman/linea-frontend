@@ -1,7 +1,7 @@
-import { CartItem } from '../../../domain/models/cartItem';
+import { Cart } from '../../../domain/models/cart';
 
 export interface CartState {
-  items: CartItem[];
+  cart: Cart;
 }
 
-export const initialState: CartState = { items: [] };
+export const initialState: CartState = { cart: Cart.createEmptyCart() };
