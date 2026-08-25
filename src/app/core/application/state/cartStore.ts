@@ -3,11 +3,6 @@ import { Cart } from '../../domain/models/cart';
 import { getShippingCost } from '../../domain/policies/shippingPolicy';
 import { getIncludedVat } from '../../domain/policies/vatPolicy';
 
-/**
- * Estado reactivo del carrito (read model para presentación).
- * No contiene reglas de negocio: consulta al agregado Cart y a las políticas
- * de dominio. Solo los use cases deberían llamar a setCart().
- */
 @Injectable({ providedIn: 'root' })
 export class CartStore {
   private readonly _cart = signal<Cart>(Cart.createEmptyCart());
