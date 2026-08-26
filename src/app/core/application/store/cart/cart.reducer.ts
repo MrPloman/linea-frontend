@@ -22,5 +22,4 @@ export const cartReducer = createReducer(
     ...state,
     cart: state.cart.clear(),
   })),
-  // TODO: tu turno — quantityUpdated y cartCleared, mismo patrón inmutable que ya conoces
 );
