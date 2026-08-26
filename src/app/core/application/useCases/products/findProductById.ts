@@ -1,7 +1,6 @@
-import { Injectable, InjectionToken, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Product } from '../../../domain/models/product';
-import { ProductRepository } from '../../../domain/ports/product.repository';
-export const PRODUCT_REPOSITORY = new InjectionToken<ProductRepository>('ProductRepository');
+import { PRODUCT_REPOSITORY } from '../../tokens/productsRepositoryToken';
 
 // core/application/useCases/findProductByIdUseCase.ts
 @Injectable({ providedIn: 'root' })

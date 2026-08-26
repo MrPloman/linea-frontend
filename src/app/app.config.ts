@@ -13,8 +13,8 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { routes } from './app.routes';
 import { CartEffects } from './core/application/store/cart/cart.effect';
 import { cartReducer } from './core/application/store/cart/cart.reducer';
-import { CART_REPOSITORY } from './core/application/useCases/cart/cartRepositoryToken';
-import { PRODUCT_REPOSITORY } from './core/application/useCases/products/findProductById';
+import { CART_REPOSITORY } from './core/application/tokens/cartRepositoryToken';
+import { PRODUCT_REPOSITORY } from './core/application/tokens/productsRepositoryToken';
 import { InMemoryCartRepository } from './infrastructure/cart/memoryCart.repository';
 import { InMemoryProductRepository } from './infrastructure/products/memoryProducts.repository';
 
