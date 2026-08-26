@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 import { Button } from '@presentation/components/shared/button/button';
 import { InputField } from '@presentation/components/shared/input/input';
+import { CartFacade } from '../../../core/application/store/cart/cart.facade';
 
 /**
  * Checkout por pasos (dirección → envío → pago), puramente visual.
@@ -18,6 +19,7 @@ import { InputField } from '@presentation/components/shared/input/input';
 })
 export class Checkout {
   private readonly fb = inject(NonNullableFormBuilder);
+  protected readonly cartFacade = inject(CartFacade);
 
   protected readonly steps = [
     { number: 1, label: 'Dirección' },
@@ -26,16 +28,58 @@ export class Checkout {
   ] as const;
 
   // TODO(pol): validar el paso actual antes de permitir avanzar
-  protected readonly currentStep = signal(1);
+  protected readonly currentStep = signal<number>(1);
 
   // TODO(pol): validadores, autocompletado de direcciones y envío real del pedido
   protected readonly addressForm = this.fb.group({
-    firstName: [''],
-    lastName: [''],
-    street: [''],
-    zip: [''],
-    city: [''],
-    phone: [''],
+    firstName: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñÜüÇç]{2,}(?:\s+[A-Za-zÁÉÍÓÚáéíóúÑñÜüÇç]{2,})*$/),
+      ],
+    ],
+    lastName: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñÜüÇç]{2,}(?:\s+[A-Za-zÁÉÍÓÚáéíóúÑñÜüÇç]{2,})*$/),
+      ],
+    ],
+    street: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.pattern(/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñÜüÇçºª\s.,#\-\/]{5,100}$/),
+      ],
+    ],
+    zip: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.pattern(/^(?:0[1-9]|[1-4]\d|5[0-2])\d{3}$/),
+      ],
+    ],
+    city: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.pattern(/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñÜüÇçºª\s.,#\-\/]{2,100}$/),
+      ],
+    ],
+    phone: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(9),
+        Validators.pattern(/^(?:\+34\s?|0034\s?)?[67]\d{8}$/),
+      ],
+    ],
   });
 
   // TODO(pol): pasarela de pago real. NUNCA guardar datos de tarjeta en claro.
@@ -46,15 +90,15 @@ export class Checkout {
     cardCvc: [''],
   });
 
-  // TODO(pol): resumen calculado desde el carrito real
-  protected readonly summary = {
-    articleCount: 4,
-    subtotal: '269,80 €',
-    shipping: 'Gratuito',
-    total: '269,80 €',
-  };
-
   protected next(): void {
+    console.log(this.addressForm);
+    switch (this.currentStep()) {
+      case 1:
+        break;
+
+      default:
+        break;
+    }
     this.currentStep.update((step) => Math.min(step + 1, this.steps.length));
   }
 

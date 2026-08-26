@@ -29,13 +29,39 @@
             <!-- TODO(pol): validación y persistencia de la dirección -->
             <form class="checkout__form" [formGroup]="addressForm">
               <div class="checkout__form-row">
-                <app-input id="address-first-name" label="Nombre" autocomplete="given-name" [control]="addressForm.controls.firstName" />
-                <app-input id="address-last-name" label="Apellidos" autocomplete="family-name" [control]="addressForm.controls.lastName" />
+                <app-input
+                  id="address-first-name"
+                  label="Nombre"
+                  autocomplete="given-name"
+                  [control]="addressForm.controls.firstName"
+                />
+                <app-input
+                  id="address-last-name"
+                  label="Apellidos"
+                  autocomplete="family-name"
+                  [control]="addressForm.controls.lastName"
+                />
               </div>
-              <app-input id="address-street" label="Dirección" placeholder="Calle, número, piso" autocomplete="street-address" [control]="addressForm.controls.street" />
+              <app-input
+                id="address-street"
+                label="Dirección"
+                placeholder="Calle, número, piso"
+                autocomplete="street-address"
+                [control]="addressForm.controls.street"
+              />
               <div class="checkout__form-row">
-                <app-input id="address-zip" label="Código postal" autocomplete="postal-code" [control]="addressForm.controls.zip" />
-                <app-input id="address-city" label="Ciudad" autocomplete="address-level2" [control]="addressForm.controls.city" />
+                <app-input
+                  id="address-zip"
+                  label="Código postal"
+                  autocomplete="postal-code"
+                  [control]="addressForm.controls.zip"
+                />
+                <app-input
+                  id="address-city"
+                  label="Ciudad"
+                  autocomplete="address-level2"
+                  [control]="addressForm.controls.city"
+                />
               </div>
               <app-input
                 id="address-phone"
@@ -128,13 +154,37 @@
                 </span>
               </label>
             </fieldset>
+            @if (currentStep() === 3) {}
 
             <form class="checkout__form" [formGroup]="paymentForm">
-              <app-input id="payment-holder" label="Titular de la tarjeta" autocomplete="cc-name" [control]="paymentForm.controls.cardHolder" />
-              <app-input id="payment-number" label="Número de tarjeta" placeholder="1234 5678 9012 3456" autocomplete="cc-number" [control]="paymentForm.controls.cardNumber" />
+              <app-input
+                id="payment-holder"
+                label="Titular de la tarjeta"
+                autocomplete="cc-name"
+                [control]="paymentForm.controls.cardHolder"
+              />
+              <app-input
+                id="payment-number"
+                label="Número de tarjeta"
+                placeholder="1234 5678 9012 3456"
+                autocomplete="cc-number"
+                [control]="paymentForm.controls.cardNumber"
+              />
               <div class="checkout__form-row">
-                <app-input id="payment-expiry" label="Caducidad" placeholder="MM/AA" autocomplete="cc-exp" [control]="paymentForm.controls.cardExpiry" />
-                <app-input id="payment-cvc" label="CVC" placeholder="123" autocomplete="cc-csc" [control]="paymentForm.controls.cardCvc" />
+                <app-input
+                  id="payment-expiry"
+                  label="Caducidad"
+                  placeholder="MM/AA"
+                  autocomplete="cc-exp"
+                  [control]="paymentForm.controls.cardExpiry"
+                />
+                <app-input
+                  id="payment-cvc"
+                  label="CVC"
+                  placeholder="123"
+                  autocomplete="cc-csc"
+                  [control]="paymentForm.controls.cardCvc"
+                />
               </div>
             </form>
 
@@ -151,20 +201,20 @@
     <!-- ============ Resumen lateral ============ -->
     <aside class="checkout-summary" aria-label="Resumen del pedido">
       <h2 class="checkout-summary__title">Tu pedido</h2>
-      <p class="checkout-summary__count">{{ summary.articleCount }} artículos</p>
+      <p class="checkout-summary__count">{{ cartFacade.itemCount() }} artículos</p>
 
       <dl class="checkout-summary__rows">
         <div class="checkout-summary__row">
           <dt>Subtotal</dt>
-          <dd>{{ summary.subtotal }}</dd>
+          <dd>{{ cartFacade.subTotal().toDisplayStringAndCurrency() }}</dd>
         </div>
         <div class="checkout-summary__row">
           <dt>Envío</dt>
-          <dd>{{ summary.shipping }}</dd>
+          <dd>{{ cartFacade.shippingCost().toDisplayStringAndCurrency() }}</dd>
         </div>
         <div class="checkout-summary__row checkout-summary__row--total">
           <dt>Total</dt>
-          <dd>{{ summary.total }}</dd>
+          <dd>{{ cartFacade.total().toDisplayStringAndCurrency() }}</dd>
         </div>
       </dl>
 
