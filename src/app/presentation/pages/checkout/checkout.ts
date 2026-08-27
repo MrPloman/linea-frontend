@@ -20,6 +20,7 @@ import { CartFacade } from '../../../core/application/store/cart/cart.facade';
 export class Checkout {
   private readonly fb = inject(NonNullableFormBuilder);
   protected readonly cartFacade = inject(CartFacade);
+  protected submitted = signal(false);
 
   protected readonly steps = [
     { number: 1, label: 'Dirección' },
@@ -91,11 +92,14 @@ export class Checkout {
   });
 
   protected next(): void {
-    console.log(this.addressForm);
     switch (this.currentStep()) {
       case 1:
+        if (this.addressForm.invalid) {
+          this.addressForm.markAllAsTouched();
+          this.submitted.set(true);
+          return;
+        }
         break;
-
       default:
         break;
     }

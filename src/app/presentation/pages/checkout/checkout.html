@@ -34,12 +34,16 @@
                   label="Nombre"
                   autocomplete="given-name"
                   [control]="addressForm.controls.firstName"
+                  [showError]="submitted() && addressForm.controls.firstName.invalid"
+                  [errorText]="'Debes introducir un nombre válido.'"
                 />
                 <app-input
                   id="address-last-name"
                   label="Apellidos"
                   autocomplete="family-name"
                   [control]="addressForm.controls.lastName"
+                  [showError]="submitted() && addressForm.controls.lastName.invalid"
+                  [errorText]="'Debes introducir un apellido válido.'"
                 />
               </div>
               <app-input
@@ -48,6 +52,8 @@
                 placeholder="Calle, número, piso"
                 autocomplete="street-address"
                 [control]="addressForm.controls.street"
+                [showError]="submitted() && addressForm.controls.street.invalid"
+                [errorText]="'Debes introducir una dirección válida.'"
               />
               <div class="checkout__form-row">
                 <app-input
@@ -55,12 +61,16 @@
                   label="Código postal"
                   autocomplete="postal-code"
                   [control]="addressForm.controls.zip"
+                  [showError]="submitted() && addressForm.controls.zip.invalid"
+                  [errorText]="'Debes introducir un CP válido.'"
                 />
                 <app-input
                   id="address-city"
                   label="Ciudad"
                   autocomplete="address-level2"
                   [control]="addressForm.controls.city"
+                  [showError]="submitted() && addressForm.controls.city.invalid"
+                  [errorText]="'Debes introducir una ciudad válida.'"
                 />
               </div>
               <app-input
@@ -70,6 +80,8 @@
                 autocomplete="tel"
                 hint="Solo para avisos de la entrega"
                 [control]="addressForm.controls.phone"
+                [showError]="submitted() && addressForm.controls.phone.invalid"
+                [errorText]="'Debes introducir un teléfono válido.'"
               />
             </form>
 

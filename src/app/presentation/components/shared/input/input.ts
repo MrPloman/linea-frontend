@@ -21,8 +21,5 @@ export class InputField {
   readonly autocomplete = input('off');
   readonly hint = input('');
   readonly errorText = input('');
-
-  // TODO(pol): mostrar el error según el estado real de validación del control
-  // (control().invalid && control().touched). De momento el bloque queda oculto.
-  protected readonly showError = false;
+  readonly showError = input(false);
 }
