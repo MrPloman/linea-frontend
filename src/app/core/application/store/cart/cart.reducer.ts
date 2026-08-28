@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+import { Cart } from '../../../domain/models/cart';
 import { CartActions } from './cart.actions';
 import { initialState } from './index';
 
@@ -21,5 +22,9 @@ export const cartReducer = createReducer(
   on(CartActions.clearCart, (state) => ({
     ...state,
     cart: state.cart.clear(),
+  })),
+  on(CartActions.getCartSuccess, (state, { items }) => ({
+    ...state,
+    cart: Cart.createCart(items),
   })),
 );

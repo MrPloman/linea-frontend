@@ -1,8 +1,7 @@
-import { Cart } from '../models/cart';
 import { CartItem } from '../models/cartItem';
 
 export interface CartRepository {
-  load(): Promise<Cart | null>;
+  load(): Promise<CartItem[]>;
   save(cart: CartItem[]): Promise<void>;
   clear(): Promise<void>;
 }

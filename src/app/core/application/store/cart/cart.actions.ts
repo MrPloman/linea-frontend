@@ -6,6 +6,7 @@ import { Quantity } from '../../../domain/models/quantity';
 export const CartActions = createActionGroup({
   source: 'Cart',
   events: {
+    getCartSuccess: props<{ items: CartItem[] }>(),
     addItem: props<{ item: CartItem }>(),
     removeItem: props<{ item: CartItem }>(),
     updateQuantity: props<{ item: CartItem; newQuantity: Quantity }>(),
