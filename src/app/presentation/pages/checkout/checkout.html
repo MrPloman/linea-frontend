@@ -159,44 +159,19 @@
                 </span>
               </label>
             </fieldset>
-            @if (currentStep() === 3) {}
-
-            <form class="checkout__form" [formGroup]="paymentForm">
-              <app-input
-                id="payment-holder"
-                label="Titular de la tarjeta"
-                autocomplete="cc-name"
-                [control]="paymentForm.controls.cardHolder"
+            <!-- TODO(pol): mostrar PayPal Buttons cuando el método elegido sea "paypal" -->
+            @if (paymentSucceeded()) {
+              <p class="checkout__payment-success">Pago confirmado. ¡Gracias por tu pedido!</p>
+            } @else {
+              <app-stripe-payment-element
+                [amount]="cartFacade.total()"
+                [orderId]="orderId"
+                (paid)="onPaymentSucceeded()"
               />
-              <app-input
-                id="payment-number"
-                label="Número de tarjeta"
-                placeholder="1234 5678 9012 3456"
-                autocomplete="cc-number"
-                [control]="paymentForm.controls.cardNumber"
-              />
-              <div class="checkout__form-row">
-                <app-input
-                  id="payment-expiry"
-                  label="Caducidad"
-                  placeholder="MM/AA"
-                  autocomplete="cc-exp"
-                  [control]="paymentForm.controls.cardExpiry"
-                />
-                <app-input
-                  id="payment-cvc"
-                  label="CVC"
-                  placeholder="123"
-                  autocomplete="cc-csc"
-                  [control]="paymentForm.controls.cardCvc"
-                />
-              </div>
-            </form>
+            }
 
             <div class="checkout__actions">
               <button class="checkout__back" type="button" (click)="previous()">Volver</button>
-              <!-- TODO(pol): confirmar y enviar el pedido real -->
-              <app-button variant="primary">Realizar pedido</app-button>
             </div>
           </section>
         }

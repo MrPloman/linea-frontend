@@ -35,6 +35,15 @@ function getPaypalOrders(): OrdersController {
 export const paymentsRouter: Router = Router();
 paymentsRouter.use(express.json());
 
+// Claves públicas: no son secretas, pero el cliente las necesita en tiempo de
+// ejecución en vez de tenerlas hardcodeadas en el bundle.
+paymentsRouter.get('/config', (_req, res) => {
+  res.json({
+    stripePublishableKey: process.env['STRIPE_PUBLISHABLE_KEY'] ?? '',
+    paypalClientId: process.env['PAYPAL_CLIENT_ID'] ?? '',
+  });
+});
+
 paymentsRouter.post('/stripe/create-intent', async (req, res, next) => {
   try {
     const { amountInCents, currency, orderId } = req.body;

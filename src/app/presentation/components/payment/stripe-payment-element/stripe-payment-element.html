@@ -1,0 +1,17 @@
+<div class="stripe-payment-element">
+  <div #paymentElement class="stripe-payment-element__mount"></div>
+
+  @if (errorMessage(); as message) {
+    <p class="stripe-payment-element__error" role="alert">{{ message }}</p>
+  }
+
+  <app-button
+    type="button"
+    variant="primary"
+    [fullWidth]="true"
+    [disabled]="!ready() || submitting()"
+    (click)="confirm()"
+  >
+    {{ submitting() ? 'Procesando…' : 'Pagar' }}
+  </app-button>
+</div>

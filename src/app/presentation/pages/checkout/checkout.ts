@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { Button } from '@presentation/components/shared/button/button';
 import { InputField } from '@presentation/components/shared/input/input';
 import { CartFacade } from '../../../core/application/store/cart/cart.facade';
+import { StripePaymentElement } from '../../components/payment/stripe-payment-element/stripe-payment-element';
 
 /**
  * Checkout por pasos (dirección → envío → pago), puramente visual.
@@ -12,7 +13,7 @@ import { CartFacade } from '../../../core/application/store/cart/cart.facade';
  */
 @Component({
   selector: 'app-checkout',
-  imports: [ReactiveFormsModule, RouterLink, Button, InputField],
+  imports: [ReactiveFormsModule, RouterLink, Button, InputField, StripePaymentElement],
   templateUrl: './checkout.html',
   styleUrl: './checkout.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,6 +22,10 @@ export class Checkout {
   private readonly fb = inject(NonNullableFormBuilder);
   protected readonly cartFacade = inject(CartFacade);
   protected submitted = signal(false);
+  protected readonly paymentSucceeded = signal(false);
+
+  // TODO(pol): sustituir por el id real una vez exista persistencia de Order (pending -> paid)
+  protected readonly orderId = crypto.randomUUID();
 
   protected readonly steps = [
     { number: 1, label: 'Dirección' },
@@ -83,13 +88,9 @@ export class Checkout {
     ],
   });
 
-  // TODO(pol): pasarela de pago real. NUNCA guardar datos de tarjeta en claro.
-  protected readonly paymentForm = this.fb.group({
-    cardHolder: [''],
-    cardNumber: [''],
-    cardExpiry: [''],
-    cardCvc: [''],
-  });
+  protected onPaymentSucceeded(): void {
+    this.paymentSucceeded.set(true);
+  }
 
   protected next(): void {
     switch (this.currentStep()) {
