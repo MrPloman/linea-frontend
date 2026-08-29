@@ -76,4 +76,8 @@ export class Money {
   public get currencyValue() {
     return this.currency;
   }
+
+  public get amountInCentsValue() {
+    return this.amountInCents;
+  }
 }
