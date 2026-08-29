@@ -1,0 +1,11 @@
+<div class="paypal-buttons">
+  @if (loading()) {
+    <p class="paypal-buttons__loading">Cargando PayPal…</p>
+  }
+
+  <div #buttonsElement class="paypal-buttons__mount"></div>
+
+  @if (errorMessage(); as message) {
+    <p class="paypal-buttons__error" role="alert">{{ message }}</p>
+  }
+</div>

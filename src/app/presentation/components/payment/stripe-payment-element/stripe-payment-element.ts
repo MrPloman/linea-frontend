@@ -1,21 +1,21 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  PLATFORM_ID,
-  afterNextRender,
   inject,
   input,
   output,
+  PLATFORM_ID,
   signal,
   viewChild,
 } from '@angular/core';
 import { loadStripe, Stripe, StripeElements } from '@stripe/stripe-js';
 import { firstValueFrom } from 'rxjs';
-import { Money } from '../../../../core/domain/models/money';
 import { STRIPE_PAYMENT_GATEWAY } from '../../../../core/application/tokens/paymentGatewayToken';
+import { Money } from '../../../../core/domain/models/money';
 import { Button } from '../../shared/button/button';
 
 /**
@@ -93,9 +93,6 @@ export class StripePaymentElement {
       return;
     }
 
-    // redirect: 'if_required' solo nos deja seguir aquí si no hizo falta
-    // redirigir. Verificamos el estado real contra nuestro backend antes de
-    // dar el pago por bueno: nunca nos fiamos solo de la confirmación del cliente.
     const result = await this.stripeGateway.capturePayment(this.providerPaymentId);
     this.submitting.set(false);
 

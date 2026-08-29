@@ -19,7 +19,7 @@ export class PaypalPaymentAdapter implements PaymentGateway {
     if (!this.isBrowser) throw new Error('PayPal order must be created in the browser');
     return firstValueFrom(
       this.http.post<PaymentInit>('/api/payments/paypal/create-order', {
-        amountInCents: amount,
+        amountInCents: amount.amountInCentsValue,
         currency: amount.currencyValue,
         orderId,
       }),

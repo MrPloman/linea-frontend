@@ -23,6 +23,7 @@ export class Checkout {
   protected readonly cartFacade = inject(CartFacade);
   protected submitted = signal(false);
   protected readonly paymentSucceeded = signal(false);
+  protected readonly paymentMethod = signal<'card' | 'paypal'>('card');
 
   // TODO(pol): sustituir por el id real una vez exista persistencia de Order (pending -> paid)
   protected readonly orderId = crypto.randomUUID();

@@ -141,25 +141,6 @@
           <section class="checkout__panel" aria-labelledby="step-payment-title">
             <h2 class="checkout__panel-title" id="step-payment-title">Pago</h2>
 
-            <!-- TODO(pol): integración real con pasarela de pago -->
-            <fieldset class="checkout__options">
-              <legend class="checkout__options-legend">Método de pago</legend>
-
-              <label class="checkout__option">
-                <input type="radio" name="payment" value="card" checked />
-                <span class="checkout__option-body">
-                  <span class="checkout__option-name">Tarjeta de crédito o débito</span>
-                </span>
-              </label>
-
-              <label class="checkout__option">
-                <input type="radio" name="payment" value="paypal" />
-                <span class="checkout__option-body">
-                  <span class="checkout__option-name">PayPal</span>
-                </span>
-              </label>
-            </fieldset>
-            <!-- TODO(pol): mostrar PayPal Buttons cuando el método elegido sea "paypal" -->
             @if (paymentSucceeded()) {
               <p class="checkout__payment-success">Pago confirmado. ¡Gracias por tu pedido!</p>
             } @else {
