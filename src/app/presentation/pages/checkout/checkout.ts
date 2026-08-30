@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { Button } from '@presentation/components/shared/button/button';
 import { InputField } from '@presentation/components/shared/input/input';
 import { CartFacade } from '../../../core/application/store/cart/cart.facade';
+import { Money } from '../../../core/domain/models/money';
 import { StripePaymentElement } from '../../components/payment/stripe-payment-element/stripe-payment-element';
 
 /**
@@ -33,6 +34,16 @@ export class Checkout {
     { number: 2, label: 'Envío' },
     { number: 3, label: 'Pago' },
   ] as const;
+
+  protected readonly shippingOptions = [
+    { label: 'Envío estándar', info: '2–4 días laborables', price: Money.createMoney(0, 'EUR') },
+    { label: 'Envío exprés', info: '24–48 horas', price: Money.createMoney(495, 'EUR') },
+    {
+      label: 'Recogida en tienda',
+      info: 'Disponible en 1–3 días',
+      price: Money.createMoney(0, 'EUR'),
+    },
+  ];
 
   // TODO(pol): validar el paso actual antes de permitir avanzar
   protected readonly currentStep = signal<number>(1);
@@ -89,6 +100,13 @@ export class Checkout {
     ],
   });
 
+  protected shippingForm = this.fb.group({
+    shippingOption: [
+      { option: 'standard', price: Money.createMoney(0, 'EUR') },
+      [Validators.required],
+    ],
+  });
+
   protected onPaymentSucceeded(): void {
     this.paymentSucceeded.set(true);
   }
@@ -110,5 +128,10 @@ export class Checkout {
 
   protected previous(): void {
     this.currentStep.update((step) => Math.max(step - 1, 1));
+  }
+
+  protected setOptionSelected(shippingOption: { label: string; info: string; price: Money }) {
+    console.log(this.shippingForm.controls.shippingOption);
+    this.cartFacade.updateShippingCost(shippingOption.price);
   }
 }
