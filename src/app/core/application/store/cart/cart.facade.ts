@@ -55,8 +55,4 @@ export class CartFacade {
   public clear(): void {
     this.store.dispatch(CartActions.clearCart());
   }
-
-  public updateShippingCost(value: Money) {
-    this.shippingCost().add(value);
-  }
 }

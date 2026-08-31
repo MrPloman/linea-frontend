@@ -5,6 +5,8 @@ import { RouterLink } from '@angular/router';
 import { Button } from '@presentation/components/shared/button/button';
 import { InputField } from '@presentation/components/shared/input/input';
 import { CartFacade } from '../../../core/application/store/cart/cart.facade';
+import { ShippingMethod } from '../../../core/application/store/checkout';
+import { CheckoutFacade } from '../../../core/application/store/checkout/checkout.facade';
 import { Money } from '../../../core/domain/models/money';
 import { StripePaymentElement } from '../../components/payment/stripe-payment-element/stripe-payment-element';
 
@@ -22,6 +24,7 @@ import { StripePaymentElement } from '../../components/payment/stripe-payment-el
 export class Checkout {
   private readonly fb = inject(NonNullableFormBuilder);
   protected readonly cartFacade = inject(CartFacade);
+  protected readonly checkoutFacade = inject(CheckoutFacade);
   protected submitted = signal(false);
   protected readonly paymentSucceeded = signal(false);
   protected readonly paymentMethod = signal<'card' | 'paypal'>('card');
@@ -35,13 +38,29 @@ export class Checkout {
     { number: 3, label: 'Pago' },
   ] as const;
 
-  protected readonly shippingOptions = [
-    { label: 'Envío estándar', info: '2–4 días laborables', price: Money.createMoney(0, 'EUR') },
-    { label: 'Envío exprés', info: '24–48 horas', price: Money.createMoney(495, 'EUR') },
+  protected readonly shippingOptions: {
+    label: string;
+    info: string;
+    price: Money;
+    value: ShippingMethod;
+  }[] = [
+    {
+      label: 'Envío estándar',
+      info: '2–4 días laborables',
+      price: Money.createMoney(0, 'EUR'),
+      value: 'standard',
+    },
+    {
+      label: 'Envío exprés',
+      info: '24–48 horas',
+      price: Money.createMoney(495, 'EUR'),
+      value: 'express',
+    },
     {
       label: 'Recogida en tienda',
       info: 'Disponible en 1–3 días',
       price: Money.createMoney(0, 'EUR'),
+      value: 'pickup',
     },
   ];
 
@@ -130,8 +149,14 @@ export class Checkout {
     this.currentStep.update((step) => Math.max(step - 1, 1));
   }
 
-  protected setOptionSelected(shippingOption: { label: string; info: string; price: Money }) {
-    console.log(this.shippingForm.controls.shippingOption);
-    this.cartFacade.updateShippingCost(shippingOption.price);
+  protected setOptionSelected(shippingOption: {
+    label: ShippingMethod;
+    info: string;
+    price: Money;
+  }) {
+    this.checkoutFacade.updateShippingMethod({
+      method: shippingOption.label,
+      price: shippingOption.price,
+    });
   }
 }

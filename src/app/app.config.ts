@@ -1,10 +1,10 @@
+import { provideHttpClient } from '@angular/common/http';
 import {
   ApplicationConfig,
   isDevMode,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 
@@ -14,6 +14,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { routes } from './app.routes';
 import { CartEffects } from './core/application/store/cart/cart.effect';
 import { cartReducer } from './core/application/store/cart/cart.reducer';
+import { checkoutReducer } from './core/application/store/checkout/checkout.reducer';
 import { CART_REPOSITORY } from './core/application/tokens/cartRepositoryToken';
 import {
   PAYPAL_PAYMENT_GATEWAY,
@@ -29,7 +30,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideStore({ cart: cartReducer }),
+    provideStore({ cart: cartReducer, checkout: checkoutReducer }),
     provideEffects(CartEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideRouter(

@@ -110,7 +110,13 @@
                       name="shippingOption"
                       [value]="shippingOption"
                       formControlName="shippingOption"
-                      (click)="setOptionSelected(shippingOption)"
+                      (click)="
+                        setOptionSelected({
+                          label: shippingOption.value,
+                          price: shippingOption.price,
+                          info: shippingOption.info,
+                        })
+                      "
                     />
                     <span class="checkout__option-body">
                       <span class="checkout__option-name">{{ shippingOption.label }}</span>
