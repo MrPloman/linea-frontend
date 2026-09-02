@@ -1,3 +1,4 @@
+import { Color } from '../models/color';
 import { Money } from '../models/money';
 import { ProductSku } from '../models/productSku';
 import { Size } from '../models/size';
@@ -7,6 +8,7 @@ export type OrderLine = {
   sku: ProductSku;
   productName: string;
   size: Size;
+  color: Color;
   priceAtPurchase: Money;
   quantity: StockQuantity;
 };
